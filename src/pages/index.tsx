@@ -9,7 +9,7 @@ export default function Home() {
 
   return (
     <section>
-      <div className={styles.main}>mario {process.env.NEXT_PUBLIC_MARIO} </div>
+      <div className={styles.main}>ana khara  {process.env.NEXT_PUBLIC_MARIO} </div>
     </section>
   );
 }
