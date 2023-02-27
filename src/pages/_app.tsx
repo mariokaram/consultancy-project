@@ -6,7 +6,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { configs } from "@/utils/config";
 import { SWRConfig } from "swr";
-
+import { Analytics } from '@vercel/analytics/react';
 const roboto = Roboto({ subsets: ["latin"], weight: "400" });
 axios.defaults.baseURL = configs.serverUrl || "";
 export default function App({ Component, pageProps }: AppProps) {
@@ -26,6 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
       >
         <main className={roboto.className}>
           <Component {...pageProps} />
+          <Analytics />
         </main>
       </SWRConfig>
     </>
