@@ -1,14 +1,19 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next";
+import { getHandler, messageSuccess, messageError } from "@/utils/handlers";
+import { excuteQuery } from "@/lib/db";
+const sql = require("sql-template-strings");
 
-type Data = {
-  name: string;
-};
-
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
-  res.setHeader("version", process.env.version || "");
-  res.status(200).json({ name: "John Doe" });
-}
+export default getHandler(false).get(async (req, res) => {
+  try {
+    const answers: any = await excuteQuery(sql`
+    select * from roles
+`);
+    if (answers.successQuery) {
+      res.json(JSON.parse(answers.data));
+    } else {
+      res.status(500);
+      throw { message: "init dashboard projects table initData" };
+    }
+  } catch (error: any) {
+    res.json(messageError(500, error.message));
+  }
+});
