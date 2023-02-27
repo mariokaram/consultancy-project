@@ -1,5 +1,6 @@
 import { getHandler, messageSuccess, messageError } from "@/utils/handlers";
 import { excuteQuery } from "@/lib/db";
+import logger from "@/utils/logger";
 const sql = require("sql-template-strings");
 
 export default getHandler(false).get(async (req, res) => {
@@ -14,6 +15,7 @@ export default getHandler(false).get(async (req, res) => {
       throw { message: "init dashboard projects table initData" };
     }
   } catch (error: any) {
+    logger.error(error, "ana hone");
     res.json(messageError(500, error.message));
   }
 });
