@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect from 'next-connect';
-import { getSession } from 'next-auth/client';
+import { getSession } from 'next-auth/react';
 export interface NextApiRequestExtended extends NextApiRequest {
  userId: string | null;
 }

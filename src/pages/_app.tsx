@@ -3,7 +3,6 @@ import { Roboto } from "next/font/google";
 import type { AppProps } from "next/app";
 import React from "react";
 import axios from "axios";
-import PropTypes from "prop-types";
 import { configs } from "@/utils/config";
 import { SWRConfig } from "swr";
 import { Analytics } from "@vercel/analytics/react";
