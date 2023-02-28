@@ -1,4 +1,3 @@
-import pino from "pino";
 import { logflarePinoVercel } from "pino-logflare";
 
 // create pino-logflare console stream for serverless functions and send function for browser logs

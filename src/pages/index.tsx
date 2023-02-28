@@ -8,11 +8,7 @@ export default function Home() {
   const { data, error, isValidating } = useSWR(`/api/hello`, {
     revalidateOnFocus: false,
   });
-  logger.info(
-    "Client side logging. Logged with pino-logflare.",
-    "mario",
-    error
-  );
+  logger.info("hey babe");
   return (
     <>
       <section>
