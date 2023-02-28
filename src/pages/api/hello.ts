@@ -1,6 +1,5 @@
 import { getHandler, messageSuccess, messageError } from "@/utils/handlers";
 import { excuteQuery } from "@/lib/db";
-import logger from "@/utils/logger";
 const sql = require("sql-template-strings");
 
 export default getHandler(false).get(async (req, res) => {
