@@ -14,6 +14,7 @@ export default getHandler(false).get(async (req, res) => {
       throw { message: "init dashboard projects table initData" };
     }
   } catch (error: any) {
+    console.error("error : 'apiii'");
     res.json(messageError(500, error.message));
   }
 });

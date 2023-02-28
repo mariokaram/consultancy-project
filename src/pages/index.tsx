@@ -9,6 +9,7 @@ export default function Home() {
   const { data, error, isValidating } = useSWR(`/api/hello`, {
     revalidateOnFocus: false,
   });
+  console.error("error : 'hey'");
   return (
     <>
       <section>
