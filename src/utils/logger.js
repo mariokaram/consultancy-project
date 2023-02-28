@@ -1,4 +1,5 @@
 import { logflarePinoVercel } from "pino-logflare";
+import pino from "pino";
 
 // create pino-logflare console stream for serverless functions and send function for browser logs
 // Browser logs are going to: https://logflare.app/sources/13989
@@ -20,7 +21,7 @@ const logger = pino(
     },
     level: "debug",
     base: {
-      env: process.env.NODE_ENV,
+      env: process.env.NODE_ENV || "",
       revision: process.env.VERCEL_GITHUB_COMMIT_SHA,
     },
   },

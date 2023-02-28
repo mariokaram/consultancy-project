@@ -15,7 +15,6 @@ export default getHandler(false).get(async (req, res) => {
       throw { message: "init dashboard projects table initData" };
     }
   } catch (error: any) {
-    logger.error("ana hone");
     res.json(messageError(500, error.message));
   }
 });
