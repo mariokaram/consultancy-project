@@ -13,7 +13,7 @@ export default function Home() {
     <>
       <section>
         <div>
-          <Button className={`mario ${styles.main}`}>nourr</Button>
+          <Button className={`mario ${styles.main}`}>tony</Button>
 
           <Link passHref href="/">
             <Button className={`mario ${styles.main}`}>asdasd</Button>
