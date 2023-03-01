@@ -12,7 +12,6 @@ export const db = mysql({
     ssl: {
       key: process.env.key,
       cert: process.env.cert,
-      ca: process.env.ca
     },
   },
   connUtilization: 0.7,
