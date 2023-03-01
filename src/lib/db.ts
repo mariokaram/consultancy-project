@@ -1,21 +1,20 @@
 import mysql from "serverless-mysql";
 import { configs } from "@/utils/config";
 import { queryCallback } from "mysql";
+const fs = require("fs");
 export const db = mysql({
   config: {
     host: configs.host,
-    port: 3306,
+    port: 25060,
     database: configs.database,
     user: configs.user,
     password: configs.password,
     timezone: "Z",
-    ssl: {
-      key: process.env.key,
-      cert: process.env.cert,
-    },
+   
   },
   connUtilization: 0.7,
 });
+console.log("hey");
 export async function excuteQuery(query: queryCallback) {
   try {
     const results = await db.query(query);
