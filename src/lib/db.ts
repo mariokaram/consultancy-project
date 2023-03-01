@@ -13,15 +13,8 @@ export const db = mysql({
   connUtilization: 0.7,
 });
 export async function excuteQuery(query: queryCallback) {
-  db.connect(function (err: any): void {
-    if (err) {
-      console.error("error connecting: " + err);
-      return;
-    }
-
-    console.log("connected as id " + db);
-  });
   try {
+    console.log(db.getConfig())
     const results = await db.query(query);
     await db.end();
     return { successQuery: true, data: JSON.stringify(results) };
