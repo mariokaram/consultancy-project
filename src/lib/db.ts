@@ -15,8 +15,6 @@ export const db = mysql({
 export async function excuteQuery(query: queryCallback) {
   try {
     const results = await db.query(query);
-    console.log(results, "results");
-    console.log(db.getErrorCount(), "db");
     await db.end();
     return { successQuery: true, data: JSON.stringify(results) };
   } catch (error) {
