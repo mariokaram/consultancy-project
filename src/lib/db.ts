@@ -4,7 +4,7 @@ import { queryCallback } from "mysql";
 export const db = mysql({
   config: {
     host: configs.host,
-    port: configs.port,
+    port: 3306,
     database: configs.database,
     user: configs.user,
     password: configs.password,

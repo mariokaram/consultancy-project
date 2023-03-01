@@ -10,7 +10,7 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 import createCache from "@emotion/cache";
 
 // ----- axios base URL START
-axios.defaults.baseURL = configs.serverUrl || "";
+axios.defaults.baseURL = configs.webUrl || "";
 
 // --------- stuff to do in order to run material ui to works on server side START
 function createEmotionCache() {
