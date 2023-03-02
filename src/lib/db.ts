@@ -10,7 +10,9 @@ export const db = mysql({
     user: configs.user,
     password: configs.password,
     timezone: "Z",
-   
+    ssl: {
+      ca: process.env.CA_CERT,
+    },
   },
   connUtilization: 0.7,
 });
