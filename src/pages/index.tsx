@@ -1,24 +1,42 @@
 import styles from "@/styles/Home.module.scss";
 import Button from "@mui/material/Button";
-
-import { configs } from "@/utils/config";
 import Link from "next/link";
-import useSWR from "swr";
-
+import Image from "next/image";
+import backGroundImage from "~/public/imgs/landing-background.jpg";
 export default function Home() {
-  const { data, error, isValidating } = useSWR(`/api/hello`, {
-    revalidateOnFocus: false,
-  });
-
   return (
     <>
       <section>
-        <div>
-          <Button className={`mario ${styles.main}`}>tony</Button>
+        <div className={styles.backgroundImg}>
+          <div className={styles.image}>
+            <Image
+              height={586}
+              width={1440}
+              alt="background"
+              src={backGroundImage}
+              quality={100}
+              priority={true}
+            />
+            <div className={styles.info}>
+              <div className={styles.title}>Consulting Agency</div>
+              <div className={styles.subTitle}>Endless Ideas</div>
+              <div className={styles.description}>
+                Our studied prices are clearly stated in the bundles with no
+                hidden fees. These bundles cater for the needs of entrepreneurs
+                in any industry and any location.
+              </div>
+            </div>
+          </div>
+        </div>
 
-          <Link passHref href="/">
-            <Button className={`mario ${styles.main}`}>asdasd</Button>
-          </Link>
+        <div>
+          <div className={styles.infoSmall}>
+            <div className={styles.description}>
+              Our studied prices are clearly stated in the bundles with no
+              hidden fees. These bundles cater for the needs of entrepreneurs in
+              any industry and any location.
+            </div>
+          </div>
         </div>
       </section>
     </>
