@@ -117,7 +117,7 @@ export default function Home() {
                 confidence
               </div>
               <div className="description">
-                Our consultants' experience and knowledge guide you through the
+                Our consultants&apos; experience and knowledge guide you through the
                 process of becoming a successful entrepreneur.
                 <br />
                 <br />

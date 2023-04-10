@@ -36,6 +36,7 @@
     "react-slick": "^0.29.0",
     "sass": "^1.58.3",
     "serverless-mysql": "^1.5.4",
+    "sharp": "^0.32.0",
     "slick-carousel": "^1.8.1",
     "sql-template-strings": "^2.2.2",
     "swr": "^2.0.4",
