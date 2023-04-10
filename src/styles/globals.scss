@@ -12,15 +12,54 @@ a {
   section {
     max-width: 1920px;
     width: 100%;
+
+    .subTitle {
+      color: var(--primaryColor);
+      font-weight: 600;
+      line-height: normal;
+      font-size: var(--primaryFontSize);
+      padding-bottom: 0.5rem;
+    }
+    .title {
+      color: var(--secondaryColor);
+      font-weight: 600;
+      font-size: var(--secondaryFontSize);
+      text-transform: uppercase;
+      padding-bottom: 0.5rem;
+    }
+    .description {
+      color: var(--primaryColor);
+      padding-bottom: 0.5rem;
+    }
   }
+}
+.slick-prev:before,
+.slick-next:before {
+  color: var(--secondaryColor) !important;
+}
+.slick-dots li.slick-active button:before {
+  color: var(--secondaryColor) !important;
+}
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+  text-align: center;
 }
 
 :root {
   --primaryColor: #4c4f51;
   --secondaryColor: #e6ac56;
+  --greyColor: #f8f8f8;
   --marginLayout: 8rem;
-  --primaryFontSize: 4.5rem;
-  --secondaryFontSize: 1.5rem;
+  --primaryFontSize: 2.5rem;
+  --secondaryFontSize: 1.2rem;
+}
+
+//cards
+.card {
+  box-shadow: 0px 0px 18px #0124421a;
+  border-radius: 20px;
+  background: white;
+  padding: 2rem;
 }
 
 //buttons

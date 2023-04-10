@@ -9,7 +9,8 @@ import { Analytics } from "@vercel/analytics/react";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import createCache from "@emotion/cache";
 import Header from "@/pages/components/Header-component";
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 // ----- axios base URL START
 axios.defaults.baseURL = configs.webUrl || "";
 
