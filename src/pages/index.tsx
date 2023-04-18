@@ -8,7 +8,7 @@ import aboutImg from "~/public/imgs/about.png";
 import arrowRight from "~/public/icons/arrow-right.svg";
 import listPen from "~/public/icons/list-pen.svg";
 import handPen from "~/public/icons/hand-pen.svg";
-
+import useSWR from "swr";
 import { useState } from "react";
 export default function Home() {
   const [btnSelected, selectBtn] = useState("first");
@@ -64,6 +64,10 @@ export default function Home() {
       desc: "You could even ask influencers to write a blog post for their own website that reviews your product or services, plus the tips they learned through working with you. This gets your business in front of even more readers and prospective target clients.",
     },
   ];
+  const { data, error, isValidating } = useSWR("/api/hello", {
+    revalidateOnFocus: false,
+  });
+  console.log(data, error, isValidating);
   return (
     <>
       <section>
@@ -117,8 +121,8 @@ export default function Home() {
                 confidence
               </div>
               <div className="description">
-                Our consultants&apos; experience and knowledge guide you through the
-                process of becoming a successful entrepreneur.
+                Our consultants&apos; experience and knowledge guide you through
+                the process of becoming a successful entrepreneur.
                 <br />
                 <br />
                 Working with us allows you to:
