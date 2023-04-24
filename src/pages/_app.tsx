@@ -11,6 +11,7 @@ import createCache from "@emotion/cache";
 import Header from "@/pages/components/Header-component";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Footer from "./components/Footer-component";
 // ----- axios base URL START
 axios.defaults.baseURL = configs.webUrl || "";
 
@@ -42,6 +43,7 @@ export default function App(props: MyAppProps) {
             {/* <Analytics /> */}
           </main>
         </SWRConfig>
+        <Footer />
       </CacheProvider>
     </>
   );

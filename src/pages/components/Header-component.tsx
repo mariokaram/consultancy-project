@@ -1,7 +1,6 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
@@ -14,10 +13,11 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useScrollTrigger } from "@mui/material";
-import styles from "@/styles/Header.module.scss";
 import Image from "next/image";
 import Logo from "~/public/icons/logo-primary.svg";
 import Link from "next/link";
+import styles from "@/styles/Header.module.scss";
+
 interface Props {
   children: React.ReactElement;
 }
@@ -70,9 +70,8 @@ export default function Header(props: any) {
   return (
     <header>
       <Box sx={{ display: "flex" }}>
-        <CssBaseline />
         <ElevationScroll {...props}>
-          <AppBar component="nav">
+          <AppBar color="transparent" component="nav">
             <Toolbar className={styles.headerNav}>
               <IconButton
                 className={styles.menuIcon}
@@ -83,7 +82,11 @@ export default function Header(props: any) {
                 <MenuIcon />
               </IconButton>
 
-              <Typography className={styles.logoContainer} variant="h2" component="div">
+              <Typography
+                className={styles.logoContainer}
+                variant="h2"
+                component="div"
+              >
                 <Image
                   onClick={() =>
                     window.scrollTo({ top: 0, behavior: "smooth" })

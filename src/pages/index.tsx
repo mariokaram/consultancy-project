@@ -10,6 +10,8 @@ import listPen from "~/public/icons/list-pen.svg";
 import handPen from "~/public/icons/hand-pen.svg";
 import useSWR from "swr";
 import { useState } from "react";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import ContactBanner from "./components/Contact-Banner";
 export default function Home() {
   const [btnSelected, selectBtn] = useState("first");
   const howItWorks: any = {
@@ -67,6 +69,10 @@ export default function Home() {
   const { data, error, isValidating } = useSWR("/api/hello", {
     revalidateOnFocus: false,
   });
+  const mediaQuery = useMediaQuery("(max-width:1000px)");
+  const mediaQuery14 = useMediaQuery("(max-width:1400px)");
+  const mediaQuery6 = useMediaQuery("(max-width:600px)");
+
   return (
     <>
       <section>
@@ -80,7 +86,10 @@ export default function Home() {
               quality={100}
               priority={true}
             />
-            <div className={styles.info}>
+            <div
+              style={{ display: mediaQuery ? "none" : "block" }}
+              className={styles.info}
+            >
               <div className="title">Consulting Agency</div>
               <div className="subTitle">Endless Ideas</div>
               <div className={styles.description}>
@@ -91,18 +100,33 @@ export default function Home() {
             </div>
           </div>
         </div>
-        {/* <div>
-          <div className={styles.infoSmall}>
-            <div className={styles.description}>
-              Our studied prices are clearly stated in the bundles with no
-              hidden fees. These bundles cater for the needs of entrepreneurs in
-              any industry and any location.
+        <div className={styles.mainContainer}>
+          {/* landing background text landscape */}
+          <div
+            style={{ display: mediaQuery ? "block" : "none" }}
+            className={styles.info}
+          >
+            <div className="title">Consulting Agency</div>
+            <div className="subTitle">Endless Ideas</div>
+            <div
+              className={`${styles.description} ${styles.descriptionNoWidth}`}
+            >
+              <div>
+                Our studied prices are clearly stated in the bundles with no
+                hidden fees. These bundles cater for the needs of entrepreneurs
+                in any industry and any location.
+              </div>
             </div>
           </div>
-        </div> */}
-
-        <div className={styles.mainContainer}>
           {/* about us section  */}
+          <div style={{ display: mediaQuery ? "block" : "none" }}>
+            <div className="title">about you</div>
+            <div className="subTitle">
+              Run your business with
+              <br />
+              confidence
+            </div>
+          </div>
           <div className={styles.aboutUsContainer}>
             <div className={styles.aboutImg}>
               <Image
@@ -113,15 +137,20 @@ export default function Home() {
               />
             </div>
             <div className={styles.aboutInfo}>
-              <div className="title">about you</div>
-              <div className="subTitle">
-                Run your business with
-                <br />
-                confidence
+              <div style={{ display: mediaQuery ? "none" : "block" }}>
+                <div className="title">about you</div>
+                <div className="subTitle">
+                  Run your business with
+                  <br />
+                  confidence
+                </div>
               </div>
-              <div className="description">
-                Our consultants&apos; experience and knowledge guide you through
-                the process of becoming a successful entrepreneur.
+
+              <div className={`description ${styles.consultDesc}`}>
+                <div>
+                  Our consultants&apos; experience and knowledge guide you
+                  through the process of becoming a successful entrepreneur.
+                </div>
                 <br />
                 <br />
                 Working with us allows you to:
@@ -158,7 +187,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-
           {/* our service section  */}
           <div className={styles.servicesContainer}>
             <div className={styles.serviceInfo}>
@@ -168,11 +196,13 @@ export default function Home() {
                 <br />
                 chance of success
               </div>
-              <div className="description">
-                Creativity and innovation are at the heart of our company. When
-                we craft plans and proposals for <br />
-                you we make sure you stand out in the market. We keep you at the
-                center at all times.
+              <div className={`description ${styles.servDesc}`}>
+                <div>
+                  Creativity and innovation are at the heart of our company.
+                  When we craft plans and proposals for you we make sure you
+                  stand out in the market. We keep you at the center at all
+                  times.
+                </div>
               </div>
               <br />
             </div>
@@ -224,7 +254,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-
           {/* why us section */}
           <div className={styles.whyUsContainer}>
             <div className={styles.whyUsInfo}>
@@ -232,14 +261,13 @@ export default function Home() {
               <div className="subTitle">
                 Explore possibilities and opportunities
               </div>
-              <div className="description">
-                Simply put, we are a result driven company, we want you to
-                succeed even after
-                <br />
-                your project is finalized. We also use a top-notch process that
-                makes the entire
-                <br />
-                experience clear, easy and trackable.
+              <div className={`description ${styles.whyDesc}`}>
+                <div>
+                  Simply put, we are a result driven company, we want you to
+                  succeed even after your project is finalized. We also use a
+                  top-notch process that makes the entire experience clear, easy
+                  and trackable.
+                </div>
               </div>
               <br />
             </div>
@@ -271,9 +299,6 @@ export default function Home() {
                   study into action based steps.
                 </div>
               </div>
-            </div>
-
-            <div className={styles.coloredCardsContainer}>
               <div className={`${styles.colored} card`}>
                 <div className={styles.cardTitle}>Responsive foundation</div>
                 <div className={styles.cardDesc}>
@@ -300,22 +325,16 @@ export default function Home() {
               </div>
             </div>
           </div>
-
           {/* how it works */}
           <div className={styles.howItWorksContainer}>
             <div className={styles.title}>How It Works</div>
             <div className={styles.desc}>
-              All of the processes on our website have been carefully
-              <br />
-              studied to make it easy for you to navigate through them.
+              All of the processes on our website have been carefully studied to
+              make it easy for you to navigate through them.
             </div>
 
             <div className={styles.btnSec}>
-              <div
-                className={
-                  btnSelected === "second" ? styles.activeBtnL : styles.zIndex
-                }
-              >
+              <div className={btnSelected === "second" ? styles.unActive : ""}>
                 <Button
                   className="btn btn-secondary"
                   onClick={() => selectBtn("first")}
@@ -323,11 +342,7 @@ export default function Home() {
                   Business plan
                 </Button>
               </div>
-              <div
-                className={
-                  btnSelected === "first" ? styles.activeBtnR : styles.zIndex
-                }
-              >
+              <div className={btnSelected === "first" ? styles.unActive : ""}>
                 <Button
                   className="btn btn-secondary"
                   onClick={() => selectBtn("second")}
@@ -336,15 +351,40 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            <div className={styles.phases}>
-              {howItWorks[btnSelected].map((v: string, i: number) => (
-                <div key={i} data-text={v}>
-                  {i + 1}
+            {!mediaQuery6 && (
+              <div className={styles.phases}>
+                {howItWorks[btnSelected].map((v: string, i: number) => (
+                  <div key={i} data-text={v}>
+                    {i + 1}
+                  </div>
+                ))}
+              </div>
+            )}
+            {mediaQuery6 && (
+              <>
+                <div className={styles.phases}>
+                  {howItWorks[btnSelected].map(
+                    (v: string, i: number) =>
+                      i <= 2 && (
+                        <div key={i} data-text={v}>
+                          {i + 1}
+                        </div>
+                      )
+                  )}
                 </div>
-              ))}
-            </div>
+                <div className={styles.phases}>
+                  {howItWorks[btnSelected].map(
+                    (v: string, i: number) =>
+                      i > 2 && (
+                        <div key={i} data-text={v}>
+                          {i + 1}
+                        </div>
+                      )
+                  )}
+                </div>
+              </>
+            )}
           </div>
-
           {/* testimonials section */}
           <div className={styles.testimonialSection}>
             <div className={styles.testimonialInfo}>
@@ -353,7 +393,11 @@ export default function Home() {
             </div>
 
             <div className={styles.profileSection}>
-              <Slider {...settings}>
+              <Slider
+                {...settings}
+                slidesToScroll={mediaQuery14 ? 1 : 2}
+                slidesToShow={mediaQuery14 ? 1 : 2}
+              >
                 {testimonials.map((v: any) => (
                   <div
                     key={v.photo}
@@ -368,6 +412,10 @@ export default function Home() {
                 ))}
               </Slider>
             </div>
+          </div>
+          {/* contact section */}
+          <div className={styles.contactSection}>
+            <ContactBanner />
           </div>
         </div>
       </section>

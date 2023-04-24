@@ -16,7 +16,6 @@ export const db = mysql({
   },
   connUtilization: 0.7,
 });
-console.log("hey");
 export async function excuteQuery(query: queryCallback) {
   try {
     const results = await db.query(query);
