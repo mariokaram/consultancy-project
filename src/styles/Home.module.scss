@@ -1,5 +1,4 @@
 .backgroundImg {
-  padding-top: 72px;
   .image {
     display: flex;
     max-height: 750px;
@@ -30,6 +29,7 @@
 
 .mainContainer {
   margin: var(--marginLayout);
+  margin-bottom: 0;
 
   // about us
   .aboutUsContainer {
@@ -111,6 +111,7 @@
         .cardText {
           color: var(--primaryColor);
           padding-top: 0.5rem;
+          line-height: 1.4rem;
         }
         .cardBtn {
           button {
@@ -169,6 +170,7 @@
         .cardDesc {
           padding-top: 0.5rem;
           font-size: 1rem !important;
+          line-height: 1.4rem;
         }
       }
     }
@@ -192,6 +194,7 @@
       padding-bottom: 1rem;
       padding-top: 0.5rem;
       max-width: 600px;
+      line-height: 1.4rem;
     }
     .btnSec {
       padding-bottom: 1rem;
@@ -277,6 +280,7 @@
             font-style: italic;
             padding: 3rem 0.5rem 1rem;
             flex: 1;
+            line-height: 1.4rem;
           }
           .name {
             font-weight: bold;

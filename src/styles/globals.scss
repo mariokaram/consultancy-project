@@ -6,11 +6,89 @@
 }
 a {
   text-decoration: none;
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+// stepper css
+.MuiStepper-root,
+.MuiStepIcon-root.Mui-active,
+.MuiStepIcon-root.Mui-completed {
+  overflow-x: auto;
+  color: var(--secondaryColor);
+}
+.MuiStepLabel-label.Mui-disabled.MuiStepLabel-alternativeLabel,
+.MuiStepLabel-label.Mui-active {
+  color: var(--primaryColor);
+}
+.MuiStepLabel-label.Mui-active {
+  font-weight: 600;
+  color: black;
+}
+.MuiRadio-root.Mui-checked {
+  color: var(--secondaryColor);
+}
+
+//radio
+.MuiRadio-root:hover {
+  background-color: rgba(230, 172, 86, 0.04);
+}
+.MuiTypography-root {
+  color: var(--primaryColor);
+}
+
+// table
+
+.inputTable {
+  outline: 0;
+  border: 0 !important;
+  color: var(--primaryColor);
+  &::before,
+  &::after {
+    border-bottom: 0 !important;
+  }
+}
+
+.MuiTableContainer-root{
+  box-shadow: var(--box-shadow);
+}
+.MuiTableCell-root {
+  color: var(--primaryColor);
+}
+
+//errors Input
+
+.radioError .MuiFormControlLabel-label {
+  color: rgb(231, 76, 60) !important;
+}
+.errorInput {
+  background-color: rgba(231, 76, 60, 0.08);
+}
+
+// inputs
+.textInput {
+  outline: 0;
+  padding: 0.5rem 0.7rem;
+  box-shadow: var(--box-shadow);
+  border-radius: 20px;
+  border-color: transparent;
+  &::before,
+  &::after {
+    border-bottom: 0 !important;
+  }
+}
+.selectInput {
+  padding: 0 !important;
+
+  fieldset {
+    border: 0 !important;
+  }
 }
 
 .main {
   display: flex;
   justify-content: center;
+  margin-top: 72px;
   section {
     max-width: 1920px;
     width: 100%;
@@ -32,6 +110,7 @@ a {
     .description {
       color: var(--primaryColor);
       padding-bottom: 0.5rem;
+      line-height: 1.4rem;
     }
   }
 }
@@ -57,8 +136,10 @@ a {
   --greyColor: #f8f8f8;
   --marginLayout: 8rem;
   --primaryFontSize: 2.3rem;
+  --brownColor: #69514e;
   --box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.12);
   --secondaryFontSize: 1.125rem;
+  --backgroundBeige: #fdf7ee;
 }
 
 //cards
@@ -130,6 +211,15 @@ a {
   &:hover {
     box-shadow: var(--box-shadow);
     background-color: var(--secondaryColor);
+  }
+}
+.btn-white {
+  background-color: white;
+  color: var(--primaryColor);
+
+  &:hover {
+    box-shadow: var(--box-shadow);
+    background-color: transparent;
   }
 }
 

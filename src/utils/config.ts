@@ -5,4 +5,12 @@ export const configs = {
   user: process.env.user,
   password: process.env.password,
   database: process.env.database,
+  secret: process.env.secret,
+  cert: process.env.CA_CERT,
+  EMAIL_SERVER: process.env.EMAIL_SERVER,
+  EMAIL_FROM: process.env.EMAIL_FROM,
+  cloudinary_cloud_name: process.env.cloudinary_cloud_name,
+  cloudinary_api_key: process.env.NEXT_PUBLIC_cloudinary_api_key,
+  cloudinary_api_secret: process.env.cloudinary_api_secret,
+  cloudinary_url: process.env.NEXT_PUBLIC_cloudinary_url,
 };

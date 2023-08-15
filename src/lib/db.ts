@@ -1,22 +1,25 @@
 import mysql from "serverless-mysql";
 import { configs } from "@/utils/config";
 import { queryCallback } from "mysql";
-const fs = require("fs");
 export const db = mysql({
   config: {
     host: configs.host,
-    port: 25060,
+    port: 3306,
     database: configs.database,
     user: configs.user,
     password: configs.password,
     timezone: "Z",
     ssl: {
-      ca: process.env.CA_CERT,
+      // should be false in development
+      rejectUnauthorized: process.env.NODE_ENV === "production",
+      ca: configs.cert,
     },
   },
   connUtilization: 0.7,
 });
-export async function excuteQuery(query: queryCallback) {
+export async function executeQuery(
+  query: queryCallback
+): Promise<{ successQuery: boolean; data?: any }> {
   try {
     const results = await db.query(query);
     await db.end();
@@ -28,5 +31,5 @@ export async function excuteQuery(query: queryCallback) {
 }
 export default {
   db,
-  excuteQuery,
+  executeQuery,
 };

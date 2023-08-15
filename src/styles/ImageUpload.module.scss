@@ -1,0 +1,49 @@
+.uploadFileInput {
+  outline: 0;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid;
+  box-shadow: var(--box-shadow);
+  border-radius: 20px;
+  border-color: transparent;
+  line-height: 1.4375em;
+  box-sizing: border-box;
+  cursor: pointer;
+  .fileBtnInput {
+    padding: 4px 0 5px;
+    display: flex;
+    color: var(--primaryColor);
+    justify-content: center;
+    align-items: center;
+    .existingPdf {
+      display: flex;
+      align-items: center;
+      border: 1px solid;
+      border-radius: 20px;
+      border-color: transparent;
+      background-color: var(--backgroundBeige);
+      padding: 5px 20px;
+      color: var(--primaryColor);
+    }
+    span {
+      color: var(--secondaryColor);
+      text-decoration: underline;
+      padding: 0 0.3rem;
+    }
+  }
+  .fileCss {
+    padding: 0 !important;
+    justify-content: flex-start;
+    cursor: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .existingPdf,
+  .fileBtnInput {
+    padding: 5px !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+}

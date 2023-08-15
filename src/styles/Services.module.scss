@@ -1,0 +1,130 @@
+.backgroundImg {
+  .image {
+    display: flex;
+    max-height: 750px;
+    position: relative;
+
+    img {
+      height: auto;
+      width: 100%;
+      object-fit: cover;
+      object-position: top;
+      border-bottom-right-radius: 100px;
+      border-top-left-radius: 100px;
+    }
+  }
+  .info {
+    position: absolute;
+    top: 34%;
+    left: 11%;
+
+    .description {
+      max-width: 560px;
+      font-weight: 500 !important;
+      font-size: 1.2rem;
+      color: var(--primaryColor);
+    }
+  }
+}
+
+.mainContainer {
+  margin: var(--marginLayout);
+  margin-bottom: 0;
+  .plansSection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    .img,
+    .desc {
+      flex: 1 0 300px;
+    }
+
+    .text {
+      color: var(--primaryColor);
+      line-height: 1.5rem;
+      max-width: 700px;
+    }
+  }
+
+  .ideaSection {
+    background-color: var(--greyColor);
+    padding: 4rem var(--marginLayout);
+    margin: 4rem calc(0rem - var(--marginLayout));
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .contactSection {
+    padding-top: 4rem;
+  }
+  .detailsSection {
+    margin-top: 4rem;
+
+    .detailsContainer {
+      padding-top: 2rem;
+      .detail {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        .item {
+          padding-bottom: 2rem;
+          color: var(--primaryColor);
+          flex: 1 0 300px;
+          .title {
+            font-weight: 600;
+            padding: 0.5rem 0;
+          }
+          .desc {
+            line-height: 1.5rem;
+            max-width: 500px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1400px) {
+  .backgroundImg {
+    .info {
+      top: 34% !important;
+      left: 2% !important;
+      .description {
+        max-width: 450px !important;
+      }
+    }
+  }
+}
+@media (max-width: 1000px) {
+  .detailsContainer {
+    .detail {
+      .item {
+        .desc {
+          max-width: unset !important;
+        }
+      }
+    }
+  }
+  .plansSection {
+    .text {
+      max-width: unset !important;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .backgroundImg {
+    .image {
+      img {
+        border-bottom-right-radius: 0 !important;
+        border-top-left-radius: 0 !important;
+      }
+    }
+  }
+
+  .plansSection {
+    img {
+      max-width: 200px;
+      height: auto;
+    }
+  }
+}

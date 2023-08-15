@@ -1,10 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import nextConnect from "next-connect";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
 import cors from "cors";
 import { configs } from "@/utils/config";
+import { optionsAuth } from "@/pages/api/auth/[...nextauth]";
 export interface NextApiRequestExtended extends NextApiRequest {
-  userId: string | null;
+  userId: string;
 }
 
 const handleCors = cors({
@@ -25,7 +26,7 @@ export function getHandler(auth: boolean) {
     .use(async (req, res, next) => {
       try {
         if (auth) {
-          const session: any = await getSession({ req });
+          const session: any = await getServerSession(req, res, optionsAuth);
           if (session) {
             req.userId = session.user["id"];
             next();
@@ -41,16 +42,20 @@ export function getHandler(auth: boolean) {
     });
 }
 
-export const messageSuccess = (codeNumber: any, data: any) => {
+export const messageSuccess = (
+  codeNumber: number,
+  data: any,
+  isNeededToBeParse: boolean = true
+) => {
   let jsonMessage = {
     success: true,
     status_code: codeNumber,
-    result: data,
+    result: isNeededToBeParse ? JSON.parse(data) : data,
   };
   return jsonMessage;
 };
 
-export const messageError = (codeNumber: any, errMsg: any) => {
+export const messageError = (codeNumber: number, errMsg: string) => {
   let jsonMessage = {
     success: false,
     status_code: codeNumber,

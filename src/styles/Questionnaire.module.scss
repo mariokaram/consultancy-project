@@ -1,0 +1,88 @@
+.mainContainer {
+  padding: var(--marginLayout);
+  padding-top: 4rem !important;
+  background-color: var(--backgroundBeige);
+
+  .title,
+  .desc {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    p {
+      max-width: 550px;
+      padding-bottom: 1rem;
+    }
+  }
+
+  .cardContent {
+    padding: 2rem 15rem;
+
+    .inputContainer {
+      padding-top: 3rem;
+
+      .minimumChar {
+        color: var(--toastify-color-error);
+        display: flex;
+        justify-content: flex-end;
+        padding-top: 0.3rem;
+      }
+
+      .title {
+        display: flex;
+        justify-content: flex-start;
+        text-align: start !important;
+        .info {
+          padding-left: 0.5rem;
+        }
+
+        label {
+          font-weight: 500;
+          color: var(--primaryColor);
+          padding-bottom: 0.5rem;
+        }
+      }
+    }
+    .tableCell {
+      display: flex;
+      gap: 0.8rem;
+    }
+    .iconsTable {
+      color: var(--secondaryColor);
+      cursor: pointer;
+    }
+    .tableHeader {
+      background-color: var(--backgroundBeige);
+    }
+  }
+  .loading {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    height: 30vh;
+    padding: 1rem;
+  }
+
+  .btnContainer {
+    display: flex;
+    padding-top: 1rem;
+    width: 100%;
+    text-align: initial !important;
+
+    .next {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
+
+@media (max-width: 1400px) {
+  .cardContent {
+    padding: 2rem 8rem !important;
+  }
+}
+@media (max-width: 800px) {
+  .cardContent {
+    padding: 2rem !important;
+  }
+}

@@ -1,0 +1,72 @@
+.signInContainer {
+  height: 700px;
+  position: relative;
+
+  .loginForm {
+    max-width: 400px;
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .logo {
+      text-align: center;
+      padding-bottom: 1rem;
+    }
+    .input {
+      padding-top: 0.5rem;
+    }
+    .btnlogin {
+      padding-top: 1rem;
+    }
+    .notice {
+      background-color: #f4f3f3;
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 12px;
+      display: flex;
+      gap: 1rem;
+      color: var(--primaryColor);
+      font-size: 0.9rem;
+    }
+    .subtitle {
+      font-size: 1.5rem;
+    }
+    .loginSeperated {
+      align-items: center;
+      padding: 1rem 0;
+      display: flex;
+      color: var(--primaryColor) !important;
+      div {
+        padding: 0 20px;
+      }
+
+      .leftHr {
+        flex-grow: 1;
+        margin: 0;
+        border: none;
+        border-top: 1px solid #ddd;
+        clear: both;
+        padding: 0;
+      }
+      .rightHr {
+        flex-grow: 1;
+        margin: 0;
+        border: none;
+        border-top: 1px solid #ddd;
+        clear: both;
+        padding: 0;
+      }
+    }
+  }
+}
+@media (max-width: 1000px) {
+  .notice {
+    gap: 0rem !important;
+  }
+  .loginForm {
+    width: 300px;
+  }
+}

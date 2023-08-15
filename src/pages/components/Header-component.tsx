@@ -12,19 +12,25 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { useScrollTrigger } from "@mui/material";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Image from "next/image";
 import Logo from "~/public/icons/logo-primary.svg";
 import Link from "next/link";
 import styles from "@/styles/Header.module.scss";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 interface Props {
   children: React.ReactElement;
 }
 
 const drawerWidth = 240;
-const navItems = ["Services", "Pricing", "Consultants", "Insights"];
-
+const navItems = [
+  { label: "Services", link: "/services" },
+  { label: "Pricing", link: "/pricing" },
+  { label: "Consultants", link: "" },
+  { label: "Insights", link: "" },
+];
 function ElevationScroll(props: Props) {
   const { children } = props;
   const trigger = useScrollTrigger({
@@ -44,25 +50,37 @@ export default function Header(props: any) {
     setMobileOpen((prevState) => !prevState);
   };
 
+  const { pathname } = useRouter();
+
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h2" component="div">
-        <Image alt="logo" src={Logo} />
+        <Link href="/" passHref>
+          <Image alt="logo" className={styles.logo} src={Logo} />
+        </Link>
       </Typography>
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+          <ListItem key={item.label} disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={item} />
+              <ListItemText primary={item.label} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
       <Divider />
       <Box className={styles.drawerContent}>
-        <Button className={`links ${styles.marginB}`}>Get in touch</Button>
-        <Button className="btn btn-secondary">Get started</Button>
+        <Button
+          onClick={() => signOut({ redirect: false })}
+          className={`links ${styles.marginB}`}
+        >
+          Get in touch
+        </Button>
+
+        <Link href="/signin" passHref legacyBehavior>
+          <Button className="btn btn-secondary">Get started</Button>
+        </Link>
       </Box>
     </Box>
   );
@@ -87,14 +105,9 @@ export default function Header(props: any) {
                 variant="h2"
                 component="div"
               >
-                <Image
-                  onClick={() =>
-                    window.scrollTo({ top: 0, behavior: "smooth" })
-                  }
-                  alt="logo"
-                  className={styles.logo}
-                  src={Logo}
-                />
+                <Link href="/" passHref>
+                  <Image alt="logo" className={styles.logo} src={Logo} />
+                </Link>
               </Typography>
 
               <Box
@@ -102,9 +115,16 @@ export default function Header(props: any) {
                 sx={{ display: { xs: "none", sm: "block" } }}
               >
                 {navItems.map((item) => (
-                  <Link href="/" className="transitionLink" passHref key={item}>
+                  <Link
+                    href={item.link}
+                    className={`${
+                      pathname === item.link  || pathname === `${item.link}/[[...service]]`  ? styles.navLinkActive : ""
+                    } transitionLink`}
+                    passHref
+                    key={item.label}
+                  >
                     <Button className="links no-hover-background">
-                      {item}
+                      {item.label}
                     </Button>
                   </Link>
                 ))}
@@ -112,9 +132,14 @@ export default function Header(props: any) {
 
               <Box className={styles.btnInfo}>
                 <Link className={styles.contact} href="/" passHref>
-                  <Button className={`links`}>Get in touch</Button>
+                  <Button
+                    onClick={() => signOut({ redirect: false })}
+                    className={`links`}
+                  >
+                    Get in touch
+                  </Button>
                 </Link>
-                <Link href="/" passHref>
+                <Link href="/signin" passHref>
                   <Button className="btn btn-secondary">Get started</Button>
                 </Link>
               </Box>

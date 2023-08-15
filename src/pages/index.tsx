@@ -66,9 +66,7 @@ export default function Home() {
       desc: "You could even ask influencers to write a blog post for their own website that reviews your product or services, plus the tips they learned through working with you. This gets your business in front of even more readers and prospective target clients.",
     },
   ];
-  const { data, error, isValidating } = useSWR("/api/hello", {
-    revalidateOnFocus: false,
-  });
+
   const mediaQuery = useMediaQuery("(max-width:1000px)");
   const mediaQuery14 = useMediaQuery("(max-width:1400px)");
   const mediaQuery6 = useMediaQuery("(max-width:600px)");
@@ -220,7 +218,11 @@ export default function Home() {
                   investors look for.
                 </div>
                 <div className={styles.cardBtn}>
-                  <Link className="transitionLink" href="/" passHref>
+                  <Link
+                    className="transitionLink"
+                    href="/services/business-plan"
+                    passHref
+                  >
                     <Button className="links no-hover-background">
                       Explore
                       <span className={styles.cardArrow}>
@@ -242,7 +244,11 @@ export default function Home() {
                   of your experience.
                 </div>
                 <div className={styles.cardBtn}>
-                  <Link className="transitionLink" href="/" passHref>
+                  <Link
+                    className="transitionLink"
+                    href="/services/proposing-business-ideas"
+                    passHref
+                  >
                     <Button className="links no-hover-background">
                       Explore
                       <span className={styles.cardArrow}>

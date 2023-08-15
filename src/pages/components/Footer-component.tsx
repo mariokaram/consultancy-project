@@ -1,5 +1,4 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
 import styles from "@/styles/Footer.module.scss";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,7 +7,7 @@ import Logo from "~/public/icons/logo-primary.svg";
 export default function Footer({ props }: any) {
   return (
     <>
-      <div className="main">
+      <div className={styles.footer}>
         <div className={styles.footerSection}>
           <div className={styles.footerLinks}>
             <div>

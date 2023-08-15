@@ -1,0 +1,143 @@
+.backgroundImg {
+  .image {
+    //TODO remove it after changing image and dontforfget the redius for the image radiys
+    background-color: red;
+    background-image: url("../../public/imgs/pricing-image.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+  .info {
+    text-align: center;
+    padding-top: 4rem;
+    .desc {
+      max-width: 650px;
+      margin: 0 auto;
+    }
+  }
+}
+
+.packages {
+  padding: 4rem 2rem;
+  padding-bottom: 10rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .pckContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 450px;
+    padding: 2rem;
+
+    .pckg {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      max-width: 300px;
+      .title {
+        color: var(--primaryColor);
+        font-weight: 600;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        text-align: center;
+      }
+      .readMore {
+        button {
+          color: var(--secondaryColor);
+          padding-top: 0.3rem;
+          text-transform: capitalize;
+          gap: 0.5rem;
+          padding: 0;
+          cursor: pointer;
+          &:hover {
+            text-decoration: underline;
+            background-color: transparent;
+          }
+        }
+      }
+      .price {
+        font-size: 3rem;
+        color: var(--brownColor);
+        font-weight: 600;
+        text-align: center;
+      }
+      .list {
+        padding: 1rem 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        color: var(--primaryColor);
+        div {
+          display: flex;
+          gap: 1rem;
+          align-items: center;
+          span {
+            text-align: start;
+          }
+        }
+      }
+    }
+  }
+}
+.complex {
+  position: absolute;
+  height: 220px;
+  right: 50%;
+  transform: translate(50%, -50%);
+  width: 1160px;
+  .infoContainer {
+    display: flex;
+    .title {
+      color: var(--primaryColor);
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .descComplex {
+      text-align: left;
+      max-width: 500px;
+      padding-top: 0.5rem;
+    }
+
+    .btnComplex {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  .arrowSection {
+    display: flex;
+    gap: 5rem;
+    padding-top: 1rem;
+    .arrowsComplex {
+      display: flex;
+      gap: 1.5rem;
+      flex-direction: column;
+      div {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        span {
+          text-align: start;
+        }
+      }
+    }
+  }
+}
+.mainContainer {
+  margin: var(--marginLayout);
+  margin-bottom: 0;
+
+  .faqSection {
+    padding: var(--marginLayout) 15rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .accordion {
+      padding-top: 2rem;
+    }
+  }
+}

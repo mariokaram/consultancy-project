@@ -25,6 +25,18 @@
   .menuIcon {
     display: none;
   }
+  .navLinkActive {
+    &::after {
+      content: "";
+      position: absolute;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: var(--secondaryColor);
+      width: 100%;
+      transform: scaleX(0.99);
+    }
+  }
 }
 .drawerContent {
   display: flex;

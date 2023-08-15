@@ -1,21 +1,25 @@
-import NextAuth, { AuthOptions } from "next-auth";
-import Providers from "next-auth/providers";
+import NextAuth from "next-auth";
 import { TypeORMLegacyAdapter } from "@next-auth/typeorm-legacy-adapter";
 import * as entities from "@/lib/entities";
-import { NextApiRequest, NextApiResponse } from "next";
-const options = {
+import EmailProvider from "next-auth/providers/email";
+import { configs } from "@/utils/config";
+export const optionsAuth = {
   adapter: TypeORMLegacyAdapter(
-    "mysql://mario:password@127.0.0.1:3306/consultency",
+    `mysql://${configs.user}:${configs.password}@${configs.host}:${configs.port}/${configs.database}`,
     { entities }
   ),
 
-  secret: "TgYalhK721BjKVyk+30uKT9VDJaVNGgd2EDic239icw=",
+  secret: configs.secret,
+
+  providers: [
+    EmailProvider({
+      server: configs.EMAIL_SERVER,
+      from: configs.EMAIL_FROM,
+    }),
+  ],
 
   callbacks: {
-    async session(
-      session: { user: { role: any; id: any } },
-      user: { role: any; id: any }
-    ) {
+    async session({ session, user }: any) {
       if (session) {
         session.user.role = user.role;
         session.user.id = user.id;
@@ -29,9 +33,4 @@ const options = {
   },
 };
 
-const next = (
-  req: NextApiRequest,
-  res: NextApiResponse,
-  options: AuthOptions
-) => NextAuth(req, res, options);
-export default next;
+export default NextAuth(optionsAuth);
