@@ -21,11 +21,10 @@ export default getHandler(true).get(async (req, res) => {
     const signature = cloudinary.utils.api_sign_request(
       {
         folder: `${folderName}/${id}/${subFolder}`,
-
         use_filename: true,
         overwrite: true,
-
         timestamp: timestamp,
+        transformation: "fl_attachment",
       },
       configs.cloudinary_api_secret
     );

@@ -11,7 +11,7 @@ import handPen from "~/public/icons/hand-pen.svg";
 import useSWR from "swr";
 import { useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import ContactBanner from "./components/Contact-Banner";
+import ContactBanner from "@/pages/components/Contact-Banner";
 export default function Home() {
   const [btnSelected, selectBtn] = useState("first");
   const howItWorks: any = {

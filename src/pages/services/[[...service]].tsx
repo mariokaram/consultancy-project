@@ -89,7 +89,7 @@ export default function ServicesPage() {
                 the rise and markets are getting saturated.
                 <br />
                 <br />
-                For a business to thrive and launch successfully in today's
+                For a business to thrive and launch successfully in today&apos;s
                 markets all the variables need to be accounted for. A basic
                 business plan is no longer viable in a complex ecosystem.
                 Currently, not considering several future opportunities makes
@@ -105,8 +105,8 @@ export default function ServicesPage() {
                 <br />
                 <br />
                 The process we follow makes it simpler to keep you on board with
-                what we're doing every step of the way. We do not provide you
-                with a bulk document to read all at once.
+                what we&apos;re doing every step of the way. We do not provide
+                you with a bulk document to read all at once.
                 <br />
                 <br />
                 Briefly, the main aspects of your business plan will be but are
@@ -160,11 +160,12 @@ export default function ServicesPage() {
                   <div className={styles.title}>Competitor analysis</div>
                   <div className={styles.desc}>
                     The nearest competitors offer great insight into the market
-                    in terms of what works and what doesn't. Our consultants
-                    will study the performance, positioning, and historical data
-                    of these competitors. This allows our experts to adopt their
-                    strong points, avoid their shortcomings, and find out what
-                    is the best positioning for your company.{" "}
+                    in terms of what works and what doesn&apos;t. Our
+                    consultants will study the performance, positioning, and
+                    historical data of these competitors. This allows our
+                    experts to adopt their strong points, avoid their
+                    shortcomings, and find out what is the best positioning for
+                    your company.{" "}
                   </div>
                 </div>
                 <div className={styles.item}>
@@ -179,7 +180,7 @@ export default function ServicesPage() {
                     determine your primary market. Based on this information
                     they will choose the best channels to reach this market.
                     They will then set an appropriate price and as accurately as
-                    possible, project the revenue you'll generate.
+                    possible, project the revenue you&apos;ll generate.
                   </div>
                 </div>
               </div>
@@ -317,9 +318,9 @@ export default function ServicesPage() {
                   <div className={styles.item}>
                     <div className={styles.title}>Prospective growth</div>
                     <div className={styles.desc}>
-                      Informs you about your company's opportunities and growth
-                      horizon, all while considering your outlook, risk taking
-                      preferences and skills.
+                      Informs you about your company&apos;s opportunities and
+                      growth horizon, all while considering your outlook, risk
+                      taking preferences and skills.
                     </div>
                   </div>
                 </div>

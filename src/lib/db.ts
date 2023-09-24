@@ -1,7 +1,8 @@
 import mysql from "serverless-mysql";
 import { configs } from "@/utils/config";
 import { queryCallback } from "mysql";
-export const db = mysql({
+
+const db = mysql({
   config: {
     host: configs.host,
     port: 3306,
@@ -17,7 +18,8 @@ export const db = mysql({
   },
   connUtilization: 0.7,
 });
-export async function executeQuery(
+
+async function executeQuery(
   query: queryCallback
 ): Promise<{ successQuery: boolean; data?: any }> {
   try {
@@ -29,7 +31,5 @@ export async function executeQuery(
     return { successQuery: false };
   }
 }
-export default {
-  db,
-  executeQuery,
-};
+
+export { db, executeQuery };

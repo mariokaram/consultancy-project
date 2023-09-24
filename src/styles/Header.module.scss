@@ -15,6 +15,17 @@
     }
   }
 
+  .avatar {
+    color: unset;
+    background-color: var(--backgroundBeige);
+  }
+  .avatarInitials {
+    color: var(--secondaryColor);
+    font-weight: bold;
+    font-size: 1rem;
+    background-color: var(--backgroundBeige);
+  }
+
   .btnInfo {
     display: flex;
     align-items: center;
@@ -59,7 +70,7 @@
   }
   .menuIcon {
     display: block !important;
-    padding-right: 2rem;
+    margin-right: 2rem;
   }
   .btnInfo {
     flex: 1;

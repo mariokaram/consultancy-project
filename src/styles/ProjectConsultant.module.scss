@@ -1,0 +1,76 @@
+.loading {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.upperBtn {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0 2rem;
+}
+
+.status {
+  display: flex;
+  gap: 0.7rem;
+  color: var(--primaryColor);
+  flex: 1;
+  align-items: center;
+}
+
+.header {
+  display: flex;
+  color: var(--secondaryColor);
+  text-transform: uppercase;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid lightgray;
+  font-weight: 600;
+}
+.steps {
+  flex: 2;
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+.statu {
+  flex: 1;
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+}
+.duration {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.action {
+  flex: 1;
+  text-align: right;
+}
+.services {
+  display: flex;
+  padding-top: 2rem;
+}
+.adminDash {
+  padding-bottom: 1rem;
+
+  .stepsAdmin {
+    display: flex;
+    align-items: center;
+    padding-bottom: 1rem;
+
+    .left {
+      flex: 1 0 75%;
+    }
+    .right {
+      flex: 1 0 15%;
+    }
+    .btnss {
+      flex: 1 0 10%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

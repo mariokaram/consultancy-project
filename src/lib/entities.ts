@@ -35,7 +35,7 @@ export class UserEntity {
   @Column({ type: "varchar", nullable: true })
   image!: string | null;
 
-  @Column({ type: "varchar", nullable: true })
+  @Column({ type: "varchar", nullable: true, default: "u" })
   role!: string | null;
 
   @OneToMany(() => SessionEntity, (session) => session.userId)

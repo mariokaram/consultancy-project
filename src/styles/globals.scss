@@ -49,7 +49,7 @@ a {
   }
 }
 
-.MuiTableContainer-root{
+.MuiTableContainer-root {
   box-shadow: var(--box-shadow);
 }
 .MuiTableCell-root {
@@ -141,6 +141,18 @@ a {
   --secondaryFontSize: 1.125rem;
   --backgroundBeige: #fdf7ee;
 }
+.badgeAvatar {
+  .MuiBadge-badge {
+    top: 3px;
+    right: 6px;
+  }
+}
+
+.MuiBadge-badge {
+  background-color: var(--secondaryColor);
+  top: 0;
+  right: 0;
+}
 
 //cards
 .card {
@@ -188,6 +200,33 @@ a {
   }
 }
 
+// colors for statuses
+.orange {
+  span {
+    background-color: var(--toastify-color-warning) !important;
+  }
+}
+.green {
+  span {
+    background-color: var(--toastify-color-success) !important;
+  }
+}
+.red {
+  span {
+    background-color: var(--toastify-color-error) !important;
+  }
+}
+.grey {
+  span {
+    background-color: var(--toastify-text-color-light) !important;
+  }
+}
+.blue {
+  span {
+    background-color: var(--toastify-color-info) !important;
+  }
+}
+
 .btn {
   padding: 7px 16px 9px;
   border-radius: 1000px;
@@ -216,10 +255,20 @@ a {
 .btn-white {
   background-color: white;
   color: var(--primaryColor);
+  box-shadow: var(--box-shadow);
+
+  &:hover {
+    background-color: var(--secondaryColor);
+    color: white;
+  }
+}
+.btn-blue {
+  background-color: var(--primaryColor);
+  color: white;
 
   &:hover {
     box-shadow: var(--box-shadow);
-    background-color: transparent;
+    background-color: var(--primaryColor);
   }
 }
 

@@ -9,6 +9,7 @@ export const configs = {
   cert: process.env.CA_CERT,
   EMAIL_SERVER: process.env.EMAIL_SERVER,
   EMAIL_FROM: process.env.EMAIL_FROM,
+  resend_api: process.env.resend_api,
   cloudinary_cloud_name: process.env.cloudinary_cloud_name,
   cloudinary_api_key: process.env.NEXT_PUBLIC_cloudinary_api_key,
   cloudinary_api_secret: process.env.cloudinary_api_secret,

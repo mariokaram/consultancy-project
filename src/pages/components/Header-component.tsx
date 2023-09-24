@@ -17,8 +17,15 @@ import Image from "next/image";
 import Logo from "~/public/icons/logo-primary.svg";
 import Link from "next/link";
 import styles from "@/styles/Header.module.scss";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import { Logout } from "@mui/icons-material";
+import Avatar from "@mui/material/Avatar";
+
+import Badge from "@mui/material/Badge";
 
 interface Props {
   children: React.ReactElement;
@@ -44,19 +51,40 @@ function ElevationScroll(props: Props) {
 }
 
 export default function Header(props: any) {
+  const { data: session, status } = useSession();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  async function signoutFn() {
+    const data = await signOut({ redirect: false, callbackUrl: "/signin" });
+    router.push(data.url);
+  }
 
   const { pathname } = useRouter();
+  const router = useRouter();
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h2" component="div">
         <Link href="/" passHref>
-          <Image alt="logo" className={styles.logo} src={Logo} />
+          <Image
+            priority={true}
+            alt="logo"
+            className={styles.logo}
+            src={Logo}
+          />
         </Link>
       </Typography>
       <Divider />
@@ -71,16 +99,19 @@ export default function Header(props: any) {
       </List>
       <Divider />
       <Box className={styles.drawerContent}>
-        <Button
-          onClick={() => signOut({ redirect: false })}
-          className={`links ${styles.marginB}`}
-        >
-          Get in touch
-        </Button>
+        <Button className={`links ${styles.marginB}`}>Get in touch</Button>
 
-        <Link href="/signin" passHref legacyBehavior>
-          <Button className="btn btn-secondary">Get started</Button>
-        </Link>
+        {status !== "authenticated" && status !== "loading" && (
+          <Link href="/signin" passHref legacyBehavior>
+            <Button className="btn btn-secondary">Get started</Button>
+          </Link>
+        )}
+        {status === "authenticated" && (
+          <Button onClick={signoutFn} className={`links ${styles.marginB}`}>
+            <Logout style={{ marginRight: ".2rem" }} fontSize="small" />
+            Logout
+          </Button>
+        )}
       </Box>
     </Box>
   );
@@ -106,7 +137,12 @@ export default function Header(props: any) {
                 component="div"
               >
                 <Link href="/" passHref>
-                  <Image alt="logo" className={styles.logo} src={Logo} />
+                  <Image
+                    priority={true}
+                    alt="logo"
+                    className={styles.logo}
+                    src={Logo}
+                  />
                 </Link>
               </Typography>
 
@@ -118,7 +154,10 @@ export default function Header(props: any) {
                   <Link
                     href={item.link}
                     className={`${
-                      pathname === item.link  || pathname === `${item.link}/[[...service]]`  ? styles.navLinkActive : ""
+                      pathname === item.link ||
+                      pathname === `${item.link}/[[...service]]`
+                        ? styles.navLinkActive
+                        : ""
                     } transitionLink`}
                     passHref
                     key={item.label}
@@ -132,16 +171,87 @@ export default function Header(props: any) {
 
               <Box className={styles.btnInfo}>
                 <Link className={styles.contact} href="/" passHref>
-                  <Button
-                    onClick={() => signOut({ redirect: false })}
-                    className={`links`}
-                  >
-                    Get in touch
-                  </Button>
+                  <Button className={`links`}>Get in touch</Button>
                 </Link>
-                <Link href="/signin" passHref>
-                  <Button className="btn btn-secondary">Get started</Button>
-                </Link>
+                {status === "authenticated" && (
+                  <div>
+                    <IconButton
+                      aria-label="account of current user"
+                      aria-controls="menu-appbar"
+                      aria-haspopup="true"
+                      size="small"
+                      onClick={handleMenu}
+                    >
+                      <div className="badgeAvatar">
+                        <Badge
+                          invisible
+                          anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                          }}
+                          variant="dot"
+                        >
+                          {/* <Avatar className={styles.avatar} /> */}
+                          <Avatar
+                            alt="initials"
+                            className={styles.avatarInitials}
+                          >
+                            {session.user.email && session.user.email[0]}
+                          </Avatar>
+                        </Badge>
+                      </div>
+                    </IconButton>
+                    <Menu
+                      id="menu-appbar"
+                      anchorEl={anchorEl}
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "center",
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "center",
+                      }}
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                    >
+                      <MenuItem
+                        onClick={() => {
+                          handleClose();
+
+                          router.push(
+                            `${
+                              session.user.role === "u"
+                                ? "/dashboard"
+                                : "/consultant/dashboard-consultant"
+                            }  `
+                          );
+                        }}
+                      >
+                        Dashboard
+                      </MenuItem>
+                      <MenuItem>
+                        <Badge invisible variant="dot">
+                          Chatroom
+                        </Badge>
+                      </MenuItem>
+                      <MenuItem onClick={signoutFn}>
+                        <Logout
+                          style={{ marginRight: ".2rem" }}
+                          fontSize="small"
+                        />
+                        Logout
+                      </MenuItem>
+                    </Menu>
+                  </div>
+                )}
+
+                {status !== "authenticated" && status !== "loading" && (
+                  <Link href="/signin" passHref legacyBehavior>
+                    <Button className="btn btn-secondary">Get started</Button>
+                  </Link>
+                )}
               </Box>
             </Toolbar>
           </AppBar>

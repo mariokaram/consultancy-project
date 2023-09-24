@@ -16,13 +16,12 @@ export default function LoginInPage({ csrfToken }: any) {
   }
 
   // TODO  spinner on login
+  // TODO  Remove all backrgound image and use IMAGE/next js
   // TODO  check email error and catch error
-  // TODO  ADD  variables to env files from here and [...authnext js]
   // TODO  FIX logout on header
+  // TODO  chaNGE callbackurl
   // TODO  google provider
-  // TODO  change foreign ids in tables
   // TODO  fix 500 and 404 error page
-  // TODO  deploy and test
   async function submit(e: HTMLFormElement) {
     try {
       e.preventDefault();
@@ -122,7 +121,7 @@ export default function LoginInPage({ csrfToken }: any) {
   );
 }
 
-import { getCsrfToken, getSession, signIn } from "next-auth/react";
+import { getCsrfToken, signIn } from "next-auth/react";
 import { GetServerSidePropsContext } from "next";
 import { optionsAuth } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";

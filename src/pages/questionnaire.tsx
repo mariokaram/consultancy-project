@@ -3,8 +3,8 @@ import axios from "axios";
 import { Form, Formik } from "formik";
 import { toast, ToastContainer } from "react-toastify";
 import styles from "@/styles/Questionnaire.module.scss";
-import { useRouter } from "next/router";
-import { map, isEmpty, groupBy, isEqual } from "lodash";
+import { Router, useRouter } from "next/router";
+import { map, isEmpty, groupBy, isEqual, filter } from "lodash";
 import Info from "~/public/icons/info.svg";
 import backArrow from "~/public/icons/backArrow.svg";
 import Image from "next/image";
@@ -18,6 +18,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { insertLogs } from "@/utils/shared";
+import OpenDialog from "@/pages/components/Modal";
 
 interface InputData {
   [key: string]: {
@@ -45,6 +46,8 @@ interface QuestionnaireProps {
   projectId: string | number;
   title: string;
   userId: string;
+  userRole: string;
+  USERID: string;
 }
 interface SelectorOption {
   value: string;
@@ -74,6 +77,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
   const [initialImage, setInitialImage] = useState<ImageInfo>();
   const [pageInputs, setPageInputs] = useState<InputData>({});
   const [stepperDataType, setStepperDataType] = useState<any>({});
+  const [emailValue, setEmail] = useState("");
   const [tableRows, setTableValues] = useState<TableType>({
     "1": {
       product: "",
@@ -135,6 +139,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
         params: {
           serviceType: props.serviceTypeQueryParam,
           projectId: projectId ? projectId : props.projectId,
+          USERID: props.USERID || "",
         },
       });
 
@@ -148,6 +153,9 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
           map(result, (parent) => {
             if (parent.quest_type === "imageType") {
               setInitialImage(parent.answers && JSON.parse(parent.answers));
+            }
+            if (parent.quest_type === "email") {
+              setEmail(parent.answers);
             }
 
             const parentAnswers = parent.answers || "";
@@ -184,7 +192,10 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
 
             setTableValues(tableValues);
 
-            if (parent.status && parent.status !== "Awaiting submission") {
+            if (
+              (parent.status && parent.status !== "notSubmitted") ||
+              props.userRole !== "u"
+            ) {
               setReadOnly(true);
             }
           });
@@ -230,9 +241,15 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
 
   const submitForm = async (
     step: number,
+    isFinalStep: boolean,
     arrayOfError?: string[]
   ): Promise<{ passed: boolean }> => {
     try {
+      // iza bi hal habb consultant y3mul submit
+      if (props.userRole === "c") {
+        return { passed: false };
+      }
+
       showSpinner(true);
 
       // if form is error
@@ -320,6 +337,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
           formData.append("folder", `projects/${props.userId}/resumee`);
           formData.append("use_filename", "true");
           formData.append("overwrite", "true");
+          formData.append("transformation", "fl_attachment");
           formData.append("api_key", `${configs.cloudinary_api_key}`);
 
           const response = await fetch(url, {
@@ -361,14 +379,28 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
             };
           }
         }
-        let params = {
-          pageInputs,
+
+        let finalData: any = {};
+        if (props.projectId !== "new") {
+          map(pageInputs, (v, i) => {
+            if (v.index === 0) {
+              finalData[i] = v;
+            }
+          });
+        } else {
+          finalData = pageInputs;
+        }
+
+        const params = {
+          pageInputs: finalData,
           serviceType: props.serviceTypeQueryParam,
           projectId: props.projectId,
           imageData: imageInfo,
+          step,
+          isFinalStep,
         };
 
-        let res = await axios.post("api/questionaire/postData", params);
+        const res = await axios.post("api/questionaire/postData", params);
         if (res.data.success) {
           showSpinner(false);
 
@@ -388,7 +420,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
         } else {
           showSpinner(false);
           if (imageInfo.comingFromCloudinary) {
-            let params = { id: imageInfo.public_id };
+            const params = { id: imageInfo.public_id };
             await axios.get("/api/cloudinary/cloudinaryDelete", { params });
 
             setPageInputs((state) => ({
@@ -404,28 +436,43 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
           return { passed: false };
         }
       } else {
-        let params = {
-          pageInputs,
+        const finalData: any = {};
+        map(pageInputs, (v, i) => {
+          if (v.index === step) {
+            finalData[i] = v;
+          }
+        });
+
+        const params = {
+          pageInputs: finalData,
           serviceType: props.serviceTypeQueryParam,
           projectId: props.projectId,
-          step: step === 1000 ? "final" : "",
+          step: step * 14343 + 14213,
+          isFinalStep,
           tableRows,
+          emailValue,
         };
 
-        let res = await axios.post("api/questionaire/postData", params);
+        const res = await axios.post("api/questionaire/postData", params);
         if (res.data.success) {
           toast.success("Saved successfully!");
           showSpinner(false);
           return { passed: true };
         } else {
           showSpinner(false);
-          toast.error("something went wrong!");
+          toast.error("Something went wrong!");
           return { passed: false };
         }
       }
     } catch (error: any) {
       showSpinner(false);
-      toast.error("Sorry, something went wrong!");
+      const ToastMessage =
+        error?.message &&
+        error.message === "Request failed with status code 429"
+          ? "Slow down. You are going too fast!"
+          : "Sorry, something went wrong!";
+
+      toast.error(ToastMessage);
       insertLogs("client", "submitForm", "questionnaire", error.message);
       return { passed: false };
     }
@@ -541,6 +588,18 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
                 imageValue={pageInputs[v.id].value}
                 onError={pageInputs[v.id].error}
               />
+              {(props.userRole === "a" || props.userRole === "c") && (
+                <div style={{ paddingTop: "1rem" }}>
+                  <a
+                    href={pageInputs[v.id].value.secure_url}
+                    download={pageInputs[v.id].value.original_filename}
+                  >
+                    <Button size="small" className="btn btn-secondary">
+                      Download CV
+                    </Button>
+                  </a>
+                </div>
+              )}
             </div>
           );
           break;
@@ -712,7 +771,13 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
                 className={`textInput ${
                   pageInputs[v.id].error ? "errorInput" : ""
                 }`}
-                type={v.quest_type === "number" ? "number" : "text"}
+                type={
+                  v.quest_type === "number"
+                    ? "number"
+                    : v.quest_type === "email"
+                    ? "email"
+                    : "text"
+                }
                 multiline={
                   v.quest_order_index !== 0 && v.quest_type !== "number"
                 }
@@ -721,15 +786,18 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
                 }
                 disabled={alreadySubmitted}
                 value={pageInputs[v.id]["value"]}
-                onChange={(e: any) =>
+                onChange={(e: any) => {
+                  if (v.quest_type === "email") {
+                    setEmail(e.target.value);
+                  }
                   setPageInputs((state) => ({
                     ...state,
                     [v.id]: {
                       ...pageInputs[v.id],
                       value: e.target.value,
                     },
-                  }))
-                }
+                  }));
+                }}
               />
 
               {v.quest_min_char &&
@@ -776,12 +844,17 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
                   initialValues={{
                     value: pageInputs,
                   }}
-                  onSubmit={async (step, arrayOfError?: string[]) => {
-                    return await submitForm(step, arrayOfError);
+                  onSubmit={async (
+                    step,
+                    isFinalStep: boolean,
+                    arrayOfError?: string[]
+                  ) => {
+                    return await submitForm(step, isFinalStep, arrayOfError);
                   }}
                   projectId={props.projectId}
                   alreadySubmitted={alreadySubmitted}
                   tableRows={tableRows}
+                  userRole={props.userRole}
                 >
                   {map(
                     stepperDataType,
@@ -859,24 +932,28 @@ export function FormikStepper({
 }: {
   children: React.ReactNode;
   initialValues: { value: InputData };
-
-  onSubmit: (
-    step: number,
-    arrayOfError?: string[]
-  ) => Promise<{ passed: boolean }>;
   projectId: string | number;
   alreadySubmitted: boolean;
   tableRows?: TableType;
+  userRole: string;
+  onSubmit: (
+    step: number,
+    isFinalStep: boolean,
+    arrayOfError?: string[]
+  ) => Promise<{ passed: boolean }>;
 }) {
   const childrenArray = React.Children.toArray(children);
   const [step, setStep] = useState(0);
   const currentChild = childrenArray[step];
   const [completed, setCompleted] = useState(false);
   const mediaQuery = useMediaQuery("(max-width:1000px)");
-
+  const router = useRouter();
   const isLastStep = () => {
     return step === childrenArray.length - 1;
   };
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [dialogResult, setDialogResult] = useState("");
 
   useEffect(() => {
     let check = false;
@@ -889,10 +966,31 @@ export function FormikStepper({
         setStep(v.index);
       }
     });
-    if (!check) {
+    if (!check && props.userRole === "u") {
       setStep(childrenArray.length - 1);
     }
+    if (props.userRole !== "u") {
+      setStep(0);
+    }
   }, []);
+
+  useEffect(() => {
+    const handleAsyncEffect = async () => {
+      if (dialogResult === "yes") {
+        const result = await props.onSubmit(step, true);
+        if (result.passed) {
+          router.push("/dashboard");
+        }
+      }
+    };
+
+    handleAsyncEffect();
+  }, [dialogResult]);
+
+  async function dialogResultFn(v: string) {
+    setDialogResult(v);
+    setIsDialogOpen(false);
+  }
 
   return (
     <Formik
@@ -959,16 +1057,13 @@ export function FormikStepper({
               if (props.alreadySubmitted) {
                 return console.log("ate3un 3a ghayrna");
               }
-              const result = await props.onSubmit(1000);
-              if (result.passed) {
-                alert("checkout");
-              }
+              setIsDialogOpen(true);
             } else {
               if (props.alreadySubmitted) {
                 setStep((s) => s + 1);
                 window.scrollTo({ top: 0, behavior: "smooth" });
               } else {
-                const result = await props.onSubmit(step);
+                const result = await props.onSubmit(step, false);
                 if (result.passed) {
                   setStep((s) => s + 1);
                   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -976,7 +1071,7 @@ export function FormikStepper({
               }
             }
           } else {
-            await props.onSubmit(step, arrayOfError);
+            await props.onSubmit(step, false, arrayOfError);
             toast.error(err);
           }
         } catch (error: any) {
@@ -986,6 +1081,13 @@ export function FormikStepper({
     >
       {({ isSubmitting }) => (
         <Form autoComplete="off">
+          <OpenDialog
+            text="Please note that submitted answers cannot be modified afterwards. Are you sure you want to proceed with the submission?"
+            title="Confirmation"
+            id="questionnaire"
+            openDialog={isDialogOpen}
+            onCloseDialog={(v) => dialogResultFn(v as string)}
+          />
           <Stepper
             alternativeLabel={mediaQuery ? false : true}
             activeStep={step}
@@ -1087,17 +1189,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   };
   const session = await getServerSession(context.req, context.res, optionsAuth);
 
-  // check if logged in and have access
-  if (session) {
-    if (session.user.role !== "u" && session.user.role !== "a") {
-      return {
-        redirect: {
-          destination: "/",
-          permanent: false,
-        },
-      };
-    }
-  } else {
+  // check if logged in
+  if (!session) {
     return {
       redirect: {
         destination: "/signin",
@@ -1141,12 +1234,20 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         if (!isEmpty(query.project) && query.project !== "new") {
           projectId = query.project;
 
+          const USERID = query?.userId || "";
+
+          // means that its called even by admin or consultant
+          let SQL;
+          if (USERID && session.user.role === "c") {
+            SQL = sql`select p.project_id from projects p where consultant_id = ${id} and p.customer_id = ${USERID} and  project_service = ${serviceTypeQueryParam} and project_id=${projectId}`;
+          } else {
+            SQL = sql`select p.project_id from projects p where customer_id = ${id} and project_service = ${serviceTypeQueryParam} and project_id=${projectId}`;
+          }
+
           const checkIfhasProjects: {
             successQuery: boolean;
             data: any;
-          } = (await executeQuery(sql`
-            select p.project_id from projects p where customer_id = ${id} and project_service = ${serviceTypeQueryParam} and project_id=${projectId}
-          `)) as {
+          } = (await executeQuery(SQL)) as {
             successQuery: boolean;
             data: any;
           };
@@ -1154,7 +1255,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
           //check if User has this project
           if (checkIfhasProjects.successQuery) {
             // if no go to dashboard
-            if (isEmpty(JSON.parse(checkIfhasProjects.data))) {
+            if (
+              isEmpty(JSON.parse(checkIfhasProjects.data)) &&
+              session.user.role !== "a"
+            ) {
               return {
                 redirect: {
                   destination: "/dashboard",
@@ -1170,6 +1274,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                   serviceTypeQueryParam,
                   title: query.service,
                   userId: id,
+                  userRole: session.user.role,
+                  USERID,
                 },
               };
             }
@@ -1201,6 +1307,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                 serviceTypeQueryParam,
                 title: query.service,
                 userId: id,
+                userRole: session.user.role,
               },
             };
           }

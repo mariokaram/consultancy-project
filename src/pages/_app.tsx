@@ -60,29 +60,10 @@ export default function App(props: MyAppProps) {
                 {/* <Analytics /> */}
               </main>
             </SWRConfig>
-            <Footer />
+            {/* <Footer /> */}
           </CacheProvider>
         </SpinnerContextProvider>
       </SessionProvider>
     </>
   );
 }
-
-// function Auth({ role, children }: { role: { role: string }; children: any }) {
-//   const { data: session, status } = useSession();
-//   const router = useRouter();
-
-//   React.useEffect(() => {
-//     if (status === "loading") return;
-//     if (status === "unauthenticated") router.push("/signin"); // If not authenticated, force log in
-//     if (status === "authenticated" && session?.user?.role !== role.role)
-//       // if authenticated but not authorized
-//       router.push("/");
-//   }, [session, status, router.pathname]);
-//   if (status === "authenticated" && session?.user?.role === role.role) {
-//     // if authenticated and authorized
-//     return children;
-//   }
-//   // TODO waiting until redirecting
-//   return <div style={{ height: "100%", zIndex: "999", background: "white" }}></div>; //should add loader or smthng todo
-// }

@@ -30,24 +30,51 @@ export default getHandler(true).get(async (req, res) => {
       serviceTypeQueryParam = "b";
     }
 
+    let USERID = req.query?.USERID;
+
     let answers: ResponseType;
 
-    if (req.query.projectId === "new") {
+    if (req.query.projectId === "new" && req.userRole === "u") {
       answers = await executeQuery(sql`
   select q.id  , q.quest_title  , q.quest_labels , q.quest_placeholder ,q.quest_type, q.options , q.quest_tooltip ,q.quest_min_char ,q.quest_order_index
   from questionnaire q 
   where q.quest_service_type = ${serviceTypeQueryParam} and q.version = ( select max(version) from questionnaire )
   order by quest_order_index , q.order
 `);
-    } else {
+    } else if (req.userRole === "c" && USERID) {
+      // if consultant
       answers = await executeQuery(sql`
-  select q.id , qu.id as answerID , q.quest_title , p.status,  qu.answers , q.quest_labels , q.options , q.quest_placeholder ,q.quest_type, q.quest_tooltip ,q.quest_min_char ,q.quest_order_index
+  select q.id , qu.id as answerID , q.quest_title , s.status_value as status , qu.answers , q.quest_labels , q.options , q.quest_placeholder ,q.quest_type, q.quest_tooltip ,q.quest_min_char ,q.quest_order_index
   from questionnaire q 
-  inner join quest_users qu on  qu.quest_id =  q.id and qu.user_id = ${req.userId} and qu.project_id = ${req.query.projectId} 
-  inner join projects p on p.project_id = ${req.query.projectId}
+  inner join quest_users qu on  qu.quest_id =  q.id and qu.user_id = ${USERID} and qu.project_id = ${req.query.projectId} 
+  inner join projects p on p.project_id = ${req.query.projectId} and p.consultant_id = ${req.userId}
+  inner join statuses s on s.id = p.status
   where q.quest_service_type = ${serviceTypeQueryParam} 
   order by quest_order_index , q.order
 `);
+
+      // if admin
+    } else if (req.userRole === "a" && USERID) {
+      answers = await executeQuery(sql`
+  select q.id , qu.id as answerID , q.quest_title , s.status_value as status , qu.answers , q.quest_labels , q.options , q.quest_placeholder ,q.quest_type, q.quest_tooltip ,q.quest_min_char ,q.quest_order_index
+  from questionnaire q 
+  inner join quest_users qu on  qu.quest_id =  q.id and qu.user_id = ${USERID} and qu.project_id = ${req.query.projectId} 
+  inner join projects p on p.project_id = ${req.query.projectId} 
+  inner join statuses s on s.id = p.status
+  where q.quest_service_type = ${serviceTypeQueryParam} 
+  order by quest_order_index , q.order
+`);
+      // if normal user
+    } else {
+      answers = await executeQuery(sql`
+      select q.id , qu.id as answerID , q.quest_title , s.status_value as status , qu.answers , q.quest_labels , q.options , q.quest_placeholder ,q.quest_type, q.quest_tooltip ,q.quest_min_char ,q.quest_order_index
+      from questionnaire q 
+      inner join quest_users qu on  qu.quest_id =  q.id and qu.user_id = ${req.userId} and qu.project_id = ${req.query.projectId} 
+      inner join projects p on p.project_id = ${req.query.projectId} and p.customer_id = ${req.userId}
+      inner join statuses s on s.id = p.status
+      where q.quest_service_type = ${serviceTypeQueryParam} 
+      order by quest_order_index , q.order
+    `);
     }
 
     if (answers.successQuery) {

@@ -28,6 +28,7 @@ interface Props {
   removeFunction: () => void;
   disableRemove?: boolean;
   onError: boolean;
+  fromConsultant?: boolean;
 }
 
 export default function ImageUpload(props: Props): JSX.Element {
@@ -105,7 +106,18 @@ export default function ImageUpload(props: Props): JSX.Element {
     html.push(
       <div key={image ? "image" : "local"} className={styles.existingPdf}>
         <Image style={{ marginRight: ".5rem" }} alt="pdf" src={pdf} />
-        {image ? image.original_filename : imageLocal?.name}
+
+        {image ? (
+          props.fromConsultant ? (
+            <a href={image?.secure_url} download={image?.original_filename}>
+              {image.original_filename}
+            </a>
+          ) : (
+            image.original_filename
+          )
+        ) : (
+          imageLocal?.name
+        )}
         {!props.disableRemove && (
           <Image
             style={{ marginLeft: ".8rem", cursor: "pointer" }}
@@ -170,7 +182,12 @@ export default function ImageUpload(props: Props): JSX.Element {
                 alt="attachment"
                 src={attach}
               />
-              Click here to <span>upload</span> your file
+              {props.fromConsultant && <span>upload</span>}
+              {!props.fromConsultant && (
+                <div>
+                  Click here to <span>upload</span> your file
+                </div>
+              )}
             </div>
           )}
         </div>
