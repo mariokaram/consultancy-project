@@ -71,7 +71,7 @@ export default function ServicesPage() {
             </div>
           </div>
 
-          {/* buisines plan Section  */}
+          {/* buisines plan Sectiond  */}
           <div className={styles.plansSection}>
             <div className={styles.img}>
               <Image
