@@ -7,18 +7,25 @@ import { db } from "@/lib/db";
 export default getHandler(true).put(async (req, res) => {
   try {
     const data = req.body;
+    const checkIdeaPicked = () => {
+      if (data.type === "i" && data.ideaPicked) {
+        return `ideaPicked = '${data.ideaPicked}' , `;
+      } else {
+        return "";
+      }
+    };
 
     await db
       .transaction()
       .query(() => {
         if (data.last) {
           return [
-            `update projects set status = 7 , info = 'completed' where project_id = ? and customer_id = ? and status = 6 and paid = 1 `,
+            `update projects set status = 7 , info = 'Completed' where project_id = ? and customer_id = ? and status = 6 and paid = 1 `,
             [data.projectId, req.userId],
           ];
         } else {
           return [
-            `update projects set status = (
+            `update projects set ${checkIdeaPicked()} status = (
                 CASE
                 WHEN (
                     SELECT serviceDuration
@@ -44,7 +51,10 @@ export default getHandler(true).put(async (req, res) => {
                 )
             END
 
-             )  where project_id = ? and customer_id = ? and status = 6 and paid = 1 `,
+             )
+            
+             
+             where project_id = ? and customer_id = ? and status = 6 and paid = 1 `,
             [data.projectId, req.userId],
           ];
         }

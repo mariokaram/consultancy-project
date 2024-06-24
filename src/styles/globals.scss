@@ -2,7 +2,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: "Montserrat", sans-serif !important;
+  // font-family: "Montserrat", sans-serif !important;
 }
 a {
   text-decoration: none;
@@ -94,46 +94,50 @@ a {
     width: 100%;
 
     .subTitle {
-      color: var(--primaryColor);
+      color: black;
       font-weight: 600;
-      line-height: normal;
       font-size: var(--primaryFontSize);
-      padding-bottom: 0.5rem;
+      padding-bottom: 1.2rem;
     }
     .title {
-      color: var(--secondaryColor);
-      font-weight: 600;
-      font-size: var(--secondaryFontSize);
+      font-weight: normal;
+      text-align: center;
+      color: var(--greyColor);
       text-transform: uppercase;
-      padding-bottom: 0.5rem;
+      margin-bottom: 1.2rem;
+      border: 1px solid var(--greyColor);
+      border-radius: 1rem;
+      padding: 0.3rem 1.7rem;
+      font-size: 0.875rem;
     }
     .description {
       color: var(--primaryColor);
-      padding-bottom: 0.5rem;
-      line-height: 1.4rem;
+      padding-bottom: 2rem;
+      line-height: 1.5rem;
+      max-width: 600px;
+      text-align: center;
     }
   }
 }
 .slick-prev:before,
 .slick-next:before {
-  color: var(--secondaryColor) !important;
-  font-size: 30px !important;
+  color: var(--primaryColor) !important;
+  font-size: 22px !important;
 }
-.slick-dots {
-  bottom: 0 !important;
-}
-.slick-dots li.slick-active button:before {
-  color: var(--secondaryColor) !important;
-}
+
 .slick-slider .slick-track,
 .slick-slider .slick-list {
   text-align: center;
 }
 
 :root {
-  --primaryColor: #4c4f51;
-  --secondaryColor: #e6ac56;
-  --greyColor: #f8f8f8;
+  --primaryColor: #5a627c;
+  --secondaryColor: #f1a31b;
+  --blueColor: #028b9c;
+  --blueNavy: #2f3a5e;
+  --lightblue: #f7f9ff;
+  --lightblueOpac: rgba(247, 249, 255, 0.7);
+  --greyColor: #7e7e7e;
   --marginLayout: 8rem;
   --primaryFontSize: 2.3rem;
   --brownColor: #69514e;
@@ -228,12 +232,8 @@ a {
 }
 
 .btn {
-  padding: 7px 16px 9px;
-  border-radius: 1000px;
   color: white;
-  text-transform: capitalize;
   white-space: nowrap;
-  font-weight: 600;
 }
 
 .btn-primary {
@@ -250,6 +250,14 @@ a {
   &:hover {
     box-shadow: var(--box-shadow);
     background-color: var(--secondaryColor);
+  }
+}
+.btn-third {
+  background-color: var(--blueColor);
+
+  &:hover {
+    box-shadow: var(--box-shadow);
+    background-color: var(--blueColor);
   }
 }
 .btn-white {
@@ -288,10 +296,6 @@ a {
 }
 
 @media (max-width: 600px) {
-  .slick-prev:before,
-  .slick-next:before {
-    display: none !important;
-  }
   .btn {
     padding: 8px 16px;
     font-size: 0.8rem !important;
@@ -299,6 +303,5 @@ a {
   .main {
     --marginLayout: 2rem !important;
     --primaryFontSize: 1.5rem;
-    --secondaryFontSize: 1rem;
   }
 }

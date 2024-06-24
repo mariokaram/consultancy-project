@@ -248,11 +248,6 @@ export default function DashboardConsultantPage(props: DashboardPropsType) {
                                 View Project
                               </Button>
                             </div>
-                            <div style={{ flex: 1 }}>
-                              <Button className="btn btn-white">
-                                chatroom
-                              </Button>
-                            </div>
                           </div>
                         </div>
                       </div>

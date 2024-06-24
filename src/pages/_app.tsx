@@ -12,12 +12,14 @@ import Header from "@/pages/components/Header-component";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Footer from "./components/Footer-component";
-
-import { SessionProvider, useSession } from "next-auth/react";
+import localFont from "next/font/local";
+import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
-import { useRouter } from "next/router";
 import SpinnerContextProvider from "@/contexts/SpinnerContextProvider";
 import "@/styles/globals.scss";
+
+// Material-UI imports
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 // ----- axios base URL START
 axios.defaults.baseURL = configs.webUrl || "";
@@ -27,15 +29,34 @@ function createEmotionCache() {
   return createCache({ key: "css", prepend: true });
 }
 const clientSideEmotionCache = createEmotionCache();
+
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
   session: Session;
 }
 
-// TODO  responsive all pages
-
 // ----- FONT_FAMILY FOR ALL WEB FROM GOOGLE FONT START
-const roboto = Montserrat({ subsets: ["latin"], weight: "400" });
+const Aeonik = localFont({
+  src: [
+    {
+      path: "../../public/fonts/Aeonik-Regular.otf",
+      weight: "400",
+    },
+    { path: "../../public/fonts/Aeonik-light.otf", weight: "300" },
+    { path: "../../public/fonts/Aeonik-bold.otf", weight: "600" },
+  ],
+  display: "swap",
+});
+
+// Create a custom theme with the Aeonik font for the button component
+const theme = createTheme({
+  typography: {
+    fontFamily: Aeonik.style.fontFamily,
+    button: {
+      fontFamily: Aeonik.style.fontFamily,
+    },
+  },
+});
 
 export default function App(props: MyAppProps) {
   const {
@@ -48,20 +69,22 @@ export default function App(props: MyAppProps) {
     <>
       <SessionProvider session={session}>
         <SpinnerContextProvider>
-          <CacheProvider value={emotionCache}>
-            <Header />
-            <SWRConfig
-              value={{
-                fetcher: (url) => axios(url).then((r) => r.data),
-              }}
-            >
-              <main className={`${roboto.className} main`}>
-                <Component {...pageProps} />
-                {/* <Analytics /> */}
-              </main>
-            </SWRConfig>
-            {/* <Footer /> */}
-          </CacheProvider>
+          <ThemeProvider theme={theme}>
+            <CacheProvider value={emotionCache}>
+              <Header />
+              <SWRConfig
+                value={{
+                  fetcher: (url) => axios(url).then((r) => r.data),
+                }}
+              >
+                <main className={`${Aeonik.className} main`}>
+                  <Component {...pageProps} />
+                  {/* <Analytics /> */}
+                </main>
+              </SWRConfig>
+              <Footer />
+            </CacheProvider>
+          </ThemeProvider>
         </SpinnerContextProvider>
       </SessionProvider>
     </>

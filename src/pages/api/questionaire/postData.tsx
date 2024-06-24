@@ -48,8 +48,8 @@ export default getHandler(true).post(async (req, res) => {
         case "i":
           returnedValue = [
             ["TBD1", 5, 1, projectId, req.userId],
-            ["TBD2", 5, 4, projectId, req.userId],
-            ["TBD3", 5, 5, projectId, req.userId],
+            ["TBD2", 5, 2, projectId, req.userId],
+            ["TBD3", 5, 3, projectId, req.userId],
           ];
           break;
       }

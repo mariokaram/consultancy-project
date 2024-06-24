@@ -633,7 +633,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
             <div style={{ textAlign: "left" }} key={v.id}>
               <FormControl disabled={alreadySubmitted}>
                 <RadioGroup
-                  aria-labelledby="demo-controlled-radio-buttons-group"
+                  aria-labelledby="muii-controlled-radio-buttons-group"
                   name="controlled-radio-buttons-group"
                   value={pageInputs[v.id]["value"]}
                   className={pageInputs[v.id].error ? "radioError" : ""}

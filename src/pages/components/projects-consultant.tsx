@@ -57,6 +57,9 @@ interface ProjectDetailsProps {
 }
 interface DashType {
   assignedConsultant: string;
+  idea1: string;
+  idea2: string;
+  idea3: string;
 }
 interface DialogModal {
   [key: string]: {
@@ -95,6 +98,9 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
 
   const [dashValue, setDash] = useState<DashType>({
     assignedConsultant: "",
+    idea1: "",
+    idea2: "",
+    idea3: "",
   });
   const [isDialogOpen, setIsDialogOpen] = useState<DialogModal>({
     readyToPay: {
@@ -141,6 +147,9 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
       setDash((state) => ({
         ...state,
         assignedConsultant: finalData.consultantId || "",
+        idea1: finalData.idea1 || "",
+        idea2: finalData.idea2 || "",
+        idea3: finalData.idea3 || "",
       }));
 
       if (services) {
@@ -374,6 +383,33 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
     }
   };
 
+  async function addIdeaGen() {
+    try {
+      showSpinner(true);
+      const params = {
+        projectId: props.projectId,
+        idea1: dashValue.idea1,
+        idea2: dashValue.idea2,
+        idea3: dashValue.idea3,
+      };
+      const res = await axios.put(
+        "/api/consultant/admin/addIdeaGeneration",
+        params
+      );
+      if (res.data.success) {
+        toast.success("Idea added succussfully!");
+      } else {
+        throw {
+          message: "Sorry, something went wrong!",
+        };
+      }
+    } catch (error: any) {
+      toast.error("Sorry, something went wrong!");
+    } finally {
+      showSpinner(false);
+    }
+  }
+
   return (
     <>
       {!isValidating && !error && !isEmpty(finalData) && !isEmpty(services) && (
@@ -443,32 +479,6 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
                   </div>
                 </div>
                 <div className={styles.stepsAdmin}>
-                  <label className={styles.left}>
-                    Questionnaire review is done and ready to pay
-                  </label>
-                  <div className={styles.right}></div>
-                  <div className={styles.btnss}>
-                    <Button
-                      onClick={() => openModal("readyToPay")}
-                      className={`links `}
-                    >
-                      Ready to pay
-                    </Button>
-                  </div>
-                </div>
-                <div className={styles.stepsAdmin}>
-                  <label className={styles.left}>Change to complex Plan</label>
-                  <div className={styles.right}></div>
-                  <div className={styles.btnss}>
-                    <Button
-                      onClick={() => openModal("changeOfPlan")}
-                      className={`links `}
-                    >
-                      Change
-                    </Button>
-                  </div>
-                </div>
-                <div className={styles.stepsAdmin}>
                   <label className={styles.left}>Assign this project to</label>
                   <Select
                     className={`${styles.right} textInput selectInput`}
@@ -498,10 +508,106 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
                     </Button>
                   </div>
                 </div>
+                <div className={styles.stepsAdmin}>
+                  <label className={styles.left}>
+                    Questionnaire review is done and ready to pay
+                  </label>
+                  <div className={styles.right}></div>
+                  <div className={styles.btnss}>
+                    <Button
+                      onClick={() => openModal("readyToPay")}
+                      className={`links `}
+                    >
+                      Ready to pay
+                    </Button>
+                  </div>
+                </div>
+                <div className={styles.stepsAdmin}>
+                  <label className={styles.left}>Change to complex Plan</label>
+                  <div className={styles.right}></div>
+                  <div className={styles.btnss}>
+                    <Button
+                      onClick={() => openModal("changeOfPlan")}
+                      className={`links `}
+                    >
+                      Change
+                    </Button>
+                  </div>
+                </div>
+
+                {finalData.projectType === "i" && (
+                  <>
+                    <div className={styles.stepsAdmin}>
+                      <label className={styles.left}>idea 1</label>
+                      <Input
+                        className={`textInput ${styles.right}`}
+                        type="text"
+                        value={dashValue.idea1}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          setDash((state) => ({
+                            ...state,
+                            idea1: e.target.value,
+                          }))
+                        }
+                      />
+                      <div className={styles.btnss}>
+                        <Button
+                          onClick={() => addIdeaGen()}
+                          className={`links `}
+                        >
+                          Add idea1
+                        </Button>
+                      </div>
+                    </div>
+                    <div className={styles.stepsAdmin}>
+                      <label className={styles.left}>idea 2</label>
+                      <Input
+                        className={`textInput ${styles.right}`}
+                        type="text"
+                        value={dashValue.idea2}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          setDash((state) => ({
+                            ...state,
+                            idea2: e.target.value,
+                          }))
+                        }
+                      />
+                      <div className={styles.btnss}>
+                        <Button
+                          onClick={() => addIdeaGen()}
+                          className={`links `}
+                        >
+                          Add idea2
+                        </Button>
+                      </div>
+                    </div>
+                    <div className={styles.stepsAdmin}>
+                      <label className={styles.left}>idea 3</label>
+                      <Input
+                        className={`textInput ${styles.right}`}
+                        type="text"
+                        value={dashValue.idea3}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          setDash((state) => ({
+                            ...state,
+                            idea3: e.target.value,
+                          }))
+                        }
+                      />
+                      <div className={styles.btnss}>
+                        <Button
+                          onClick={() => addIdeaGen()}
+                          className={`links `}
+                        >
+                          Add idea3
+                        </Button>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           )}
-
           <div>
             <Collapse in={open}>
               <Alert
@@ -550,9 +656,21 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
                 )}
                 <div className={styles.action}>Actions</div>
               </div>
-              {services?.map((v: servicesType) => (
+              {services?.map((v: servicesType, i: number) => (
                 <div key={v.serviceName} className={styles.services}>
-                  <div className={styles.steps}>{v.serviceName}</div>
+                  <div className={styles.steps}>
+                    {v.serviceName}{" "}
+                    {i === 0 &&
+                      finalData.projectType === "i" &&
+                      finalData.ideaPicked && (
+                        <>
+                          <span>-</span>
+                          <span style={{ color: "var(--secondaryColor)" }}>
+                            {finalData.ideaPicked}
+                          </span>
+                        </>
+                      )}
+                  </div>
                   <div className={styles.statu}>
                     <Badge className={v.status_color} variant="dot"></Badge>
                     <div>{v.status_label}</div>

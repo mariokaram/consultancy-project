@@ -17,6 +17,13 @@ const db = mysql({
     },
   },
   connUtilization: 0.7,
+  onConnectError: (error: any) => {
+    console.error("Connection Error while connecting:", error);
+  },
+  onError: (error: any) => {
+    console.error("Connection Error:", error);
+  },
+  onClose: () => console.log("on close connection"),
 });
 
 async function executeQuery(
@@ -24,11 +31,14 @@ async function executeQuery(
 ): Promise<{ successQuery: boolean; data?: any }> {
   try {
     const results = await db.query(query);
-    await db.end();
+    console.log("connection and query succeeded");
     return { successQuery: true, data: JSON.stringify(results) };
   } catch (error) {
-    console.log(error);
+    console.error("query error:", error);
     return { successQuery: false };
+  } finally {
+    console.error("db connection ended:");
+    await db.end();
   }
 }
 

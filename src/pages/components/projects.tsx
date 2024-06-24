@@ -38,7 +38,7 @@ import {
   IMAGEValueType,
   servicesType,
 } from "../api/dashboard/getProjectDetails";
-import OpenDialog from "./Modal";
+import OpenDialog, { radioIdeaGen } from "./Modal";
 import { SpinnerContext } from "@/contexts/SpinnerContextProvider";
 import axios from "axios";
 
@@ -61,6 +61,7 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogResult, setDialogResult] = useState("");
   const [serviceId, setServiceId] = useState<number | null>();
+  const [ideaPicked, setIdeaPicked] = useState<string>("");
   const services: servicesType[] = data?.result?.services;
   const finalData: finalDataType = data?.result?.finalData;
 
@@ -77,6 +78,8 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
             serviceId,
             projectId: props.projectId,
             last: services[servicesFinalIndex].serviceId === serviceId,
+            ideaPicked,
+            type: finalData.projectType,
           };
           const response = await axios.put(
             "/api/dashboard/confirmFile",
@@ -99,6 +102,7 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
         } finally {
           setDialogResult("no");
           setServiceId(null);
+          setIdeaPicked("");
         }
       }
     };
@@ -110,8 +114,16 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
     setIsDialogOpen(true);
     setServiceId(v);
   }
-  async function dialogResultFn(v: string) {
-    setDialogResult(v);
+  async function dialogResultFn(v: string | radioIdeaGen) {
+    if (typeof v !== "string") {
+      if (v.result.type === "ideaGen") {
+        setDialogResult(v.result.answer);
+        setIdeaPicked(v.result.radioPicked || "");
+      }
+    } else {
+      setDialogResult(v);
+    }
+
     setIsDialogOpen(false);
   }
   return (
@@ -214,9 +226,21 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
                 </div>
                 <div className={styles.action}>Actions</div>
               </div>
-              {services?.map((v: servicesType) => (
+              {services?.map((v: servicesType, i: number) => (
                 <div key={v.serviceName} className={styles.services}>
-                  <div className={styles.steps}>{v.serviceName}</div>
+                  <div className={styles.steps}>
+                    {v.serviceName}
+                    {i === 0 &&
+                      finalData.projectType === "i" &&
+                      finalData.ideaPicked && (
+                        <>
+                          <span>-</span>
+                          <span style={{ color: "var(--secondaryColor)" }}>
+                            {finalData.ideaPicked}
+                          </span>
+                        </>
+                      )}
+                  </div>
                   <div className={styles.statu}>
                     <Badge className={v.status_color} variant="dot"></Badge>
                     <div>{v.status_label}</div>
@@ -255,15 +279,27 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
                   </div>
                 </div>
               ))}
-              <OpenDialog
-                title="Confirmation"
-                id="confirm"
-                text="Are you sure you want to confirm , you cannot modify it later on if you submit , if you feel not sure you can go to chatroom and discuss it with your consultant"
-                openDialog={isDialogOpen}
-                onCloseDialog={(v) => dialogResultFn(v as string)}
-              />
             </>
           </div>
+          {!finalData.ideaPicked && finalData.projectType === "i" ? (
+            <OpenDialog
+              title="Choose Idea"
+              id="idea"
+              type="ideaGen"
+              data={finalData}
+              text="After you carefully reading the idea generation documnet u have to pick one from these ideas , if you feel not sure can go to chatroom and discuss it with yoyur cobnsultanbt"
+              openDialog={isDialogOpen}
+              onCloseDialog={(v) => dialogResultFn(v as radioIdeaGen)}
+            />
+          ) : (
+            <OpenDialog
+              title="Confirmation"
+              id="confirm"
+              text="Are you sure you want to confirm , you cannot modify it later on if you submit , if you feel not sure you can go to chatroom and discuss it with your consultant"
+              openDialog={isDialogOpen}
+              onCloseDialog={(v) => dialogResultFn(v as string)}
+            />
+          )}
         </div>
       )}
 

@@ -1,6 +1,5 @@
 import { getHandler, messageSuccess, messageError } from "@/utils/handlers";
-import { executeQuery } from "@/lib/db";
-import { insertLogs, sendEmail } from "@/utils/shared";
+import { insertLogs } from "@/utils/shared";
 const sql = require("sql-template-strings");
 import { db } from "@/lib/db";
 

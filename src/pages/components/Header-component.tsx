@@ -38,6 +38,7 @@ const navItems = [
   { label: "Consultants", link: "" },
   { label: "Insights", link: "" },
 ];
+
 function ElevationScroll(props: Props) {
   const { children } = props;
   const trigger = useScrollTrigger({
@@ -45,7 +46,10 @@ function ElevationScroll(props: Props) {
     threshold: 0,
   });
 
+  const boxShadow = trigger ? '0 2px 4px rgba(0, 0, 0, 0.1)' : 'none';
+
   return React.cloneElement(children, {
+    sx: { boxShadow },
     elevation: trigger ? 4 : 0,
   });
 }
@@ -80,7 +84,7 @@ export default function Header(props: any) {
       <Typography variant="h2" component="div">
         <Link href="/" passHref>
           <Image
-            priority={true}
+            // priority={true}
             alt="logo"
             className={styles.logo}
             src={Logo}
@@ -103,7 +107,7 @@ export default function Header(props: any) {
 
         {status !== "authenticated" && status !== "loading" && (
           <Link href="/signin" passHref legacyBehavior>
-            <Button className="btn btn-secondary">Get started</Button>
+            <Button className="btn btn-third">Get started</Button>
           </Link>
         )}
         {status === "authenticated" && (
@@ -138,7 +142,7 @@ export default function Header(props: any) {
               >
                 <Link href="/" passHref>
                   <Image
-                    priority={true}
+                    // priority={true}
                     alt="logo"
                     className={styles.logo}
                     src={Logo}
@@ -249,7 +253,7 @@ export default function Header(props: any) {
 
                 {status !== "authenticated" && status !== "loading" && (
                   <Link href="/signin" passHref legacyBehavior>
-                    <Button className="btn btn-secondary">Get started</Button>
+                    <Button size='large' className="btn btn-third">Get started</Button>
                   </Link>
                 )}
               </Box>

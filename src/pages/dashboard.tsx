@@ -111,6 +111,7 @@ export default function DashboardPage() {
                   <Button
                     fullWidth
                     className={`links ${styles.infoNotSelected}`}
+                    onClick={() => router.push("/chatroom")}
                   >
                     Chatroom
                   </Button>
@@ -136,6 +137,7 @@ export default function DashboardPage() {
                   </div>
 
                   {!isEmpty(dataResult) &&
+                    !error &&
                     map(dataResult, (v: ProjectListType) => (
                       <div key={v.project_id} className={styles.projects}>
                         <div className="card">
@@ -161,7 +163,9 @@ export default function DashboardPage() {
                                 sx={{ mb: 2 }}
                               >
                                 <AlertTitle>Info</AlertTitle>
-                                {isNaN(v.info as number) ? v.info : `Estimatinh time is around ${v.info} business days`}
+                                {isNaN(v.info as number)
+                                  ? v.info
+                                  : `Estimatinh time is around ${v.info} business days`}
                               </Alert>
                             </Collapse>
                           </div>
@@ -253,11 +257,7 @@ export default function DashboardPage() {
                                 View Project
                               </Button>
                             </div>
-                            <div style={{ flex: 2 }}>
-                              <Button className="btn btn-white">
-                                chatroom
-                              </Button>
-                            </div>
+
                             {!v.paid && v.status_value === "notPaid" && (
                               <div>
                                 <Button

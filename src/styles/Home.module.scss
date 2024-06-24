@@ -1,28 +1,37 @@
 .backgroundImg {
-  .image {
-    display: flex;
-    max-height: 750px;
-    position: relative;
+  position: relative;
+  width: 100%;
+  height: 835px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    img {
-      height: auto;
-      width: 100%;
-      object-fit: cover;
-      object-position: top;
-      border-bottom-right-radius: 100px;
-      border-top-left-radius: 100px;
-    }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 0 -80px;
   }
-  .info {
-    position: absolute;
-    top: 34%;
-    left: 11%;
 
-    .description {
-      max-width: 560px;
-      font-weight: 500 !important;
-      font-size: 1.2rem;
-      color: var(--primaryColor);
+  .textOverlay {
+    position: absolute;
+    left: 20%;
+    top: 20%;
+    color: white;
+    z-index: 1;
+    max-width: 600px;
+
+    .subtitle {
+      text-transform: uppercase;
+      letter-spacing: 1.35px;
+    }
+    .title {
+      padding: 0.5rem 0;
+      font-size: 3rem;
+      font-weight: bold;
+    }
+    .desc {
+      padding-bottom: 1rem;
     }
   }
 }
@@ -30,34 +39,52 @@
 .mainContainer {
   margin: var(--marginLayout);
   margin-bottom: 0;
+  // this 56 elminate the gap for the hero image
+  margin-top: -56px;
 
   // about us
   .aboutUsContainer {
+    margin-top: 4rem;
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    .consultDesc {
-      max-width: 700px;
-    }
-    .aboutInfo,
-    .aboutImg {
-      flex: 1 1 408px;
-    }
-    .aboutPoints {
-      display: flex;
+    flex-direction: column;
+    color: var(--primaryColor);
 
-      .aboutMini {
-        flex: 1;
+    .aboutDescription {
+      display: flex;
+      gap: 1rem;
+      padding-top: 1rem;
+      .aboutText {
         display: flex;
         flex-direction: column;
-        div {
+        align-items: center;
+        gap: 2rem;
+        flex: 1;
+        > div:first-child {
+          text-align: center;
+          line-height: 1.5;
+        }
+      }
+      .imageLeft {
+        display: flex;
+        flex: 1;
+        justify-content: flex-end;
+      }
+      .imageRight {
+        display: flex;
+        flex: 1;
+        align-items: flex-end;
+      }
+      .ticks {
+        display: flex;
+        gap: 3rem;
+        span {
+          font-weight: bold;
+        }
+        *div {
+          padding: 0.2rem 0;
           display: flex;
           align-items: center;
-          gap: 0.5rem;
-          padding-bottom: 0.5rem;
-          font-weight: 600;
-          color: var(--primaryColor);
         }
       }
     }
@@ -65,146 +92,174 @@
 
   // our services
   .servicesContainer {
-    padding: var(--marginLayout) 0;
-    .serviceInfo {
-      text-align: center;
+    margin: 0 calc(0rem - var(--marginLayout));
+    margin-top: 4rem;
+    padding: 4rem var(--marginLayout) 0;
+    background-color: var(--lightblueOpac);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    a {
+      display: inline-block;
+      &:focus-visible {
+        .icon {
+          background-color: lightgray;
+        }
+      }
+      :hover {
+        .icon {
+          color: var(--primaryColor);
+        }
+      }
     }
-    .servDesc {
+    .link {
+      display: flex;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+      font-size: var(--secondaryFontSize);
+      padding-bottom: 1rem;
+      .icon {
+        margin-left: 0.5rem;
+      }
+    }
+
+    .services {
       display: flex;
       justify-content: center;
-      div {
-        max-width: 700px;
+      .businessPlan,
+      .ideaGen {
+        display: flex;
+        flex-direction: column;
+        .rectangular {
+          padding: 3rem 2.5rem;
+          width: 556px;
+          height: 268px;
+          line-height: 1.33;
+          color: white;
+        }
+
+        .lightBlue {
+          background-color: var(--blueColor);
+        }
+        .blue {
+          background-color: var(--blueNavy);
+          margin: -0.2rem 0;
+        }
       }
     }
-    .cardsContainer {
-      position: relative;
-      &::after {
-        content: "";
-        position: absolute;
-        background-color: var(--greyColor);
-        height: 1500px;
-        inset: 0;
-        z-index: -1;
-        top: 49%;
-        margin: 0 calc(0rem - var(--marginLayout));
-      }
+    .btnService {
       display: flex;
-      gap: 2rem;
       justify-content: center;
-      flex-wrap: wrap;
-      div {
-        max-width: 450px;
-        .cardTitle {
-          color: var(--primaryColor);
-          font-weight: 600;
-          position: relative;
-          padding-bottom: 0.5rem;
-          &::after {
-            content: "";
-            border-bottom: 2px solid var(--secondaryColor);
-            bottom: 0;
-            left: 0;
-            width: 55px;
-            position: absolute;
-          }
-        }
-        .cardText {
-          color: var(--primaryColor);
-          padding-top: 0.5rem;
-          line-height: 1.4rem;
-        }
-        .cardBtn {
-          button {
-            color: var(--secondaryColor) !important;
-            text-transform: capitalize !important;
-            padding-left: 0 !important;
-          }
-        }
-        .cardArrow {
-          padding-left: 0.3rem;
-        }
-      }
+      padding: 4rem 0;
     }
   }
 
   // why us
   .whyUsContainer {
-    padding-bottom: var(--marginLayout);
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--primaryColor);
 
-    .whyDesc {
+    .upperFeatures,
+    .bottomFeatures {
       display: flex;
       justify-content: center;
-      div {
-        max-width: 700px;
+      align-items: center;
+      padding-top: 2rem;
+
+      .whyUsSection {
+        max-width: 350px;
+        height: 265px;
+        text-align: center;
+        border-right: 1px solid;
+        border-color: rgba(71, 84, 126, 0.29);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .icon {
+          position: relative;
+        }
+
+        .icon::before {
+          content: "";
+          position: absolute;
+          left: 15%;
+          top: 50%;
+          width: 50px;
+          height: 50px;
+          background-color: rgba(2, 139, 156, 0.05);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          z-index: -1; /* to place it behind the icon */
+        }
+        .desc {
+          padding: 1rem;
+          line-height: 1.3;
+        }
+        .title {
+          font-weight: bold;
+          color: black;
+          font-size: 1.125rem;
+          padding-top: 1rem;
+        }
+      }
+      .noBorder {
+        border: 0 !important;
       }
     }
-    .whyUsInfo {
-      text-align: center;
-    }
-    .coloredCardsContainer {
-      display: flex;
-      gap: 2rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      .colored {
-        background-image: url("../../public/imgs/about.png");
-        background-position: 50%;
-        background-size: cover;
-        color: white;
-        font-weight: 600;
-        min-height: 250px;
-        max-width: 400px;
-        .cardTitle {
-          font-size: 1.2rem;
-          position: relative;
-          padding-bottom: 0.5rem;
-          &::after {
-            content: "";
-            border-bottom: 2px solid var(--secondaryColor);
-            bottom: 0;
-            left: 0;
-            width: 55px;
-            position: absolute;
-          }
-        }
-        .cardDesc {
-          padding-top: 0.5rem;
-          font-size: 1rem !important;
-          line-height: 1.4rem;
-        }
+    .bottomFeatures {
+      padding-top: 0rem !important;
+      border-top: 1px solid;
+      border-color: rgba(71, 84, 126, 0.29);
+      .whyUsSection {
+        padding-top: 3rem;
       }
     }
   }
 
   // how it works
   .howItWorksContainer {
-    background-color: var(--primaryColor);
+    background-color: var(--blueNavy);
     margin: 0 calc(0rem - var(--marginLayout));
-    border-top-right-radius: 100px;
-    border-bottom-left-radius: 100px;
+    margin-top: 4rem;
     padding: 4rem var(--marginLayout);
+    text-align: center;
+    position: relative;
 
     .title {
       font-size: var(--primaryFontSize);
       color: white;
-      font-weight: 600;
+      font-weight: bold;
     }
     .desc {
       color: white;
-      padding-bottom: 1rem;
-      padding-top: 0.5rem;
-      max-width: 600px;
-      line-height: 1.4rem;
+      padding-bottom: 2rem;
+      padding-top: 1.2rem;
     }
     .btnSec {
       padding-bottom: 1rem;
       display: flex;
+      justify-content: center;
       align-items: center;
       gap: 0.5rem;
+
+      .howitWorkBtn {
+        color: white;
+        border-radius: 1rem;
+        text-transform: capitalize;
+        padding: 5px 16px;
+        background-color: #6170a1;
+      }
       .unActive {
-        button {
+        .howitWorkBtn {
+          color: #7383b7;
           background: transparent !important;
-          border: 1px solid white !important;
+          border: 0 !important;
           transition: all 0.35s ease-in;
         }
       }
@@ -237,78 +292,180 @@
         }
       }
     }
+
+    .videoWrapper {
+      position: absolute;
+      transform: translate(-50%, 0);
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      max-width: 900px;
+      max-height: 480px;
+      bottom: -240px;
+      padding: 0 4rem;
+
+      .videoContainer {
+        position: relative;
+        padding-bottom: 56.25%;
+
+        iframe {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+        }
+      }
+    }
+
+    .timelineContainer {
+      width: 85%;
+      position: relative;
+      margin: 0 auto;
+      padding: 3rem 0 20rem;
+
+      .timeline {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        overflow-x: auto;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        top: 70%;
+        left: 0;
+        min-width: 900px;
+        right: 0;
+        height: 2px;
+        background-color: #47547e;
+      }
+
+      .timelineStep {
+        text-align: center;
+        color: white;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 150px;
+        min-height: 160px;
+      }
+
+      .icon {
+        margin-bottom: 10px;
+      }
+
+      .stepNumber {
+        margin-bottom: 40px;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+      }
+
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: solid 1px #47547e;
+        background-color: #91a5e4;
+        position: absolute;
+        top: 70%;
+        transform: translateY(-50%);
+        left: calc(50% - 6px);
+      }
+
+      .label {
+        margin-top: 10px;
+      }
+    }
   }
 
   // testompnials
   .testimonialSection {
-    padding: var(--marginLayout) 0;
+    margin-top: calc(240px + 4rem);
     .testimonialInfo {
       text-align: center;
-      padding-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
     }
 
     .profileSection {
+      max-width: 1000px;
+      margin: 0 auto;
       .profile {
         position: relative;
-        max-width: 550px;
+        max-width: 300px;
         margin: 4rem 0;
-        flex-direction: column;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        background-color: var(--lightblueOpac);
+        text-align: center;
+        color: var(--primaryColor);
+        border-radius: 18px;
         &::after {
           content: "";
-
           background-position: 50%;
           background-size: cover;
           position: absolute;
           border-radius: 50%;
           max-height: 100px;
-          width: 100px;
-          height: 100px;
+          width: 80px;
+          height: 80px;
           box-shadow: var(--box-shadow);
           max-width: 100px;
           inset: 0;
-          margin: -50px auto;
+          margin: -40px auto;
         }
-        background-color: var(--greyColor);
-        text-align: center;
-        color: var(--primaryColor);
 
         .info {
           display: flex;
           flex-direction: column;
-          height: 260px;
+          min-height: 300px;
           .text {
-            font-style: italic;
-            padding: 3rem 0.5rem 1rem;
-            flex: 1;
-            line-height: 1.4rem;
+            line-height: 1.3;
+            padding-top: 1.5rem;
           }
           .name {
             font-weight: bold;
+            color: var(--blueColor);
+            margin-top: 1.5rem;
           }
           .job {
             font-size: 0.8rem;
-            font-weight: bold;
+            font-weight: 600;
+            padding-top: 0.5rem;
+            img {
+              cursor: pointer;
+            }
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
           }
         }
       }
       .profile1 {
         &::after {
-          background-image: url("../../public/imgs/about.png");
+          background-image: url("~/public/imgs/about.png");
         }
       }
       .profile2 {
         &::after {
-          background-image: url("../../public/imgs/landing-background.jpg");
+          background-image: url("~/public/imgs/landing-background.jpg");
         }
       }
       .profile3 {
         &::after {
-          background-image: url("../../public/imgs/about.png");
+          background-image: url("~/public/imgs/about.png");
         }
       }
       .profile4 {
         &::after {
-          background-image: url("../../public/imgs/about.png");
+          background-image: url("~/public/imgs/about.png");
         }
       }
     }
@@ -317,89 +474,124 @@
 
 @media (max-width: 1400px) {
   .backgroundImg {
-    .info {
-      top: 34% !important;
-      left: 2% !important;
-      .description {
-        max-width: 450px !important;
+    img {
+      object-position: -400px -80px !important;
+    }
+  }
+  .aboutUsContainer {
+    .imageLeft,
+    .imageRight {
+      display: none !important;
+    }
+    .aboutText {
+      max-width: 500px;
+    }
+    .imgRespSect {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .servicesContainer {
+    .services {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+
+  .whyUsContainer {
+    .upperFeatures,
+    .bottomFeatures {
+      border: 0 !important;
+      flex-direction: column;
+      .whyUsSection {
+        padding-top: 0 !important;
+        border: 0 !important;
       }
+    }
+  }
+  .testimonialSection {
+    .profileSection {
+      max-width: 500px !important;
     }
   }
 }
 
 @media (max-width: 1000px) {
-  .profileSection {
-    .profile {
-      max-width: 270px !important;
-      padding: 2rem 1rem !important;
-      .info {
-        height: 380px !important;
+  .backgroundImg {
+    img {
+      object-position: -800px -80px !important;
+    }
+    .textOverlay {
+      left: 50%;
+      top: 40%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  .aboutUsContainer {
+    margin-top: 2rem !important;
+    .imgRespSect {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      justify-content: center;
+      .imgResp2 {
+        display: none;
       }
-    }
-  }
-  .phases {
-    div {
-      &::after {
-        font-size: 0.8rem !important;
-      }
-    }
-  }
-  .btnSec {
-    justify-content: center;
-  }
-  .cardTitle::after {
-    inset: 0 !important;
-    margin: auto !important;
-  }
-
-  .cardsContainer::after {
-    height: 2680px !important;
-  }
-  .consultDesc {
-    max-width: 100% !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-  .descriptionNoWidth {
-    max-width: 100% !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: var(--marginLayout);
-    div {
-      color: var(--primaryColor) !important;
-    }
-  }
-  .aboutPoints {
-    justify-content: space-around;
-    .aboutMini {
-      text-align: left;
-      flex: unset !important;
     }
   }
 }
+@media (max-width: 800px) {
+  .testimonialSection {
+    margin-top: 10rem !important;
+  }
+}
+
 @media (max-width: 600px) {
   .backgroundImg {
-    .image {
-      img {
-        border-bottom-right-radius: 0 !important;
-        border-top-left-radius: 0 !important;
-      }
-    }
-  }
-  .phases {
-    div {
-      &::after {
-        inset: 50px 0 !important;
-      }
-    }
-  }
-  .aboutImg {
     img {
-      max-width: 200px;
-      height: auto;
+      object-position: -1150px -80px !important;
     }
+    .textOverlay {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      .title {
+        font-size: 2rem;
+      }
+    }
+  }
+  .aboutUsContainer {
+    .ticks {
+      flex-direction: column;
+      gap: 0rem !important;
+      *div {
+        padding: 0.5rem 0 !important ;
+      }
+    }
+  }
+
+  .servicesContainer {
+    .rectangular {
+      height: 100% !important;
+      width: 260px !important;
+
+      padding: 3rem 1rem !important;
+    }
+    img {
+      height: 100% !important;
+      width: 260px !important;
+      object-fit: cover !important;
+    }
+  }
+  .howItWorksContainer {
+    .videoWrapper {
+      padding: 0 1rem !important;
+      bottom: -200px !important;
+    }
+  }
+  .testimonialSection {
+    margin-top: 4rem !important;
   }
 }

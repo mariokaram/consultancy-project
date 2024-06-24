@@ -15,10 +15,15 @@ export interface ProjectListDetailsType {
   serviceName: string;
   serviceId: number;
   serviceValue: string;
+  projectType: string;
   confirmed: number;
   status_color: string;
   status_label: string;
   status_value: string;
+  idea1: string;
+  idea2: string;
+  idea3: string;
+  ideaPicked: string;
 }
 
 export interface IMAGEValueType {
@@ -41,7 +46,12 @@ export interface finalDataType {
   date_creation: Date | null;
   info: string | number;
   consultantName: string;
+  projectType: string;
   companyName: string;
+  idea1: string;
+  idea2: string;
+  idea3: string;
+  ideaPicked: string;
   projectLabelStatus: string;
   projectColorStatus: string;
 }
@@ -57,7 +67,7 @@ export default getHandler(true).get(async (req, res) => {
 
     const projectId = req.query?.project;
     answers = await executeQuery(sql` 
-    select s.id as serviceId , s.confirmed , s.serviceName , st.status_color , st.status_label , st.status_value , s.serviceValue , p.info,  p.project_id, u.name as consultantName , p.date_creation ,
+    select s.id as serviceId , p.project_service as projectType, p.idea1 , p.idea2 , p.idea3 , p.ideaPicked  ,s.confirmed , s.serviceName , st.status_color , st.status_label , st.status_value , s.serviceValue , p.info,  p.project_id, u.name as consultantName , p.date_creation ,
     ( select sta.status_label from statuses sta where sta.id = p.status ) as projectLabelStatus ,
     ( select sta.status_color from statuses sta where sta.id = p.status ) as projectColorStatus , 
     ( select answers from quest_users q where q.quest_type= 'projectName' and q.project_id = ${projectId}   ) as companyName  
@@ -89,9 +99,14 @@ export default getHandler(true).get(async (req, res) => {
             (finalData.consultantName = v.consultantName),
             (finalData.date_creation = v.date_creation),
             (finalData.info = v.info),
+            (finalData.projectType = v.projectType),
             (finalData.projectColorStatus = v.projectColorStatus),
             (finalData.projectLabelStatus = v.projectLabelStatus),
             (finalData.project_id = v.project_id);
+            (finalData.idea1 = v.idea1),
+            (finalData.idea2 = v.idea2),
+            (finalData.idea3 = v.idea3),
+            (finalData.ideaPicked = v.ideaPicked);
         });
       }
 

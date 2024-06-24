@@ -8,7 +8,14 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-import { Checkbox, Input } from "@mui/material";
+import {
+  Checkbox,
+  FormControl,
+  Input,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+} from "@mui/material";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -28,9 +35,10 @@ export interface DialogType {
   title: string;
   text?: string;
   type?: string;
+  data?: any;
   id: string;
   openDialog: boolean;
-  onCloseDialog: (v: string | InfoEmailAlertValueType) => void;
+  onCloseDialog: (v: string | InfoEmailAlertValueType | radioIdeaGen) => void;
 }
 interface InfoEmailAlertType {
   value: string;
@@ -40,10 +48,19 @@ interface InfoEmailAlertType {
 export interface InfoEmailAlertValueType {
   modalName: string;
   result: {
-    emailValue: string;
-    alertValue: string;
+    emailValue?: string;
+    alertValue?: string;
     answer: string;
     type: string;
+    radioPicked?: string;
+  };
+}
+export interface radioIdeaGen {
+  modalName: string;
+  result: {
+    answer: string;
+    type: string;
+    radioPicked?: string;
   };
 }
 type AllowedInputAlertKeys = "emailInfo" | "alertInfo";
@@ -51,6 +68,8 @@ type AllowedInputAlertKeys = "emailInfo" | "alertInfo";
 type inputEmailAlertType = {
   [key in AllowedInputAlertKeys]: InfoEmailAlertType;
 };
+
+type RadioIdeaType = string;
 
 function BootstrapDialogTitle(props: DialogTitleProps) {
   const { children, onClose, ...other } = props;
@@ -94,6 +113,8 @@ export default function OpenDialog(props: DialogType) {
     },
   };
 
+  const [radioIdea, setRadioIdeaValues] = React.useState<RadioIdeaType>("");
+
   const [inputEmailAlert, setinputEmailAlert] =
     React.useState<inputEmailAlertType>(DefaultValueEmailAlert);
 
@@ -101,6 +122,9 @@ export default function OpenDialog(props: DialogType) {
     setOpen(props.openDialog);
     if (props.type === "inputEmailAlert") {
       setinputEmailAlert(DefaultValueEmailAlert);
+    }
+    if (props.type === "ideaGen") {
+      setRadioIdeaValues("");
     }
   }, [props.openDialog]);
 
@@ -113,6 +137,15 @@ export default function OpenDialog(props: DialogType) {
           emailValue: inputEmailAlert.emailInfo.value,
           alertValue: inputEmailAlert.alertInfo.value,
           type: props.type,
+        },
+      });
+    } else if (props.type === "ideaGen") {
+      props.onCloseDialog({
+        modalName: props.id,
+        result: {
+          answer: v,
+          type: props.type,
+          radioPicked: radioIdea,
         },
       });
     } else {
@@ -142,9 +175,46 @@ export default function OpenDialog(props: DialogType) {
         <BootstrapDialogTitle id={props.id} onClose={() => handleClose("no")}>
           {props.title}
         </BootstrapDialogTitle>
-        {!props.type && (
+        {props.type !== "inputEmailAlert" && (
           <DialogContent dividers>
             <Typography gutterBottom>{props.text}</Typography>
+            {props.type === "ideaGen" && (
+              <div>
+                <FormControl>
+                  <RadioGroup
+                    aria-labelledby="idea-controlled-radio-buttons-group"
+                    name="idea-controlled-radio-buttons-group"
+                    value={radioIdea}
+                    onChange={(e: any) => setRadioIdeaValues(e.target.value)}
+                  >
+                    {props.data?.idea1 && (
+                      <FormControlLabel
+                        key={props.data?.idea1}
+                        value={props.data?.idea1}
+                        control={<Radio />}
+                        label={props.data?.idea1}
+                      />
+                    )}
+                    {props.data?.idea2 && (
+                      <FormControlLabel
+                        key={props.data?.idea2}
+                        value={props.data?.idea2}
+                        control={<Radio />}
+                        label={props.data?.idea2}
+                      />
+                    )}
+                    {props.data?.idea3 && (
+                      <FormControlLabel
+                        key={props.data?.idea3}
+                        value={props.data?.idea3}
+                        control={<Radio />}
+                        label={props.data?.idea3}
+                      />
+                    )}
+                  </RadioGroup>
+                </FormControl>
+              </div>
+            )}
           </DialogContent>
         )}
 
@@ -232,12 +302,25 @@ export default function OpenDialog(props: DialogType) {
         )}
 
         <DialogActions>
-          <Button
-            className="btn btn-secondary"
-            onClick={() => handleClose("yes")}
-          >
-            {props.id === "confirm" ? "Confirm" : "Submit"}
-          </Button>
+          {props.id === "idea" && (
+            <Button
+              className="btn btn-secondary"
+              onClick={() => handleClose("yes")}
+              disabled={!radioIdea}
+            >
+              Submit
+            </Button>
+          )}
+
+          {props.id !== "idea" && (
+            <Button
+              className="btn btn-secondary"
+              onClick={() => handleClose("yes")}
+            >
+              {props.id === "confirm" ? "Confirm" : "Submit"}
+            </Button>
+          )}
+
           <Button className="links" onClick={() => handleClose("no")}>
             Cancel
           </Button>

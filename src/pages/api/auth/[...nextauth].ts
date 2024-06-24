@@ -11,7 +11,6 @@ export const optionsAuth = {
   ),
 
   secret: configs.secret,
-
   providers: [
     EmailProvider({
       server: configs.EMAIL_SERVER,

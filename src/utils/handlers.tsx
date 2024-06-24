@@ -13,7 +13,7 @@ export interface NextApiRequestExtended extends NextApiRequest {
 
 export function getHandler(
   auth: boolean,
-  limit: number = 5,
+  limit: number = 10,
   interval: number = 60,
   urlRateLimit?: string
 ) {

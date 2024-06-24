@@ -6,7 +6,7 @@ import Logo from "~/public/icons/logo-primary.svg";
 
 export default function Footer({ props }: any) {
   return (
-    <>
+    <footer>
       <div className={styles.footer}>
         <div className={styles.footerSection}>
           <div className={styles.footerLinks}>
@@ -43,6 +43,6 @@ export default function Footer({ props }: any) {
           </div>
         </div>
       </div>
-    </>
+    </footer>
   );
 }
