@@ -13,7 +13,7 @@ export default function ContactBanner() {
         <div className={styles.content}>
           <h6 className={`title ${styles.title} `}>contact us</h6>
           <h2 className={`subTitle ${styles.subTitle} `}>
-            Got a project? Let's talk
+            Got a project? Let&apos;s talk
           </h2>
           <div className={`description ${styles.desc}`}>
             We believe the workspaces of tomorrow begin with people, a

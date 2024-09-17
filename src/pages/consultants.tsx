@@ -90,7 +90,7 @@ export default function ConsultantsPage() {
                   </div>
                   <div className={styles.consultBio}>{consultant.bio}</div>
                   <div className={styles.consultQuote}>
-                    "{consultant.quote}"
+                    &quot;{consultant.quote}&quot;
                   </div>
                 </div>
               </div>

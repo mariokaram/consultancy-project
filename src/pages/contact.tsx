@@ -100,9 +100,9 @@ export default function ContactUsPage() {
             <div className={styles.contactInfoSection}>
               <div className={`subTitle ${styles.infoTitle}`}>Get in touch</div>
               <div className={styles.infoDesc}>
-                We're here to assist you with any inquiries or questions you may
+                We&apos;re here to assist you with any inquiries or questions you may
                 have. Please feel free to reach out to us using the contact
-                information below, and we'll get back to you as soon as
+                information below, and we&apos;ll get back to you as soon as
                 possible.
               </div>
               <div className={styles.infoContact}>

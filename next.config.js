@@ -1,12 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-const fs = require("fs");
-const path = require("path");
-
-// Read the version from package.json
-const packageJsonPath = path.resolve(__dirname, "package.json");
-const { version } = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
-
 const cspHeader =
   process.env.NODE_ENV === "production"
     ? `
@@ -48,7 +41,6 @@ const nextConfig = {
           },
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "X-Frame-Options", value: "DENY" },
-          { key: "X-App-Version", value: version },
         ],
       },
     ];
