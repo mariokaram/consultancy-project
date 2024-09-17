@@ -41,8 +41,8 @@ const Aeonik = localFont({
       path: "../../public/fonts/Aeonik-Regular.otf",
       weight: "400",
     },
-    { path: "../../public/fonts/Aeonik-light.otf", weight: "300" },
-    { path: "../../public/fonts/Aeonik-bold.otf", weight: "600" },
+    { path: "../../public/fonts/Aeonik-Light.otf", weight: "300" },
+    { path: "../../public/fonts/Aeonik-Bold.otf", weight: "600" },
   ],
   display: "swap",
 });
