@@ -23,7 +23,7 @@ interface ResponseType {
   data?: ProjectConsultantListType[];
 }
 
-export default getHandler(true).get(async (req, res) => {
+export default getHandler({}).get(async (req, res) => {
   try {
     let answers: ResponseType;
 
@@ -73,12 +73,12 @@ export default getHandler(true).get(async (req, res) => {
       throw { message: "get projects consultant api" };
     }
   } catch (error: any) {
-    res.json(messageError(500, error.message));
+    res.json(messageError(500, error?.message));
     insertLogs(
       "api",
       "getProjects consultant",
       "consultant dashboard",
-      error.message,
+      error?.message,
       req.userId
     );
   }

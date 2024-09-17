@@ -3,7 +3,7 @@ import { executeQuery } from "@/lib/db";
 import { insertLogs } from "@/utils/shared";
 const sql = require("sql-template-strings");
 
-export default getHandler(true).put(async (req, res) => {
+export default getHandler({}).put(async (req, res) => {
   try {
     const data = req.body;
 
@@ -24,12 +24,12 @@ export default getHandler(true).put(async (req, res) => {
       throw { message: "projects table assigneConsultant" };
     }
   } catch (error: any) {
-    res.json(messageError(500, error.message));
+    res.json(messageError(500, error?.message));
     insertLogs(
       "api",
       "put assignUser",
       "consultant admin",
-      error.message,
+      error?.message,
       req.userId
     );
   }

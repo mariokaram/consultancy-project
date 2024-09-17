@@ -3,7 +3,7 @@ import { insertLogs } from "@/utils/shared";
 const sql = require("sql-template-strings");
 import { db } from "@/lib/db";
 
-export default getHandler(true).post(async (req, res) => {
+export default getHandler({}).post(async (req, res) => {
   try {
     const data = req.body;
 
@@ -19,7 +19,7 @@ export default getHandler(true).post(async (req, res) => {
     await db.end();
     res.json(messageSuccess(200, "", false));
   } catch (error: any) {
-    res.json(messageError(500, error.message));
-    insertLogs("api", "post checkout", "dashboard", error.message, req.userId);
+    res.json(messageError(500, error?.message));
+    insertLogs("api", "post checkout", "dashboard", error?.message, req.userId);
   }
 });

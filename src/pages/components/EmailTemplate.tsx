@@ -14,22 +14,16 @@ import {
 
 interface EmailProps {
   link?: string;
-  isWelcome?: boolean;
+  type?: string;
   text?: string;
   heading?: string;
   name?: string;
 }
 
-export const TemplateEmail = ({
-  link,
-  isWelcome = false,
-  heading,
-  name,
-  text,
-}: EmailProps) => {
+export const TemplateEmail = (template: EmailProps) => {
   return (
     <>
-      {isWelcome && (
+      {template.type === "login" && (
         <Html>
           <Head />
           <Preview>
@@ -49,7 +43,7 @@ export const TemplateEmail = ({
                 Welcome to horizon consultancy bla bla bla
               </Text>
               <Section style={btnContainer}>
-                <Button pX={12} pY={12} style={button} href={link}>
+                <Button style={button} href={template.link}>
                   Sign in
                 </Button>
               </Section>
@@ -65,10 +59,12 @@ export const TemplateEmail = ({
         </Html>
       )}
 
-      {!isWelcome && (
+      {template.type === "contactUs" ? (
         <Html>
           <Head />
-          <Preview>{heading || ""}</Preview>
+          <Preview>
+            {template.name || "Someone"} is contacting you from Contact us
+          </Preview>
           <Body style={main}>
             <Container style={container}>
               <Img
@@ -78,10 +74,31 @@ export const TemplateEmail = ({
                 alt="logo horizon"
                 style={logo}
               />
-              <Text style={paragraph}>Hello {name || ""}</Text>
-              <Text style={paragraph}>{text || ""}</Text>
+              <Text style={paragraph}>
+                You have a message from {template.name} and his email is
+              </Text>
+              <Text style={paragraph}>{template.heading}</Text>
+              <Text style={paragraph}>{template.text}</Text>
+            </Container>
+          </Body>
+        </Html>
+      ) : (
+        <Html>
+          <Head />
+          <Preview>{template.heading || ""}</Preview>
+          <Body style={main}>
+            <Container style={container}>
+              <Img
+                src={`https://res.cloudinary.com/dfbxrjdfd/image/upload/v1692953894/sample.jpg`}
+                width="170"
+                height="50"
+                alt="logo horizon"
+                style={logo}
+              />
+              <Text style={paragraph}>Hello {template.name || ""}</Text>
+              <Text style={paragraph}>{template.text || ""}</Text>
               <Section style={btnContainer}>
-                <Button pX={12} pY={12} style={button} href={link}>
+                <Button style={button} href={template.link}>
                   My dashboard
                 </Button>
               </Section>

@@ -1,41 +1,68 @@
 import styles from "@/styles/Signin.module.scss";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-
+import { toast, ToastContainer } from "react-toastify";
 import Image from "next/image";
-import backGroundImage from "~/public/imgs/signin-img.jpg";
+import backGroundImage from "~/public/imgs/signin-img.webp";
 import Logo from "~/public/icons/logo-primary.svg";
 import googleIcon from "~/public/icons/googleicon.svg";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
-import { useState } from "react";
-export default function LoginInPage({ csrfToken }: any) {
-  const [email, setInput] = useState("mariokaram257@gmail.com");
+import { SpinnerContext } from "@/contexts/SpinnerContextProvider";
+import { insertLogs } from "@/utils/shared";
+import { useState, useContext, useEffect } from "react";
+import { signIn, getCsrfToken } from "next-auth/react";
+import { useRouter } from "next/router";
+import { configs } from "@/utils/config";
 
+export default function LoginInPage({ csrfToken }: any) {
+  const { showSpinner } = useContext(SpinnerContext);
+
+  const [email, setInput] = useState("");
+  const router = useRouter();
   function emailChange(value: string) {
     setInput(value);
   }
 
-  // TODO  spinner on login
-  // TODO  Remove all backrgound image and use IMAGE/next js
-  // TODO  check email error and catch error
-  // TODO  FIX logout on header
-  // TODO  chaNGE callbackurl
-  // TODO  google provider
-  // TODO  fix 500 and 404 error page
+  useEffect(() => {
+    if (router.query.error) {
+      if (router.query.error === "OAuthAccountNotLinked") {
+        toast.error(
+          "You already have an account linked to this gmail, try to signin via email instead."
+        );
+      } else {
+        toast.error("Something went wrong, please try again later");
+      }
+      insertLogs(
+        "client",
+        "signInwWithGoogle",
+        "signin",
+        router.query.error as string
+      );
+    }
+  }, [router.query.error]);
+
   async function submit(e: HTMLFormElement) {
     try {
       e.preventDefault();
       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-        const result = await signIn("email", {
+        showSpinner(true);
+        await signIn("email", {
           email,
-          callbackUrl: "http://localhost:3000",
+          callbackUrl: configs.webUrl,
         });
-        console.log(result);
       } else {
-        console.log("wrong email");
+        toast.error("Invalid email");
       }
     } catch (error: any) {
-      insertLogs("client", "submit", "signin", error.message);
+      toast.error("Something went wrong, please try again later");
+      insertLogs(
+        "client",
+        "submit",
+        "signin",
+        "error from email submit:" + router.query.error
+      );
+    } finally {
+      showSpinner(false);
     }
   }
   return (
@@ -43,7 +70,7 @@ export default function LoginInPage({ csrfToken }: any) {
       <section>
         <div className={styles.signInContainer}>
           <Image
-            alt="background"
+            alt="background-signin"
             src={backGroundImage}
             quality={100}
             fill
@@ -51,9 +78,9 @@ export default function LoginInPage({ csrfToken }: any) {
             className={styles.img}
           />
           <div className={styles.loginForm}>
-            <div className="card">
+            <div className={`card ${styles.cardLogin}`}>
               <div className={styles.logo}>
-                <Image alt="logo" src={Logo} />
+                <Image alt="logo-signin" height={35} src={Logo} />
               </div>
               <div className={`subTitle ${styles.subtitle}`}>Sign in</div>
               <div className="description">
@@ -98,6 +125,7 @@ export default function LoginInPage({ csrfToken }: any) {
               </div>
               <div>
                 <Button
+                  onClick={() => signIn("google")}
                   variant="contained"
                   startIcon={
                     <Image
@@ -116,16 +144,25 @@ export default function LoginInPage({ csrfToken }: any) {
             </div>
           </div>
         </div>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={8000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover={false}
+        />
       </section>
     </>
   );
 }
 
-import { getCsrfToken, signIn } from "next-auth/react";
 import { GetServerSidePropsContext } from "next";
 import { optionsAuth } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
-import { insertLogs } from "@/utils/shared";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerSession(context.req, context.res, optionsAuth);
@@ -138,6 +175,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
   const csrfToken = await getCsrfToken(context);
+
   return {
     props: { csrfToken },
   };

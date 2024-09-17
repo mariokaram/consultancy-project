@@ -2,6 +2,7 @@ import axios from "axios";
 import { Resend } from "resend";
 import EmailTemplate from "@/pages/components/EmailTemplate";
 import { configs } from "@/utils/config";
+import { CreateEmailResponse } from "resend/build/src/emails/interfaces";
 
 export async function insertLogs(
   type: string,
@@ -63,6 +64,14 @@ export async function sendEmail(paramsEmail: EmailParams) {
             text: paramsEmail.text,
             btnLink: "dashboard",
           };
+        case "contactUs":
+          return {
+            to: configs.EMAIL_FROM,
+            subject: `${paramsEmail.name} contacted you`,
+            heading: paramsEmail.subject,
+            name: paramsEmail.name,
+            text: paramsEmail.text,
+          };
         case "fileConfirmation":
           return {
             to: configs.EMAIL_FROM,
@@ -88,12 +97,13 @@ export async function sendEmail(paramsEmail: EmailParams) {
 
     const { text, heading, btnLink, name, subject, to } = getEmailText();
 
-    const emailData = await resend.sendEmail({
+    const emailData: CreateEmailResponse = await resend.sendEmail({
       from: configs.EMAIL_FROM || "",
       to: to || "",
       subject: subject || "",
       react: (
         <EmailTemplate
+          type={paramsEmail.type}
           text={text}
           heading={heading}
           name={name}
@@ -102,8 +112,12 @@ export async function sendEmail(paramsEmail: EmailParams) {
       ),
     });
 
+    if (!emailData.id) {
+      throw "resend email from shared not working correct , no ID output ";
+    }
+
     return emailData;
   } catch (error: any) {
-    return error;
+    throw error;
   }
 }

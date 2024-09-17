@@ -74,7 +74,7 @@ export interface UsersConsultantType {
   id: string;
 }
 
-export default getHandler(true).get(async (req, res) => {
+export default getHandler({}).get(async (req, res) => {
   try {
     let answers: ResponseType;
     let usersConsultant: ResponseTypeUsers | null;
@@ -168,12 +168,12 @@ export default getHandler(true).get(async (req, res) => {
       throw { message: "get projectsDetails successQuery false" };
     }
   } catch (error: any) {
-    res.json(messageError(500, error.message));
+    res.json(messageError(500, error?.message));
     insertLogs(
       "api",
       "getProjectsDetails",
       "projects",
-      error.message,
+      error?.message,
       req.userId
     );
   }

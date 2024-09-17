@@ -1,16 +1,40 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import { TypeORMLegacyAdapter } from "@next-auth/typeorm-legacy-adapter";
 import * as entities from "@/lib/entities";
 import EmailProvider from "next-auth/providers/email";
 import { configs } from "@/utils/config";
 import { CustomsendVerificationRequest } from "./signinemail";
-export const optionsAuth = {
-  adapter: TypeORMLegacyAdapter(
-    `mysql://${configs.user}:${configs.password}@${configs.host}:${configs.port}/${configs.database}`,
-    { entities }
-  ),
+import GoogleProvider from "next-auth/providers/google";
+import { insertLogs } from "@/utils/shared";
 
-  secret: configs.secret,
+export const optionsAuth: NextAuthOptions = {
+  adapter: TypeORMLegacyAdapter({
+    type: "mysql",
+    host: configs.host,
+    port: configs.port as number,
+    username: configs.user,
+    password: configs.password,
+    database: configs.database,
+    entities,
+    ssl: {
+      rejectUnauthorized: process.env.NODE_ENV === "production",
+      ca: configs.cert,
+    },
+  }),
+
+  logger: {
+    error(code: string, metadata: object) {
+      insertLogs(
+        "api",
+        "[...nextauth]",
+        "signin",
+        JSON.stringify(metadata + code)
+      );
+    },
+  },
+
+  secret: configs.secret as string,
+
   providers: [
     EmailProvider({
       server: configs.EMAIL_SERVER,
@@ -19,20 +43,24 @@ export const optionsAuth = {
         CustomsendVerificationRequest({ identifier, url, provider });
       },
     }),
+    GoogleProvider({
+      clientId: configs.GOOGLE_CLIENT_ID as string,
+      clientSecret: configs.GOOGLE_CLIENT_SECRET as string,
+    }),
   ],
 
   callbacks: {
-    async session({ session, user }: any) {
-      if (session) {
-        session.user.role = user.role;
-        session.user.id = user.id;
+    async session({ session, user }) {
+      if (session && user) {
+        session.user.role = (user as any).role;
+        session.user.id = (user as any).id;
       }
       return session;
     },
   },
+
   pages: {
     signIn: "/signin",
-    error: "/500",
   },
 };
 

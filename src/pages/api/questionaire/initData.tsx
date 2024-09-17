@@ -23,14 +23,14 @@ interface ResponseType {
   data?: QuestionnaireListType[];
 }
 
-export default getHandler(true).get(async (req, res) => {
+export default getHandler({}).get(async (req, res) => {
   try {
     let serviceTypeQueryParam = req.query.serviceType;
     if (serviceTypeQueryParam === "bc") {
       serviceTypeQueryParam = "b";
     }
 
-    let USERID = req.query?.USERID;
+    const USERID = req.query?.USERID;
 
     let answers: ResponseType;
 
@@ -84,7 +84,7 @@ export default getHandler(true).get(async (req, res) => {
       throw { message: "quest_users table initData" };
     }
   } catch (error: any) {
-    res.json(messageError(500, error.message));
-    insertLogs("api", "initData", "questionnaire", error.message, req.userId);
+    res.json(messageError(500, error?.message));
+    insertLogs("api", "initData", "questionnaire", error?.message, req.userId);
   }
 });

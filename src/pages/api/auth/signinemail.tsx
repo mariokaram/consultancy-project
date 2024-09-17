@@ -15,6 +15,6 @@ export async function CustomsendVerificationRequest(params: {
     from: provider.from || "",
     to: identifier,
     subject: "Welcome to Horizon-Consultancy",
-    react: <EmailTemplate isWelcome={true} link={url} />,
+    react: <EmailTemplate type="login" link={url} />,
   });
 }

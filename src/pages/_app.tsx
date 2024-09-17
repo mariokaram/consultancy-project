@@ -1,5 +1,4 @@
 import "react-toastify/dist/ReactToastify.css";
-import { Montserrat } from "next/font/google";
 import type { AppProps } from "next/app";
 import React from "react";
 import axios from "axios";
@@ -82,7 +81,9 @@ export default function App(props: MyAppProps) {
                   {/* <Analytics /> */}
                 </main>
               </SWRConfig>
-              <Footer />
+              <footer className={`${Aeonik.className}`}>
+                <Footer />
+              </footer>
             </CacheProvider>
           </ThemeProvider>
         </SpinnerContextProvider>

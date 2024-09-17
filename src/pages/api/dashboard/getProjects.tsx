@@ -20,11 +20,9 @@ interface ResponseType {
   data?: ProjectListType[];
 }
 
-export default getHandler(true).get(async (req, res) => {
+export default getHandler({}).get(async (req, res) => {
   try {
-    let answers: ResponseType;
-
-    answers = await executeQuery(sql` 
+    const answers: ResponseType = await executeQuery(sql` 
     select s.status_color,s.status_label , s.status_value ,p.project_id, p.date_creation , p.paid , p.info , u.name as consultantName ,  
     ( select answers from quest_users q where q.quest_type= 'projectName' and q.project_id = p.project_id   ) as companyName , 
     case 
@@ -47,7 +45,7 @@ export default getHandler(true).get(async (req, res) => {
       throw { message: "get projects api" };
     }
   } catch (error: any) {
-    res.json(messageError(500, error.message));
-    insertLogs("api", "getProjects", "dashboard", error.message, req.userId);
+    res.json(messageError(500, error?.message));
+    insertLogs("api", "getProjects", "dashboard", error?.message, req.userId);
   }
 });

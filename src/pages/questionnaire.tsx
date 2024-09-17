@@ -212,7 +212,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
     } catch (error: any) {
       showSpinner(false);
       toast.error("Sorry, something went wrong!");
-      insertLogs("client", "initData", "questionnaire", error.message);
+      insertLogs("client", "initData", "questionnaire", error?.message);
     }
   }
 
@@ -315,7 +315,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
         ) {
           // if we alreade have a public id we have to delete
           if (initialImage?.public_id) {
-            let params = { id: initialImage.public_id };
+            const params = { id: initialImage.public_id };
             const response = await axios.get(
               "/api/cloudinary/cloudinaryDelete",
               {
@@ -468,12 +468,12 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
       showSpinner(false);
       const ToastMessage =
         error?.message &&
-        error.message === "Request failed with status code 429"
+        error?.message === "Request failed with status code 429"
           ? "Slow down. You are going too fast!"
           : "Sorry, something went wrong!";
 
       toast.error(ToastMessage);
-      insertLogs("client", "submitForm", "questionnaire", error.message);
+      insertLogs("client", "submitForm", "questionnaire", error?.message);
       return { passed: false };
     }
   };
@@ -819,7 +819,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
         "client",
         "returnFieldsElement",
         "questionnaire",
-        error.message
+        error?.message
       );
       return [];
     }
@@ -1075,7 +1075,7 @@ export function FormikStepper({
             toast.error(err);
           }
         } catch (error: any) {
-          insertLogs("client", "onSubmit", "questionnaire", error.message);
+          insertLogs("client", "onSubmit", "questionnaire", error?.message);
         }
       }}
     >
@@ -1317,7 +1317,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
           "serverSide",
           "getServerSideProps",
           "questionnaire",
-          error.message,
+          error?.message,
           id
         );
         return {

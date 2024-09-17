@@ -241,7 +241,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerSession(context.req, context.res, optionsAuth);
   if (session) {
     const role: string = session.user.role === "a" ? "c" : session.user.role;
-    const name: string = session.user.name;
+    const name: string = session.user.name as string;
 
     if (session.user.role === "u") {
       const id: string = session.user.id;

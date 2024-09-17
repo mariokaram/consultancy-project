@@ -9,7 +9,7 @@ export default function ContactBanner() {
   return (
     <>
       <div className={styles.contactSection}>
-        <Image src={contactus} alt="contactus" />
+        <Image quality={100} src={contactus} alt="contactus" />
         <div className={styles.content}>
           <h6 className={`title ${styles.title} `}>contact us</h6>
           <h2 className={`subTitle ${styles.subTitle} `}>

@@ -16,7 +16,7 @@ interface ResponseType {
   data?: ChatListType[];
 }
 
-export default getHandler(true).get(async (req, res) => {
+export default getHandler({}).get(async (req, res) => {
   try {
     let answers: ResponseType;
 
@@ -44,7 +44,7 @@ export default getHandler(true).get(async (req, res) => {
       throw { message: "get chatroom getMessages api" };
     }
   } catch (error: any) {
-    res.json(messageError(500, error.message));
-    insertLogs("api", "getMessages", "chatroom", error.message, req.userId);
+    res.json(messageError(500, error?.message));
+    insertLogs("api", "getMessages", "chatroom", error?.message, req.userId);
   }
 });

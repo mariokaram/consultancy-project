@@ -113,15 +113,15 @@ a {
     .description {
       color: var(--primaryColor);
       padding-bottom: 2rem;
-      line-height: 1.5rem;
-      max-width: 600px;
+      line-height: 1.3rem;
+      max-width: 750px;
       text-align: center;
     }
   }
 }
 .slick-prev:before,
 .slick-next:before {
-  color: var(--primaryColor) !important;
+  color: var(--blueColor) !important;
   font-size: 22px !important;
 }
 
@@ -234,6 +234,7 @@ a {
 .btn {
   color: white;
   white-space: nowrap;
+  text-transform: capitalize;
 }
 
 .btn-primary {

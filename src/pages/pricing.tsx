@@ -1,291 +1,217 @@
 import styles from "@/styles/Pricing.module.scss";
 import Image from "next/image";
-import backGroundImage from "~/public/imgs/pricing-image.png";
+import backGroundImage from "~/public/imgs/pricing.webp";
+import complexPplan from "~/public/imgs/complex-business-plan.webp";
 import tick from "~/public/icons/tick.svg";
-import redirect from "~/public/icons/redirect.svg";
 import ContactBanner from "./components/Contact-Banner";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Link from "next/link";
 import Button from "@mui/material/Button";
 import CustomizedAccordions from "./components/Accordion-component";
+import Link from "next/link";
 
 export default function PricingPage() {
-  const mediaQuery = useMediaQuery("(max-width:1000px)");
-  const mediaQuery14 = useMediaQuery("(max-width:1400px)");
-  const mediaQuery6 = useMediaQuery("(max-width:600px)");
+  const cardsData = [
+    {
+      id: 1,
+      title: "Idea Generation",
+      pricing: "$1,500",
+      currency: "CAD",
+      serviceUrl: "/services/proposing-business-ideas",
+      backgroundClass: styles.cardBlue,
+      points: [
+        "Customized plan",
+        "Dynamic dashboard",
+        "Website chatroom",
+        "2 to 3 answer oriented and specific idea proposals",
+        "2 free idea proposals revision",
+        "In-depth analysis of your answers",
+        "Elaborate idea description",
+        "Solutions for concerns",
+        "Optimisation of skills",
+        "Business launch roadmap",
+        "5 to 8 days working full process time",
+        "10 to 15 pages analysis document on average",
+      ],
+    },
+    {
+      id: 2,
+      title: "Business Model and Financial Study",
+      pricing: "$3,000",
+      currency: "CAD",
+      serviceUrl: "/services/business-plan",
+      backgroundClass: styles.darkBlue,
+      points: [
+        "Customized strategies",
+        "Dynamic dashboard",
+        "Website chatroom",
+        "Business model",
+        "2 free business model revisions",
+        "Financial projections",
+        "9 to 11 working days full process time",
+        "8 to 12 pages full study",
+      ],
+    },
+    {
+      id: 3,
+      title: "Business Model and Marketing Strategy",
+      pricing: "$4,500",
+      currency: "CAD",
+      serviceUrl: "/services/business-plan",
+      backgroundClass: styles.darkBlack,
+      points: [
+        "Customized strategies",
+        "Dynamic dashboard",
+        "Website chatroom",
+        "Business model",
+        "2 free business model revisions",
+        "Market research",
+        "9 to 12 working days full process time",
+        "10 to 14 pages full study",
+      ],
+    },
+    {
+      id: 4,
+      title: "Business Plan",
+      pricing: "$2,000",
+      currency: "CAD",
+      serviceUrl: "/services/business-plan",
+      backgroundClass: styles.cardGreen,
+      points: [
+        "Customized strategies",
+        "Dynamic dashboard",
+        "Website chatroom",
+        "Business model",
+        "2 free business model revisions",
+        "Marketing strategy",
+        "Risk mitigation",
+        "Company structure and operations",
+        "Financial study",
+        "Growth prospects",
+        "12 to 15 working days full process time",
+        "25 to 30 pages full plan",
+        "Business presentation slides (Pitch deck)",
+        "Other supporting documents as per request",
+      ],
+    },
+  ];
+
   return (
     <>
       <section>
         {/* backGroundImage Section */}
         <div className={styles.backgroundImg}>
           <div className={styles.image}>
+            <Image
+              alt="background-pricing"
+              src={backGroundImage}
+              quality={100}
+              priority={true}
+            />
             <div className={styles.info}>
-              <div className="title">Pricing</div>
-              <div className="subTitle">Choose a Service Plan</div>
-              <div className={`${styles.desc} description`}>
-                Horizon consultancy offers you all-inclusive and in-depth
-                studies that are guaranteed to put your business journey on the
-                right track.
+              <h1 style={{ color: "white" }} className="subTitle">
+                Choose a Service Plan
+              </h1>
+              <div className={styles.description}>
+                Enhance your strategic decision-making, attract investors, and
+                boost business success. At Horizon Consultancy, we provide
+                comprehensive studies and detailed analysis to develop dynamic
+                business strategies tailored to your needs.
               </div>
-              <div className={styles.packages}>
-                <div className={styles.pckContainer}>
-                  <div className={styles.pckg}>
-                    <div className={styles.title}>financial plan</div>
-                    <div className={styles.readMore}>
-                      <Link href="/services/business-plan" passHref>
-                        <Button>
-                          Read more
-                          <span className={styles.cardArrow}>
-                            <Image alt="redirect" src={redirect} />
-                          </span>
-                        </Button>
-                      </Link>
-                    </div>
-                    <div className={styles.price}>$1500</div>
-                    <div className={styles.list}>
-                      <div>
-                        <Image alt="arrow" src={tick} />
-                        <span>2 to 3 idea suggesti ds dsd ssdsons</span>
-                      </div>
-                      <div>
-                        <Image alt="arrow" src={tick} />
-                        <span>Expert consultad sd sdsnt</span>
-                      </div>
-                      <div>
-                        <Image alt="arrow" src={tick} />
-                        <span>Personalized analysd sd sis</span>
-                      </div>
-                      <div>
-                        <Image alt="arrow" src={tick} />
-                        <span>Business model el ds sd sments</span>
-                      </div>
-                      <div>
-                        <Image alt="arrow" src={tick} />
-                        <span>
-                          Open workroom directly ds dsds on sdsd lezim,
-                          sdfdsfthis platform
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+            </div>
+          </div>
 
-                  <div className={styles.chooseBtn}>
-                    <Link
-                      passHref
-                      href={{
-                        pathname: "/questionnaire",
-                        query: { service: "financial-plan", project: "new" },
-                      }}
-                    >
-                      <Button className="btn btn-secondary">Choose</Button>
-                    </Link>
+          {/* Card Section */}
+          <div className={styles.cardContainer}>
+            {cardsData.map((card) => (
+              <div key={card.id} className={styles.card}>
+                <div className={`${styles.cardBackg} ${card.backgroundClass}`}>
+                  <div className={styles.cardTitle}>{card.title}</div>
+                  <div className={styles.cardPricing}>
+                    {card.pricing} <small>{card.currency}</small>
                   </div>
+                  <Link href={card.serviceUrl}>
+                    <div className={styles.cardReadMore}>Learn More</div>
+                  </Link>
                 </div>
-                <div className={styles.pckContainer}>
-                  <div className={styles.pckg}>
-                    <div className={styles.title}>marketing</div>
-                    <div className={styles.readMore}>
-                      <Link href="/services/business-plan" passHref>
-                        <Button>
-                          Read more
-                          <span className={styles.cardArrow}>
-                            <Image alt="redirect" src={redirect} />
-                          </span>
-                        </Button>
-                      </Link>
+                <div className={styles.cardBody}>
+                  {card.points.map((point, index) => (
+                    <div key={index} className={styles.cardPoint}>
+                      <div className={styles.cardTick}>
+                        <Image alt="tick" width={22} height={16} src={tick} />
+                      </div>
+                      <div className={styles.cardInfo}>{point}</div>
                     </div>
-                    <div className={styles.price}>$2500</div>
-                    <div className={styles.list}>
-                      <div>
-                        <Image alt="arrow" src={tick} />
-                        <span>2 to 3 idea suggestions</span>
-                      </div>
-                      <div>
-                        <Image alt="arrow" src={tick} />
-                        <span>Expert consultant</span>
-                      </div>
-                      <div>
-                        <Image alt="arrow" src={tick} />
-                        <span>Personalized analysis</span>
-                      </div>
-                      <div>
-                        <Image alt="arrow" src={tick} />
-                        <span>Business model elements</span>
-                      </div>
-                      <div>
-                        <Image alt="arrow" src={tick} />
-                        <span>Open workroom directly on this platform</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className={styles.chooseBtn}>
-                    <Link
-                      passHref
-                      href={{
-                        pathname: "/questionnaire",
-                        query: { service: "marketing-plan", project: "new" },
-                      }}
-                    >
-                      <Button className="btn btn-secondary">Choose</Button>
-                    </Link>
-                  </div>
+                  ))}
                 </div>
-                <div className="card">
-                  <div
-                    className={styles.pckContainer}
-                    style={{ padding: 0, height: "100%" }}
-                  >
-                    <div className={styles.pckg}>
-                      <div className={styles.title}>business plan</div>
-                      <div className={styles.readMore}>
-                        <Link href="/services/business-plan" passHref>
-                          <Button>
-                            Read more
-                            <span className={styles.cardArrow}>
-                              <Image alt="redirect" src={redirect} />
-                            </span>
-                          </Button>
-                        </Link>
-                      </div>
-                      <div className={styles.price}>$4000</div>
-                      <div className={styles.list}>
-                        <div>
-                          <Image alt="arrow" src={tick} />
-                          <span>some ide ato share</span>
-                        </div>
-                        <div>
-                          <Image alt="arrow" src={tick} />
-                          <span>hake ktir lexzim nghayro</span>
-                        </div>
-                        <div>
-                          <Image alt="arrow" src={tick} />
-                          <span>Personalized analysis</span>
-                        </div>
-                        <div>
-                          <Image alt="arrow" src={tick} />
-                          <span>Business model elements</span>
-                        </div>
-                        <div>
-                          <Image alt="arrow" src={tick} />
-                          <span>
-                            Open workroom directly on this plapen workroom
-                            directly on this plapen workroom directly on this
-                            platform
-                          </span>
-                        </div>
-                      </div>
-                    </div>
 
-                    <div className={styles.chooseBtn}>
-                      <Link
-                        passHref
-                        href={{
-                          pathname: "/questionnaire",
-                          query: { service: "business-plan", project: "new" },
-                        }}
-                      >
-                        <Button className="btn btn-secondary">Choose</Button>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.pckContainer}>
-                  <div className={styles.pckg}>
-                    <div className={styles.title}>idea generation</div>
-                    <div className={styles.readMore}>
-                      <Link href="/services/proposing-business-ideas" passHref>
-                        <Button>
-                          Read more
-                          <span className={styles.cardArrow}>
-                            <Image alt="redirect" src={redirect} />
-                          </span>
-                        </Button>
-                      </Link>
-                    </div>
-                    <div className={styles.price}>$1500</div>
-                    <div className={styles.list}>
-                      <div>
-                        <Image alt="arrow" src={tick} />
-                        <span>2 to 3 idea suggestions</span>
-                      </div>
-                      <div>
-                        <Image alt="arrow" src={tick} />
-                        <span>Expert consultant</span>
-                      </div>
-                      <div>
-                        <Image alt="arrow" src={tick} />
-                        <span>Personalized analysis</span>
-                      </div>
-                      <div>
-                        <Image alt="arrow" src={tick} />
-                        <span>Business model elements</span>
-                      </div>
-                      <div>
-                        <Image alt="arrow" src={tick} />
-                        <span>Open workroom directly on this platform</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className={styles.chooseBtn}>
-                    <Link
-                      passHref
-                      href={{
-                        pathname: "/questionnaire",
-                        query: { service: "ideas-generation", project: "new" },
-                      }}
-                    >
-                      <Button className="btn btn-secondary">Choose</Button>
-                    </Link>
-                  </div>
+                <div className={styles.cardBtn}>
+                  <Button size="large" className="btn btn-secondary">
+                    Choose Plan
+                  </Button>
                 </div>
               </div>
-              <div className={`${styles.complex} card`}>
-                <div className={styles.infoContainer}>
-                  <div>
-                    <div className={styles.title}>Complex business plan</div>
-                    <div className={`${styles.descComplex} description`}>
-                      You might need a different quotation if your business
-                      meets some of these criteria.
+            ))}
+          </div>
+
+          {/* Banner Section */}
+          <div className={styles.bannerWrapper}>
+            <div className={styles.bannerContainer}>
+              <div className={styles.bannerContent}>
+                <h2 className={styles.bannerTitle}>Complex business plan</h2>
+                <div className={styles.bannerDesc}>
+                  You might need a different quotation if your business meets
+                  some of these criteria
+                </div>
+                <div className={styles.bannerPoints}>
+                  <div className={styles.bannerPnt}>
+                    <div>
+                      <div className={styles.bannerTick}>
+                        <Image alt="tick" width={22} height={16} src={tick} />
+                      </div>
+                      <div className={styles.bannerInfo}>
+                        More than 1 businness modal
+                      </div>
+                    </div>
+                    <div>
+                      <div className={styles.bannerTick}>
+                        <Image alt="tick" width={22} height={16} src={tick} />
+                      </div>
+                      <div className={styles.bannerInfo}>
+                        Budget higher than $400,000
+                      </div>
                     </div>
                   </div>
-
-                  <div className={styles.btnComplex}>
-                    <Link
-                      passHref
-                      href={{
-                        pathname: "/questionnaire",
-                        query: { service: "complex-business-plan", project: "new" },
-                      }}
-                    >
-                      <Button className="btn btn-secondary">Get started</Button>
-                    </Link>
+                  <div className={styles.bannerPnt}>
+                    <div>
+                      <div className={styles.bannerTick}>
+                        <Image alt="tick" width={22} height={16} src={tick} />
+                      </div>
+                      <div className={styles.bannerInfo}>
+                        Intricate operations/processes
+                      </div>
+                    </div>
+                    <div>
+                      <div className={styles.bannerTick}>
+                        <Image alt="tick" width={22} height={16} src={tick} />
+                      </div>
+                      <div className={styles.bannerInfo}>
+                        Medium to large sized entreprise
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className={styles.arrowSection}>
-                  <div className={styles.arrowsComplex}>
-                    <div>
-                      <Image alt="arrow" src={tick} />
-                      <span>More than 1 business model</span>
-                    </div>
-                    <div>
-                      <Image alt="arrow" src={tick} />
-                      <span>Budget higher than $400,000</span>
-                    </div>
-                  </div>
-                  <div className={styles.arrowsComplex}>
-                    <div>
-                      <Image alt="arrow" src={tick} />
-                      <span>Intricate operations/processes</span>
-                    </div>
-                    <div>
-                      <Image alt="arrow" src={tick} />
-                      <span>Medium to large sized enterprise</span>
-                    </div>
-                  </div>
+
+                <div className={styles.bannerBtn}>
+                  <Button size="large" className="btn btn-secondary">
+                    Get quotation
+                  </Button>
                 </div>
               </div>
+              <Image
+                className={styles.bannerImg}
+                alt="Banner Image"
+                src={complexPplan}
+                quality={100}
+              />
             </div>
           </div>
         </div>
@@ -293,8 +219,14 @@ export default function PricingPage() {
         <div className={styles.mainContainer}>
           {/* faq Section */}
           <div className={styles.faqSection}>
-            <div className="title">faq</div>
-            <div className="subTitle">How can we help you?</div>
+            <h6 className="title">faq</h6>
+            <h2 className="subTitle">How can we help you?</h2>
+            <div className="description">
+              Simply put, we are a result driven company, we want you to succeed
+              even after your project is finalized. We also use a top-notch
+              process that makes the entire experience clear, easy and
+              trackable.
+            </div>
 
             <div className={styles.accordion}>
               <CustomizedAccordions />

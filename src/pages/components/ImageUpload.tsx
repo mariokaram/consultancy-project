@@ -77,7 +77,7 @@ export default function ImageUpload(props: Props): JSX.Element {
               "client",
               "handleImageChange",
               "ImageUpload",
-              error.message
+              error?.message
             );
           }
         } else {
@@ -145,7 +145,7 @@ export default function ImageUpload(props: Props): JSX.Element {
       } catch (error: any) {
         showSpinner(false);
         toast.error("Sorry something went wrong!");
-        insertLogs("client", "handleRemove", "ImageUpload", error.message);
+        insertLogs("client", "handleRemove", "ImageUpload", error?.message);
       }
     }
   };

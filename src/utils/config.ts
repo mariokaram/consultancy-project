@@ -1,7 +1,7 @@
 export const configs = {
   webUrl: process.env.webUrl,
   host: process.env.host,
-  port: process.env.port || undefined,
+  port: process.env.portDB || 3306,
   user: process.env.user,
   password: process.env.password,
   database: process.env.database,
@@ -9,6 +9,8 @@ export const configs = {
   cert: process.env.CA_CERT,
   EMAIL_SERVER: process.env.EMAIL_SERVER,
   EMAIL_FROM: process.env.EMAIL_FROM,
+  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   resend_api: process.env.resend_api,
   cloudinary_cloud_name: process.env.cloudinary_cloud_name,
   cloudinary_api_key: process.env.NEXT_PUBLIC_cloudinary_api_key,

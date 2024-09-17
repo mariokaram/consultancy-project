@@ -6,13 +6,11 @@ import Button from "@mui/material/Button";
 import Slider from "react-slick";
 import Link from "next/link";
 import Image from "next/image";
-
 import backGroundImage from "~/public/imgs/landing-background.webp";
 import ambitionWork from "~/public/imgs/ambitionWork.webp";
 import successWork from "~/public/imgs/successWork.webp";
 import businessPlan from "~/public/imgs/businessPlan.webp";
 import bulb from "~/public/imgs/bulb.webp";
-import ReadMoreIcon from "@mui/icons-material/ReadMore";
 import solution from "~/public/icons/solution.svg";
 import development from "~/public/icons/development.svg";
 import data from "~/public/icons/data.svg";
@@ -27,7 +25,6 @@ import redirect from "~/public/icons/redirect.svg";
 import consultant from "~/public/icons/consultant.svg";
 import contactform from "~/public/icons/contact-form.svg";
 import tick from "~/public/icons/tick.svg";
-
 export default function Home() {
   type HowItWorksKeys = "business" | "idea";
   type HowItWorksStep = {
@@ -103,21 +100,21 @@ export default function Home() {
             src={backGroundImage}
             alt="Hero Image"
             quality={100}
-            priority
+            priority={true}
           />
           <div className={styles.textOverlay}>
             <div className={styles.subtitle}>consulting Agency</div>
             <h1 className={styles.title}>
-              Elevate Your Business Vision with Cutting-Edge Consulting
+              Realize your ambitions with expert guidance and amazing results
             </h1>
             <div className={styles.desc}>
-              Intuitive online process meets expert guidance to transform your
-              entrepreneurial journey.
+              Our advanced processes will guarantee you a seamless business
+              launch with vivid messaging and standout communications.
             </div>
             <div>
               <Link href="/dashboard">
                 <Button size="large" className="btn btn-secondary">
-                  Experience the Project Dashboard
+                  Access dashboard
                 </Button>
               </Link>
             </div>
@@ -158,41 +155,42 @@ export default function Home() {
               </div>
               <div className={styles.aboutText}>
                 <div>
-                  Embarking on the journey of entrepreneurship can be daunting,
-                  but with our seasoned consultants by your side, you can
-                  navigate this path with confidence. Our team brings a wealth
-                  of experience and knowledge to the table, guiding you through
-                  5 lines
+                  Our seasoned experts will help you smoothly navigate the
+                  challenging path to launching your new company. We ensure you
+                  fully understand each phase of the process, equipping you with
+                  the knowledge needed to successfully launch and sustain your
+                  business with confidence. Embrace Independence: Forge Your
+                  Path with Us! We can help you:
                 </div>
 
                 <div className={styles.ticks}>
                   <div>
                     <div>
                       <Image alt="tick" width={22} height={16} src={tick} />
-                      <span>Alleviate uncertainty</span>
+                      <span>Minimize uncertainty</span>
                     </div>
                     <div>
                       <Image alt="tick" width={22} height={16} src={tick} />
-                      <span>Focus on your own skills</span>
+                      <span>Focus on your skills</span>
                     </div>
                     <div>
                       <Image alt="tick" width={22} height={16} src={tick} />
-                      <span>Follow an executive plan</span>
+                      <span>Acquire investment</span>
                     </div>
                   </div>
 
                   <div>
                     <div>
                       <Image alt="tick" width={22} height={16} src={tick} />
-                      <span>Maintain your business</span>
+                      <span>Gain relevant knowledge</span>
                     </div>
                     <div>
                       <Image alt="tick" width={22} height={16} src={tick} />
-                      <span>Acquire investment</span>
+                      <span>Autonomously run your firm</span>
                     </div>
                     <div>
                       <Image alt="tick" width={22} height={16} src={tick} />
-                      <span>Obtain mentorship</span>
+                      <span>Expand in the right direction</span>
                     </div>
                   </div>
                 </div>
@@ -222,18 +220,13 @@ export default function Home() {
             <div className={styles.services}>
               <div className={styles.businessPlan}>
                 <div className={`${styles.rectangular} ${styles.lightBlue} `}>
+                  <div className={styles.link}>Business Plan</div>
                   <div>
-                    <Link href="/services/business-plan" passHref>
-                      <div className={styles.link}>
-                        Business Plan <ReadMoreIcon className={styles.icon} />
-                      </div>
-                    </Link>
-                  </div>
-                  <div>
-                    Our business plan analytically covers all aspects of a
-                    startup. It is an all-inclusive roadmap that guides you even
-                    after the launch. It also entails all the information
-                    investors look for.
+                    Our Business Plan template is a detailed roadmap designed to
+                    guide your startup in any industry from conception through
+                    launch and beyond. It covers every essential aspect of your
+                    business, offering a comprehensive and easy-to-follow
+                    strategy.
                   </div>
                 </div>
                 <div>
@@ -257,18 +250,13 @@ export default function Home() {
                   ></Image>
                 </div>
                 <div className={`${styles.rectangular} ${styles.blue} `}>
+                  <div className={styles.link}>Idea Generation</div>
                   <div>
-                    <Link href="/services/proposing-business-ideas">
-                      <div className={styles.link}>
-                        Idea Generation <ReadMoreIcon className={styles.icon} />
-                      </div>
-                    </Link>
-                  </div>
-                  <div>
-                    Based on our original “Business idea questionnaire” your
-                    answers will help us propose ideas that are uniquely
-                    suitable for you. The report is based on an in depth
-                    critical analysis of your experience and preferences.
+                    We can propose innovative ideas that align perfectly with
+                    your capabilities and aspirations. Our approach involves
+                    conducting a thorough analysis of your background, skills,
+                    and preferences so we can analyze and propose ideas that
+                    suit you.
                   </div>
                 </div>
               </div>
@@ -285,9 +273,7 @@ export default function Home() {
           {/* why us section */}
           <div className={styles.whyUsContainer}>
             <h6 className="title">Why us</h6>
-            <h2 className="subTitle">
-              Explore possibilities and opportunities
-            </h2>
+            <h2 className="subTitle">Turning visions into reality</h2>
             <div className="description">
               Simply put, we are a result driven company, we want you to succeed
               even after your project is finalized. We also use a top-notch
@@ -305,7 +291,7 @@ export default function Home() {
                     alt="solution"
                   ></Image>
                 </div>
-                <div className={styles.title}>Idea research and study</div>
+                <div className={styles.title}>Idea validation</div>
                 <div className={styles.desc}>
                   To validate your idea we make sure we fully understand it in
                   context. The collected data enables us to either move forward
@@ -321,11 +307,10 @@ export default function Home() {
                     alt="businessmodel"
                   ></Image>
                 </div>
-                <div className={styles.title}>Custom-made business model</div>
+                <div className={styles.title}>Tailored business model</div>
                 <div className={styles.desc}>
-                  Instead of adopting a head-on with competitors business model
-                  we provide you with one that favorably differentiates yours
-                  from theirs.
+                  We provide an adaptive business model that distinguishes your
+                  venture from competitors, even in a competitive market.
                 </div>
               </div>
               <div className={`${styles.whyUsSection} ${styles.noBorder} `}>
@@ -337,11 +322,11 @@ export default function Home() {
                     alt="contentmanagement"
                   ></Image>
                 </div>
-                <div className={styles.title}>Executive plan</div>
+                <div className={styles.title}>Practical plan</div>
                 <div className={styles.desc}>
-                  Business plans need to be coupled with practical and
-                  executable roadmaps. The executive plan transforms the full
-                  study into action based steps.
+                  When creating the business plan structure our aim is to
+                  develop a plan that is actionable and grounded in real-world
+                  implementation rather than being purely theoretical.
                 </div>
               </div>
             </div>
@@ -352,9 +337,9 @@ export default function Home() {
                 </div>
                 <div className={styles.title}>Responsive foundation</div>
                 <div className={styles.desc}>
-                  To validate your idea we make sure we fully understand it in
-                  context. The collected data enables us to either move forward
-                  or propose amendments.
+                  In an ever-changing market our approach involves crafting
+                  versatile and adjustable strategies to predict and navigate
+                  ongoing changes effectively.
                 </div>
               </div>
 
@@ -367,11 +352,11 @@ export default function Home() {
                     alt="consultation"
                   ></Image>
                 </div>
-                <div className={styles.title}>Mentorship</div>
+                <div className={styles.title}>Customer support</div>
                 <div className={styles.desc}>
-                  As we care about your full entrepreneurial journey we teamed
-                  up with mentorship platforms. This means that when the project
-                  is done you will still have, if need be, guidance and support.
+                  You can count on our comprehensive project processes and
+                  dedicated follow-up to ensure your satisfaction and provide
+                  the highest level of service and support.
                 </div>
               </div>
               <div className={`${styles.whyUsSection} ${styles.noBorder} `}>
@@ -383,11 +368,11 @@ export default function Home() {
                     alt="development"
                   ></Image>
                 </div>
-                <div className={styles.title}>Personal development</div>
+                <div className={styles.title}>Relevant business know-how</div>
                 <div className={styles.desc}>
-                  Our services are pronouncedly based on your future success as
-                  well as the launching of your company. We strive to give
-                  entrepreneurs the right tools to adapt and grow in the market.
+                  We aim to assist you in launching and sustaining your business
+                  by providing practical insights. We can help you avoid
+                  unnecessary courses and workshops.
                 </div>
               </div>
             </div>
@@ -396,8 +381,8 @@ export default function Home() {
           <div className={styles.howItWorksContainer}>
             <h2 className={styles.title}>How It Works</h2>
             <div className={styles.desc}>
-              All of the processes on our website have been carefully studied to
-              make it easy for you to navigate through them.
+              We have thoroughly analyzed all processes on our website to ensure
+              they are user-friendly and easy for you to navigate.
             </div>
 
             <div className={styles.btnSec}>

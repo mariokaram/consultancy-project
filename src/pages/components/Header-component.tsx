@@ -35,8 +35,8 @@ const drawerWidth = 240;
 const navItems = [
   { label: "Services", link: "/services" },
   { label: "Pricing", link: "/pricing" },
-  { label: "Consultants", link: "" },
-  { label: "Insights", link: "" },
+  { label: "Consultants", link: "/consultants" },
+  { label: "Insights", link: "/blogs" },
 ];
 
 function ElevationScroll(props: Props) {
@@ -46,7 +46,7 @@ function ElevationScroll(props: Props) {
     threshold: 0,
   });
 
-  const boxShadow = trigger ? '0 2px 4px rgba(0, 0, 0, 0.1)' : 'none';
+  const boxShadow = trigger ? "0 2px 4px rgba(0, 0, 0, 0.1)" : "none";
 
   return React.cloneElement(children, {
     sx: { boxShadow },
@@ -72,7 +72,7 @@ export default function Header(props: any) {
   };
 
   async function signoutFn() {
-    const data = await signOut({ redirect: false, callbackUrl: "/signin" });
+    const data = await signOut({ redirect: false, callbackUrl: "/" });
     router.push(data.url);
   }
 
@@ -82,31 +82,34 @@ export default function Header(props: any) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h2" component="div">
-        <Link href="/" passHref>
-          <Image
-            // priority={true}
-            alt="logo"
-            className={styles.logo}
-            src={Logo}
-          />
+        <Link href="/">
+          <Image alt="logo" className={styles.logo} src={Logo} />
         </Link>
       </Typography>
       <Divider />
       <List>
         {navItems.map((item) => (
           <ListItem key={item.label} disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={item.label} />
-            </ListItemButton>
+            <Link style={{ width: "100%" }} href={item.link}>
+              <ListItemButton sx={{ textAlign: "center" }}>
+                <ListItemText primary={item.label} />
+              </ListItemButton>
+            </Link>
           </ListItem>
         ))}
       </List>
       <Divider />
       <Box className={styles.drawerContent}>
-        <Button className={`links ${styles.marginB}`}>Get in touch</Button>
-
+        <Link style={{ width: "100%" }} href="/contact">
+          <Button
+            style={{ width: "100%" }}
+            className={`links ${styles.marginB}`}
+          >
+            Get in touch
+          </Button>
+        </Link>
         {status !== "authenticated" && status !== "loading" && (
-          <Link href="/signin" passHref legacyBehavior>
+          <Link href="/signin">
             <Button className="btn btn-third">Get started</Button>
           </Link>
         )}
@@ -140,13 +143,8 @@ export default function Header(props: any) {
                 variant="h2"
                 component="div"
               >
-                <Link href="/" passHref>
-                  <Image
-                    // priority={true}
-                    alt="logo"
-                    className={styles.logo}
-                    src={Logo}
-                  />
+                <Link href="/">
+                  <Image alt="logo" className={styles.logo} src={Logo} />
                 </Link>
               </Typography>
 
@@ -163,7 +161,6 @@ export default function Header(props: any) {
                         ? styles.navLinkActive
                         : ""
                     } transitionLink`}
-                    passHref
                     key={item.label}
                   >
                     <Button className="links no-hover-background">
@@ -174,7 +171,7 @@ export default function Header(props: any) {
               </Box>
 
               <Box className={styles.btnInfo}>
-                <Link className={styles.contact} href="/" passHref>
+                <Link className={styles.contact} href="/contact">
                   <Button className={`links`}>Get in touch</Button>
                 </Link>
                 {status === "authenticated" && (
@@ -252,8 +249,10 @@ export default function Header(props: any) {
                 )}
 
                 {status !== "authenticated" && status !== "loading" && (
-                  <Link href="/signin" passHref legacyBehavior>
-                    <Button size='large' className="btn btn-third">Get started</Button>
+                  <Link href="/signin">
+                    <Button size="large" className="btn btn-third">
+                      Get started
+                    </Button>
                   </Link>
                 )}
               </Box>

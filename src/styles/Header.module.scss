@@ -10,9 +10,6 @@
 
   .logoContainer {
     flex: 1;
-    .logo {
-      cursor: pointer;
-    }
   }
 
   .avatar {
@@ -56,7 +53,7 @@
   align-items: center;
 }
 .marginB {
-  padding-bottom: 1rem;
+  margin: 1rem 0;
 }
 @media (max-width: 1200px) {
   .headerNav {

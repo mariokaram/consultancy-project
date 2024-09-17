@@ -3,13 +3,10 @@ import { executeQuery } from "@/lib/db";
 import { insertLogs } from "@/utils/shared";
 const sql = require("sql-template-strings");
 
-export default getHandler(true).post(async (req, res) => {
+export default getHandler({}).post(async (req, res) => {
   try {
     const data = req.body;
-
-    let answers: any;
-
-    answers = await executeQuery(sql` 
+    const answers = await executeQuery(sql` 
     
  insert into chatroom ( userId, consultantId , message, date ,msgFrom) values ( ${
    req.userRole === "u" ? req.userId : data.receiverId
@@ -24,7 +21,7 @@ export default getHandler(true).post(async (req, res) => {
       };
     }
   } catch (error: any) {
-    res.json(messageError(500, error.message));
-    insertLogs("api", "post postMsg", "chatroom", error.message, req.userId);
+    res.json(messageError(500, error?.message));
+    insertLogs("api", "post postMsg", "chatroom", error?.message, req.userId);
   }
 });

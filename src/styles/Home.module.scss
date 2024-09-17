@@ -32,6 +32,7 @@
     }
     .desc {
       padding-bottom: 1rem;
+      line-height: 1.3rem;
     }
   }
 }
@@ -80,6 +81,7 @@
         gap: 3rem;
         span {
           font-weight: bold;
+          font-size: 1.02rem;
         }
         *div {
           padding: 0.2rem 0;
@@ -135,7 +137,7 @@
         .rectangular {
           padding: 3rem 2.5rem;
           width: 556px;
-          height: 268px;
+          height: 235px;
           line-height: 1.33;
           color: white;
         }
@@ -450,22 +452,22 @@
       }
       .profile1 {
         &::after {
-          background-image: url("~/public/imgs/about.png");
+          background-image: url("~/public/imgs/consultantImg.png");
         }
       }
       .profile2 {
         &::after {
-          background-image: url("~/public/imgs/landing-background.jpg");
+          background-image: url("~/public/imgs/consultantImg.png");
         }
       }
       .profile3 {
         &::after {
-          background-image: url("~/public/imgs/about.png");
+          background-image: url("~/public/imgs/consultantImg.png");
         }
       }
       .profile4 {
         &::after {
-          background-image: url("~/public/imgs/about.png");
+          background-image: url("~/public/imgs/consultantImg.png");
         }
       }
     }
@@ -527,6 +529,12 @@
       left: 50%;
       top: 40%;
       transform: translate(-50%, -50%);
+    }
+  }
+
+  .servicesContainer {
+    .link {
+      justify-content: center !important;
     }
   }
   .aboutUsContainer {

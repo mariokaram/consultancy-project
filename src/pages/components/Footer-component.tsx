@@ -3,34 +3,41 @@ import styles from "@/styles/Footer.module.scss";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "~/public/icons/logo-primary.svg";
-
+import XIcon from "@mui/icons-material/X";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import YouTubeIcon from "@mui/icons-material/YouTube";
 export default function Footer({ props }: any) {
   return (
-    <footer>
+    <>
       <div className={styles.footer}>
         <div className={styles.footerSection}>
           <div className={styles.footerLinks}>
             <div>
-              <div className={styles.logo}>
-                <Image
-                  onClick={() =>
-                    window.scrollTo({ top: 0, behavior: "smooth" })
-                  }
-                  alt="logo"
-                  src={Logo}
-                />
+              <div>
+                <Link href="/">
+                  <Image alt="logo-footer" src={Logo} />
+                </Link>
               </div>
-              <div>social media icons</div>
+              <div className={styles.social}>
+                <XIcon />
+                <FacebookIcon />
+                <LinkedInIcon />
+                <YouTubeIcon />
+              </div>
             </div>
             <div>
               <div>Company</div>
               <Link href="/">About us</Link>
               <Link href="/">Blogs</Link>
+              <Link href="/consultants">Consultants</Link>
+              <Link href="/services">Services</Link>
             </div>
             <div>
               <div>Help & Support</div>
-              <Link href="/">Faq</Link>
-              <Link href="/">Consultants</Link>
+              <Link href="/pricing">Faq</Link>
+              <Link href="/pricing">Pricing</Link>
+              <Link href="/contact">Contact us</Link>
             </div>
             <div>
               <div>Legal</div>
@@ -38,11 +45,13 @@ export default function Footer({ props }: any) {
               <Link href="/">Privacy Policy</Link>
             </div>
           </div>
+          <hr />
           <div className={styles.copyRight}>
-            All right reserved. Copyright 2023 Horizon
+            Copyright © {new Date().getFullYear()} Horizon Consultancy. All
+            rights reserved.
           </div>
         </div>
       </div>
-    </footer>
+    </>
   );
 }

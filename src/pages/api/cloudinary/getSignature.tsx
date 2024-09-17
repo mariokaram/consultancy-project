@@ -4,7 +4,7 @@ import { insertLogs } from "@/utils/shared";
 
 const cloudinary = require("cloudinary").v2;
 
-export default getHandler(true).get(async (req, res) => {
+export default getHandler({}).get(async (req, res) => {
   try {
     cloudinary.config({
       cloud_name: configs.cloudinary_cloud_name,
@@ -32,6 +32,6 @@ export default getHandler(true).get(async (req, res) => {
     res.json(messageSuccess(200, { signature, timestamp }, false));
   } catch (error: any) {
     res.json(messageError(500, error?.message));
-    insertLogs("api", "getSignature", "cloudinary", error.message, req.userId);
+    insertLogs("api", "getSignature", "cloudinary", error?.message, req.userId);
   }
 });

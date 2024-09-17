@@ -4,7 +4,7 @@ import { isEmpty, map } from "lodash";
 const sql = require("sql-template-strings");
 import { insertLogs, sendEmail } from "@/utils/shared";
 
-export default getHandler(true).post(async (req, res) => {
+export default getHandler({}).post(async (req, res) => {
   try {
     const data = req.body;
 
@@ -194,7 +194,7 @@ export default getHandler(true).post(async (req, res) => {
 
     res.json(messageSuccess(200, getNewProjectId || "", false));
   } catch (error: any) {
-    res.json(messageError(500, error.message));
-    insertLogs("api", "postData", "questionnaire", error.message, req.userId);
+    res.json(messageError(500, error?.message));
+    insertLogs("api", "postData", "questionnaire", error?.message, req.userId);
   }
 });

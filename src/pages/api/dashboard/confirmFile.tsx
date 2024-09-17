@@ -4,7 +4,7 @@ import { insertLogs, sendEmail } from "@/utils/shared";
 const sql = require("sql-template-strings");
 import { db } from "@/lib/db";
 
-export default getHandler(true).put(async (req, res) => {
+export default getHandler({}).put(async (req, res) => {
   try {
     const data = req.body;
     const checkIdeaPicked = () => {
@@ -84,12 +84,12 @@ export default getHandler(true).put(async (req, res) => {
 
     res.json(messageSuccess(200, "", false));
   } catch (error: any) {
-    res.json(messageError(500, error.message));
+    res.json(messageError(500, error?.message));
     insertLogs(
       "api",
       "put confirmFile",
       "dashboard",
-      error.message,
+      error?.message,
       req.userId
     );
   }

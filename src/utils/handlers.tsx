@@ -11,12 +11,17 @@ export interface NextApiRequestExtended extends NextApiRequest {
   userName: string;
 }
 
-export function getHandler(
-  auth: boolean,
-  limit: number = 10,
-  interval: number = 60,
-  urlRateLimit?: string
-) {
+export function getHandler({
+  auth = true,
+  limit = 10,
+  interval = 60,
+  urlRateLimit = "",
+}: {
+  auth?: boolean;
+  limit?: number;
+  interval?: number;
+  urlRateLimit?: string;
+}) {
   const handleCors = cors({
     origin: configs.webUrl,
   });
@@ -28,10 +33,10 @@ export function getHandler(
 
   return nextConnect<NextApiRequestExtended, NextApiResponse>({
     onError(error, req, res) {
-      if (error.message === "Rate limit exceeded") {
-        res.status(429).json({ error: error.message });
-      } else if (error.message === "not authorized") {
-        res.status(401).json({ error: error.message });
+      if (error?.message === "Rate limit exceeded") {
+        res.status(429).json({ error: error?.message });
+      } else if (error?.message === "not authorized") {
+        res.status(401).json({ error: error?.message });
       } else {
         res.status(500).json({ error: "Internal Server Error" });
       }
@@ -59,6 +64,10 @@ export function getHandler(
             next(Error("not authorized"));
           }
         } else {
+          const { isRateLimited } = limiter.check("AuthNotRequired");
+          if (isRateLimited) {
+            return next(Error("Rate limit exceeded"));
+          }
           next();
         }
       } catch (error) {
@@ -72,7 +81,7 @@ export const messageSuccess = (
   data: any,
   isNeededToBeParse: boolean = true
 ) => {
-  let jsonMessage = {
+  const jsonMessage = {
     success: true,
     status_code: codeNumber,
     result: isNeededToBeParse ? JSON.parse(data) : data,
@@ -81,7 +90,7 @@ export const messageSuccess = (
 };
 
 export const messageError = (codeNumber: number, errMsg: string) => {
-  let jsonMessage = {
+  const jsonMessage = {
     success: false,
     status_code: codeNumber,
     message: errMsg,
