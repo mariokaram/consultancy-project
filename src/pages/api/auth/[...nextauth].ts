@@ -8,19 +8,23 @@ import GoogleProvider from "next-auth/providers/google";
 import { insertLogs } from "@/utils/shared";
 
 export const optionsAuth: NextAuthOptions = {
-  adapter: TypeORMLegacyAdapter({
-    type: "mysql",
-    host: configs.host,
-    port: configs.port as number,
-    username: configs.user,
-    password: configs.password,
-    database: configs.database,
-    entities,
-    ssl: {
-      rejectUnauthorized: process.env.NODE_ENV === "production",
-      ca: configs.cert,
+  adapter: TypeORMLegacyAdapter(
+    {
+      type: "mysql",
+      host: configs.host,
+      port: configs.port as number,
+      username: configs.user,
+      password: configs.password,
+      database: configs.database,
+      ssl: {
+        rejectUnauthorized: process.env.NODE_ENV === "production",
+        ca: configs.cert,
+      },
     },
-  }),
+    {
+      entities,
+    }
+  ),
 
   logger: {
     error(code: string, metadata: object) {

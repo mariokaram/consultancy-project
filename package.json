@@ -37,7 +37,7 @@
     "next-connect": "^0.13.0",
     "next-images": "^1.8.4",
     "nodemailer": "^6.9.14",
-    "react": "^18.2.0",
+    "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-email": "1.9.4",
     "react-slick": "^0.29.0",
@@ -49,7 +49,7 @@
     "slick-carousel": "^1.8.1",
     "sql-template-strings": "^2.2.2",
     "swr": "^2.0.4",
-    "typeorm": "^0.3.7",
+    "typeorm": "^0.3.20",
     "typescript": "4.9.5"
   },
   "devDependencies": {

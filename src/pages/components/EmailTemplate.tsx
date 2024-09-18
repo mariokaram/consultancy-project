@@ -23,7 +23,7 @@ interface EmailProps {
 export const TemplateEmail = (template: EmailProps) => {
   return (
     <>
-      {template.type === "login" && (
+      {template.type === "login" ? (
         <Html>
           <Head />
           <Preview>
@@ -57,9 +57,7 @@ export const TemplateEmail = (template: EmailProps) => {
             </Container>
           </Body>
         </Html>
-      )}
-
-      {template.type === "contactUs" ? (
+      ) : template.type === "contactUs" ? (
         <Html>
           <Head />
           <Preview>
