@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
+    "noEmit": false,  // Allow emitting JS files
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -22,7 +22,6 @@
       "~/*": ["./*"],
       "@/fonts": ["./fonts"]
     }
-    
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

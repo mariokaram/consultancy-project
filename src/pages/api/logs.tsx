@@ -19,11 +19,16 @@ export default getHandler({ auth: false, urlRateLimit: "logs" }).post(
         }
       }
 
-      await executeQuery(sql`
+      const logResult = await executeQuery(sql`
     insert into logs ( userID, type , fn, page ,message , date ) values ( ${id}, ${data.type}, ${data.fn} , ${data.page} , ${data.message} ,current_timestamp(6) )   
     `);
+      if (logResult.successQuery) {
+        res.json(messageSuccess(200, true));
+      }else{
+        res.status(500)
+        throw { message: "logs errors" };
+      }
 
-      res.json(messageSuccess(200, true));
     } catch (error: any) {
       res.json(messageError(500, error?.message));
     }

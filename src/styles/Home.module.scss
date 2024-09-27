@@ -60,10 +60,11 @@
         flex-direction: column;
         align-items: center;
         gap: 2rem;
-        flex: 1;
+        flex: 2;
         > div:first-child {
           text-align: center;
           line-height: 1.5;
+          max-width: 600px;
         }
       }
       .imageLeft {
