@@ -16,7 +16,7 @@ import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
 import SpinnerContextProvider from "@/contexts/SpinnerContextProvider";
 import "@/styles/globals.scss";
-
+import NextNProgress from "nextjs-progressbar";
 // Material-UI imports
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -77,6 +77,7 @@ export default function App(props: MyAppProps) {
                 }}
               >
                 <main className={`${Aeonik.className} main`}>
+                  <NextNProgress height={2} color="#028b9c"/>
                   <Component {...pageProps} />
                   {/* <Analytics /> */}
                 </main>

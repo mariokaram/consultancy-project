@@ -48,6 +48,9 @@ a {
     border-bottom: 0 !important;
   }
 }
+.MuiPaper-root {
+  z-index: 0 !important;
+}
 
 .MuiTableContainer-root {
   box-shadow: var(--box-shadow);
