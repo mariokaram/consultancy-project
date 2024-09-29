@@ -1,11 +1,11 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import { TypeORMLegacyAdapter } from "@next-auth/typeorm-legacy-adapter";
-import * as entities from "@/lib/entities";
 import EmailProvider from "next-auth/providers/email";
 import { configs } from "@/utils/config";
 import { CustomsendVerificationRequest } from "./signinemail";
 import GoogleProvider from "next-auth/providers/google";
 import { insertLogs } from "@/utils/shared";
+import path from "path";
 
 export const optionsAuth: NextAuthOptions = {
   adapter: TypeORMLegacyAdapter(
@@ -22,7 +22,7 @@ export const optionsAuth: NextAuthOptions = {
       },
     },
     {
-      entities,
+      entities: [path.join(__dirname, "../../../lib/entities.ts")] as any,
     }
   ),
 
