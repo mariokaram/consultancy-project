@@ -50,6 +50,9 @@ export function getHandler({
       try {
         if (auth) {
           const session: any = await getServerSession(req, res, optionsAuth);
+
+          console.log(session, "marioooooooooooooo");
+
           if (session) {
             const { isRateLimited } = limiter.check(session.user["id"]);
 

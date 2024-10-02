@@ -3,8 +3,8 @@ import axios from "axios";
 import { Form, Formik } from "formik";
 import { toast, ToastContainer } from "react-toastify";
 import styles from "@/styles/Questionnaire.module.scss";
-import { Router, useRouter } from "next/router";
-import { map, isEmpty, groupBy, isEqual, filter } from "lodash";
+import { useRouter } from "next/router";
+import { map, isEmpty, groupBy, isEqual } from "lodash";
 import Info from "~/public/icons/info.svg";
 import backArrow from "~/public/icons/backArrow.svg";
 import Image from "next/image";
@@ -19,6 +19,7 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { insertLogs } from "@/utils/shared";
 import OpenDialog from "@/pages/components/Modal";
+import HelpIcon from "@mui/icons-material/Help";
 
 interface InputData {
   [key: string]: {
@@ -871,10 +872,12 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
                                       placement="top"
                                       title={v.quest_tooltip}
                                     >
-                                      <Image
-                                        style={{ cursor: "pointer" }}
-                                        alt="info"
-                                        src={Info}
+                                      <HelpIcon
+                                        fontSize="small"
+                                        style={{
+                                          color: "var(--secondaryColor)",
+                                          cursor: "pointer",
+                                        }}
                                       />
                                     </Tooltip>
                                   </div>
@@ -1091,6 +1094,7 @@ export function FormikStepper({
           <Stepper
             alternativeLabel={mediaQuery ? false : true}
             activeStep={step}
+            orientation={"vertical"}
           >
             {childrenArray.map((child, index) => {
               if (

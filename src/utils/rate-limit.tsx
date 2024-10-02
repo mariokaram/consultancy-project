@@ -26,7 +26,7 @@ export default function rateLimit(options: Options) {
       const currentUsage = tokenCount[0];
       const isRateLimited = currentUsage > limit;
 
-      process.env.NODE_ENV !== "production" &&
+      if (process.env.NODE_ENV !== "production") {
         console.table([
           { Metric: "Limit", Value: limit },
           { Metric: "Token Count", Value: tokenCount },
@@ -34,6 +34,7 @@ export default function rateLimit(options: Options) {
           { Metric: "Current Usage", Value: currentUsage },
           { Metric: "isRateLimited", Value: isRateLimited },
         ]);
+      }
 
       return {
         isRateLimited,

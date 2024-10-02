@@ -10,11 +10,11 @@ import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import { SpinnerContext } from "@/contexts/SpinnerContextProvider";
 import { insertLogs } from "@/utils/shared";
 import { useState, useContext, useEffect } from "react";
-import { signIn, getCsrfToken } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { configs } from "@/utils/config";
 
-export default function LoginInPage({ csrfToken }: any) {
+export default function LoginInPage() {
   const { showSpinner } = useContext(SpinnerContext);
 
   const [email, setInput] = useState("");
@@ -86,13 +86,8 @@ export default function LoginInPage({ csrfToken }: any) {
               <div className="description">
                 We are glad to help you and introduce you to our services.
               </div>
-              <form method="post" onSubmit={(e: any) => submit(e)}>
+              <form onSubmit={(e: any) => submit(e)}>
                 <div className={styles.input}>
-                  <input
-                    name="csrfToken"
-                    type="hidden"
-                    defaultValue={csrfToken}
-                  />
                   <TextField
                     variant="standard"
                     size="small"
@@ -174,9 +169,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     };
   }
-  const csrfToken = await getCsrfToken(context);
-
   return {
-    props: { csrfToken },
+    props: {},
   };
 }

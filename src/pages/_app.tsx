@@ -77,7 +77,7 @@ export default function App(props: MyAppProps) {
                 }}
               >
                 <main className={`${Aeonik.className} main`}>
-                  <NextNProgress height={2} color="#028b9c"/>
+                  <NextNProgress color="#028b9c" />
                   <Component {...pageProps} />
                   {/* <Analytics /> */}
                 </main>

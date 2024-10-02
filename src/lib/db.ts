@@ -1,6 +1,5 @@
 import mysql from "serverless-mysql";
 import { configs } from "@/utils/config";
-import { queryCallback } from "mysql";
 
 const db = mysql({
   config: {
@@ -17,28 +16,32 @@ const db = mysql({
     },
   },
   connUtilization: 0.7,
+  
+  onConnect: (error: any) => {
+    console.error("Connection Started:", error);
+  },
   onConnectError: (error: any) => {
     console.error("Connection Error while connecting:", error);
   },
   onError: (error: any) => {
     console.error("Connection Error:", error);
   },
-  onClose: () => console.log("on close connection"),
+  onClose: () => console.log("Connection closing"),
 });
 
 async function executeQuery(
-  query: queryCallback
+  query: string
 ): Promise<{ successQuery: boolean; data?: any }> {
   try {
     const results = await db.query(query);
-    console.log("connection and query succeeded");
+    console.log("Query succeeded");
     return { successQuery: true, data: JSON.stringify(results) };
   } catch (error) {
-    console.error("query error:", error);
+    console.error("Query error:", error);
     return { successQuery: false };
   } finally {
-    console.error("db connection ended:");
     await db.end();
+    console.log("Connection ended");
   }
 }
 

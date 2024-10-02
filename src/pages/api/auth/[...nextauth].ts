@@ -35,6 +35,9 @@ export const optionsAuth: NextAuthOptions = {
         JSON.stringify(metadata + code)
       );
     },
+    debug(code, metadata) {
+      console.log(code, metadata)
+    }
   },
 
   secret: configs.secret as string,

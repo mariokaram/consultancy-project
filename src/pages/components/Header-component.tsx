@@ -13,6 +13,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
+import CircularProgress from "@mui/material/CircularProgress";
 import Image from "next/image";
 import Logo from "~/public/icons/logo-primary.svg";
 import Link from "next/link";
@@ -108,6 +109,12 @@ export default function Header(props: any) {
             Get in touch
           </Button>
         </Link>
+        {status === "loading" && (
+          <CircularProgress
+            style={{ color: "var(--blueColor)" }}
+            size={20}
+          ></CircularProgress>
+        )}
         {status !== "authenticated" && status !== "loading" && (
           <Link href="/signin">
             <Button className="btn btn-third">Get started</Button>
@@ -174,6 +181,14 @@ export default function Header(props: any) {
                 <Link className={styles.contact} href="/contact">
                   <Button className={`links`}>Get in touch</Button>
                 </Link>
+
+                {status === "loading" && (
+                  <CircularProgress
+                    style={{ color: "var(--blueColor)" }}
+                    size={20}
+                  ></CircularProgress>
+                )}
+
                 {status === "authenticated" && (
                   <div>
                     <IconButton

@@ -9,6 +9,91 @@ import CustomizedAccordions from "./components/Accordion-component";
 import Link from "next/link";
 
 export default function PricingPage() {
+  // const cardsData = [
+  //   {
+  //     id: 1,
+  //     title: "Idea Generation",
+  //     pricing: "$1,500",
+  //     currency: "CAD",
+  //     serviceUrl: "/services/proposing-business-ideas",
+  //     backgroundClass: styles.cardBlue,
+  //     points: [
+  //       "Customized plan",
+  //       "Dynamic dashboard",
+  //       "Website chatroom",
+  //       "2 to 3 answer oriented and specific idea proposals",
+  //       "2 free idea proposals revision",
+  //       "In-depth analysis of your answers",
+  //       "Elaborate idea description",
+  //       "Solutions for concerns",
+  //       "Optimisation of skills",
+  //       "Business launch roadmap",
+  //       "5 to 8 days working full process time",
+  //       "10 to 15 pages analysis document on average",
+  //     ],
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Business Model and Financial Study",
+  //     pricing: "$3,000",
+  //     currency: "CAD",
+  //     serviceUrl: "/services/business-plan",
+  //     backgroundClass: styles.darkBlue,
+  //     points: [
+  //       "Customized strategies",
+  //       "Dynamic dashboard",
+  //       "Website chatroom",
+  //       "Business model",
+  //       "2 free business model revisions",
+  //       "Financial projections",
+  //       "9 to 11 working days full process time",
+  //       "8 to 12 pages full study",
+  //     ],
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Business Model and Marketing Strategy",
+  //     pricing: "$4,500",
+  //     currency: "CAD",
+  //     serviceUrl: "/services/business-plan",
+  //     backgroundClass: styles.darkBlack,
+  //     points: [
+  //       "Customized strategies",
+  //       "Dynamic dashboard",
+  //       "Website chatroom",
+  //       "Business model",
+  //       "2 free business model revisions",
+  //       "Market research",
+  //       "9 to 12 working days full process time",
+  //       "10 to 14 pages full study",
+  //     ],
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Business Plan",
+  //     pricing: "$2,000",
+  //     currency: "CAD",
+  //     serviceUrl: "/services/business-plan",
+  //     backgroundClass: styles.cardGreen,
+  //     points: [
+  //       "Customized strategies",
+  //       "Dynamic dashboard",
+  //       "Website chatroom",
+  //       "Business model",
+  //       "2 free business model revisions",
+  //       "Marketing strategy",
+  //       "Risk mitigation",
+  //       "Company structure and operations",
+  //       "Financial study",
+  //       "Growth prospects",
+  //       "12 to 15 working days full process time",
+  //       "25 to 30 pages full plan",
+  //       "Business presentation slides (Pitch deck)",
+  //       "Other supporting documents as per request",
+  //     ],
+  //   },
+  // ];
+
   const cardsData = [
     {
       id: 1,
@@ -16,6 +101,7 @@ export default function PricingPage() {
       pricing: "$1,500",
       currency: "CAD",
       serviceUrl: "/services/proposing-business-ideas",
+      questionnaireUrl: "ideas-generation",
       backgroundClass: styles.cardBlue,
       points: [
         "Customized plan",
@@ -24,12 +110,6 @@ export default function PricingPage() {
         "2 to 3 answer oriented and specific idea proposals",
         "2 free idea proposals revision",
         "In-depth analysis of your answers",
-        "Elaborate idea description",
-        "Solutions for concerns",
-        "Optimisation of skills",
-        "Business launch roadmap",
-        "5 to 8 days working full process time",
-        "10 to 15 pages analysis document on average",
       ],
     },
     {
@@ -38,6 +118,7 @@ export default function PricingPage() {
       pricing: "$3,000",
       currency: "CAD",
       serviceUrl: "/services/business-plan",
+      questionnaireUrl: "financial-plan",
       backgroundClass: styles.darkBlue,
       points: [
         "Customized strategies",
@@ -46,8 +127,6 @@ export default function PricingPage() {
         "Business model",
         "2 free business model revisions",
         "Financial projections",
-        "9 to 11 working days full process time",
-        "8 to 12 pages full study",
       ],
     },
     {
@@ -56,6 +135,7 @@ export default function PricingPage() {
       pricing: "$4,500",
       currency: "CAD",
       serviceUrl: "/services/business-plan",
+      questionnaireUrl: "marketing-plan",
       backgroundClass: styles.darkBlack,
       points: [
         "Customized strategies",
@@ -64,8 +144,6 @@ export default function PricingPage() {
         "Business model",
         "2 free business model revisions",
         "Market research",
-        "9 to 12 working days full process time",
-        "10 to 14 pages full study",
       ],
     },
     {
@@ -74,6 +152,7 @@ export default function PricingPage() {
       pricing: "$2,000",
       currency: "CAD",
       serviceUrl: "/services/business-plan",
+      questionnaireUrl: "business-plan",
       backgroundClass: styles.cardGreen,
       points: [
         "Customized strategies",
@@ -82,18 +161,9 @@ export default function PricingPage() {
         "Business model",
         "2 free business model revisions",
         "Marketing strategy",
-        "Risk mitigation",
-        "Company structure and operations",
-        "Financial study",
-        "Growth prospects",
-        "12 to 15 working days full process time",
-        "25 to 30 pages full plan",
-        "Business presentation slides (Pitch deck)",
-        "Other supporting documents as per request",
       ],
     },
   ];
-
   return (
     <>
       <section>
@@ -144,9 +214,16 @@ export default function PricingPage() {
                 </div>
 
                 <div className={styles.cardBtn}>
-                  <Button size="large" className="btn btn-secondary">
-                    Choose Plan
-                  </Button>
+                  <Link
+                    href={{
+                      pathname: "/questionnaire",
+                      query: { service: card.questionnaireUrl, project: "new" },
+                    }}
+                  >
+                    <Button size="large" className="btn btn-secondary">
+                      Choose Plan
+                    </Button>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -201,9 +278,19 @@ export default function PricingPage() {
                 </div>
 
                 <div className={styles.bannerBtn}>
-                  <Button size="large" className="btn btn-secondary">
-                    Get quotation
-                  </Button>
+                  <Link
+                    href={{
+                      pathname: "/questionnaire",
+                      query: {
+                        service: "complex-business-plan",
+                        project: "new",
+                      },
+                    }}
+                  >
+                    <Button size="large" className="btn btn-secondary">
+                      Get quotation
+                    </Button>
+                  </Link>
                 </div>
               </div>
               <Image
