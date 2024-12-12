@@ -16,15 +16,19 @@ const db = mysql({
     },
   },
   connUtilization: 0.7,
-  
-  onConnect: (error: any) => {
-    console.error("Connection Started:", error);
+
+  onConnect: () => {
+    console.error("Connection Started");
   },
   onConnectError: (error: any) => {
     console.error("Connection Error while connecting:", error);
   },
   onError: (error: any) => {
-    console.error("Connection Error:", error);
+    if (error?.code === "PROTOCOL_CONNECTION_LOST") {
+      console.error("prototol lost connection from Db inital");
+    } else {
+      console.error("Connection Error from Db inital:", error);
+    }
   },
   onClose: () => console.log("Connection closing"),
 });
@@ -34,14 +38,14 @@ async function executeQuery(
 ): Promise<{ successQuery: boolean; data?: any }> {
   try {
     const results = await db.query(query);
-    console.log("Query succeeded");
+    console.log("Query Succeeded");
     return { successQuery: true, data: JSON.stringify(results) };
   } catch (error) {
-    console.error("Query error:", error);
+    console.error("Query Error:", error);
     return { successQuery: false };
   } finally {
     await db.end();
-    console.log("Connection ended");
+    console.log("Connection Ended");
   }
 }
 

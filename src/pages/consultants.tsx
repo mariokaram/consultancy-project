@@ -1,50 +1,10 @@
 import styles from "@/styles/Consultants.module.scss";
 import Image from "next/image";
 import backGroundImage from "~/public/imgs/consultants-hero.webp";
-import consultantProf1 from "~/public/imgs/khara.png";
-import consultantProf2 from "~/public/imgs/consultant1.png";
-
 import ContactBanner from "@/pages/components/Contact-Banner";
+import { consultants } from "@/utils/shared";
 
 export default function ConsultantsPage() {
-  const consultants = [
-    {
-      name: "Mario",
-      field: "PhD, Entrepreneurship, Stanford University",
-      focus: "Healthcare and Biotechnology",
-      bio: "Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...",
-      quote:
-        "I thrive on transforming complex ideas into compelling strategies that drive growth...",
-      imageSrc: consultantProf1,
-    },
-    {
-      name: "John",
-      field: "MBA, Finance, Harvard Business School",
-      focus: "Financial Services and Investment",
-      bio: "John has extensive experience in financial planning and investment strategies...",
-      quote:
-        "My goal is to leverage financial acumen to maximize returns and ensure long-term stability...",
-      imageSrc: consultantProf2,
-    },
-    {
-      name: "John",
-      field: "MBA, Finance, Harvard Business School",
-      focus: "Financial Services and Investment",
-      bio: "John has extensive experience in financial planning and investment strategies...",
-      quote:
-        "My goal is to leverage financial acumen to maximize returns and ensure long-term stability...",
-      imageSrc: consultantProf2,
-    },
-    {
-      name: "John",
-      field: "MBA, Finance, Harvard Business School",
-      focus: "Financial Services and Investment",
-      bio: "John has extensive experience in financial planning and investment strategies...",
-      quote:
-        "My goal is to leverage financial acumen to maximize returns and ensure long-term stability...",
-      imageSrc: consultantProf2,
-    },
-  ];
   return (
     <>
       <section>

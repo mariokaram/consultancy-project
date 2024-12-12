@@ -13,19 +13,24 @@ export interface ProjectListDetailsConsultantType {
   companyName: string;
   projectLabelStatus: string;
   projectColorStatus: string;
+  projectStatusValue: string;
+  projectTypeName: string;
   userEmail: string;
   serviceDuration: number;
   serviceName: string;
+  paymentLink:string;
   serviceValue: string;
+  upgradeFromProjectType: string;
+  upgradeFromProjectId: number;
+  project_upgraded: number;
   status_color: string;
   status_label: string;
   serviceId: number;
   projectType: string;
-  idea1: string;
-  idea2: string;
-  idea3: string;
-  ideaPicked: string;
+  confirmed: number;
   status_value: string;
+  userName: string;
+  userId: string;
 }
 
 export interface IMAGEValueType {
@@ -40,8 +45,10 @@ export interface servicesType {
   status_color: string;
   status_label: string;
   status_value: string;
+  confirmed: number;
   serviceDuration: number;
   serviceId: number;
+  serviceImg: string;
 }
 export interface finalDataType {
   project_id: number;
@@ -50,14 +57,20 @@ export interface finalDataType {
   userEmail: string;
   consultantName: string;
   consultantId: string;
+  upgradeFromProjectType: string;
+  upgradeFromProjectId: number;
+  project_upgraded: number;
   companyName: string;
   projectLabelStatus: string;
   projectColorStatus: string;
-  projectType: string;
-  idea1: string;
-  idea2: string;
-  idea3: string;
-  ideaPicked: string;
+  projectType: string;  
+  invoice: string;
+  projectStatusValue: string;
+  paymentLink:string;
+  projectTypeName: string;
+  userName: string;
+  currentServiceName:string
+  userId: string;
 }
 
 interface ResponseType {
@@ -83,11 +96,21 @@ export default getHandler({}).get(async (req, res) => {
 
     if (req.userRole === "a") {
       answers = await executeQuery(sql` 
-        select s.id as serviceId , p.project_service as projectType , p.idea1 , p.idea2 , p.idea3 , p.ideaPicked ,s.serviceDuration , s.serviceName , st.status_color , st.status_label , st.status_value , s.serviceValue , p.info,  p.project_id, u.id as consultantId ,u.name as consultantName , p.date_creation ,
+        select s.id as serviceId , p.invoice , s.confirmed , p.upgradeFromProjectType , p.upgradeFromProjectId , p.project_upgraded , p.paymentLink, p.project_service as projectType ,
+        (select serviceName from services se where se.serviceStatus = p.status and se.serviceStatus <> 7 and se.projectId = ${projectId} limit 1 ) as currentServiceName ,   
+        case 
+        when p.project_service = 'i' then 'Ideas generation'
+        when p.project_service = 'f' then 'Financial plan'
+        when p.project_service = 'm' then 'Marketing plan'
+        when p.project_service = 'bc' then 'Complex business plan'    
+        else "Business plan" end as projectTypeName,
+        s.serviceDuration , s.serviceName , st.status_color , st.status_label , s.serviceImg , st.status_value , s.serviceValue , p.info,  p.project_id, u.id as consultantId, p.customer_id as userId , u.name as consultantName , p.date_creation ,
         ( select sta.status_label from statuses sta where sta.id = p.status ) as projectLabelStatus ,
         ( select sta.status_color from statuses sta where sta.id = p.status ) as projectColorStatus , 
-        ( select answers from quest_users q where q.quest_type= 'email' and q.project_id = ${projectId}   ) as userEmail ,
-        ( select answers from quest_users q where q.quest_type= 'projectName' and q.project_id = ${projectId}   ) as companyName  
+        ( select sta.status_value from statuses sta where sta.id = p.status ) as projectStatusValue ,
+        (SELECT answers FROM quest_users q WHERE q.quest_type = 'name' AND q.project_id = IF(p.upgradeFromProjectId IS NULL, ${projectId}, p.upgradeFromProjectId) ) AS userName,
+        (SELECT answers FROM quest_users q WHERE q.quest_type = 'email' AND q.project_id = IF(p.upgradeFromProjectId IS NULL, ${projectId}, p.upgradeFromProjectId) ) AS userEmail ,
+        (SELECT answers FROM quest_users q WHERE q.quest_type = 'projectName' AND q.project_id = IF(p.upgradeFromProjectId IS NULL,${projectId}, p.upgradeFromProjectId) ) AS companyName 
         from services s 
         inner join projects p on p.project_id = s.projectId
         left join users u on u.id = p.consultant_id
@@ -98,16 +121,25 @@ export default getHandler({}).get(async (req, res) => {
         `);
 
       usersConsultant = await executeQuery(sql` 
-       select name , id from users where role = 'c'       
+       select name , id from users where role in ( 'a' , 'c' )      
         
        `);
     } else {
       answers = await executeQuery(sql` 
-        select s.id as serviceId, s.serviceName , st.status_color , st.status_label , st.status_value , s.serviceValue , p.info,  p.project_id, u.name as consultantName , p.date_creation ,
+        select s.id as serviceId, p.invoice , p.project_service as projectType, p.upgradeFromProjectType , p.upgradeFromProjectId , p.project_upgraded , s.confirmed ,s.serviceName , st.status_color , st.status_label , st.status_value , s.serviceValue , s.serviceImg , p.customer_id as userId , p.info,  p.project_id, u.name as consultantName , p.date_creation ,
+        (select serviceName from services se where se.serviceStatus = p.status and se.serviceStatus <> 7 and se.projectId = ${projectId} limit 1 ) as currentServiceName ,         
+        case 
+        when p.project_service = 'i' then 'Ideas generation'
+        when p.project_service = 'f' then 'Financial plan'
+        when p.project_service = 'm' then 'Marketing plan'
+        when p.project_service = 'bc' then 'Complex business plan'    
+        else "Business plan" end as projectTypeName,
         ( select sta.status_label from statuses sta where sta.id = p.status ) as projectLabelStatus ,
         ( select sta.status_color from statuses sta where sta.id = p.status ) as projectColorStatus , 
-        ( select answers from quest_users q where q.quest_type= 'email' and q.project_id = ${projectId}   ) as userEmail ,
-        ( select answers from quest_users q where q.quest_type= 'projectName' and q.project_id = ${projectId}   ) as companyName  
+        ( select sta.status_value from statuses sta where sta.id = p.status ) as projectStatusValue ,
+        ( select answers from quest_users q where q.quest_type= 'email' and q.project_id = ${projectId} ) as userEmail ,
+        ( select answers from quest_users q where q.quest_type= 'name' and q.project_id = ${projectId} ) as userName , 
+        ( select answers from quest_users q where q.quest_type= 'projectName' and q.project_id = ${projectId} ) as companyName  
         from services s 
         inner join projects p on p.project_id = s.projectId and p.consultant_id = ${req.userId}
         left join users u on u.id = p.consultant_id
@@ -138,27 +170,36 @@ export default getHandler({}).get(async (req, res) => {
         JSON.parse(dataResult)?.map((v: any) => {
           services.push({
             serviceName: v.serviceName,
+            serviceImg: v.serviceImg,
             serviceId: v.serviceId,
             serviceValue: v.serviceValue ? JSON.parse(v.serviceValue) : null,
+            confirmed : v.confirmed,
             status_color: v.status_color,
             status_label: v.status_label,
             status_value: v.status_value,
             serviceDuration: v.serviceDuration,
           });
-          (finalData.companyName = v.companyName),
+            (finalData.companyName = v.companyName),
             (finalData.consultantName = v.consultantName),
             (finalData.consultantId = v.consultantId),
             (finalData.date_creation = v.date_creation),
             (finalData.userEmail = v.userEmail),
+            (finalData.paymentLink = v.paymentLink),
             (finalData.info = v.info),
             (finalData.projectColorStatus = v.projectColorStatus),
             (finalData.projectLabelStatus = v.projectLabelStatus),
+            (finalData.projectStatusValue = v.projectStatusValue);
+            (finalData.userName = v.userName);
+            (finalData.upgradeFromProjectType = v.upgradeFromProjectType),
+            (finalData.upgradeFromProjectId = v.upgradeFromProjectId),
+            (finalData.project_upgraded = v.project_upgraded),
+            (finalData.userId = v.userId);
+            (finalData.currentServiceName = v.currentServiceName);
+            (finalData.projectTypeName = v.projectTypeName);
             (finalData.project_id = v.project_id),
-            (finalData.projectType = v.projectType),
-            (finalData.idea1 = v.idea1),
-            (finalData.idea2 = v.idea2),
-            (finalData.idea3 = v.idea3),
-            (finalData.ideaPicked = v.ideaPicked);
+            (finalData.invoice = v.invoice),
+            (finalData.projectType = v.projectType)
+           
         });
       }
 

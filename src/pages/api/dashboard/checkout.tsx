@@ -10,7 +10,7 @@ export default getHandler({}).post(async (req, res) => {
     await db
       .transaction()
       .query(
-        sql`update projects  set status = 2, paid = 1 , info = ( select serviceDuration from services s where s.projectId = ${data.projectId} and userId =${req.userId} and statusOrder = 1  ) where project_id = ${data.projectId} and customer_id =${req.userId}`
+        sql`update projects  set status = 2 , info = ( select serviceDuration from services s where s.projectId = ${data.projectId} and userId =${req.userId} and statusOrder = 1  ) where project_id = ${data.projectId} and customer_id =${req.userId}`
       )
       .query(
         sql`update services set serviceStatus = 2 where projectId = ${data.projectId} and userId =${req.userId} and statusOrder = 1 `

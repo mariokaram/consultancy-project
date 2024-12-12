@@ -5,17 +5,16 @@ import { toast, ToastContainer } from "react-toastify";
 import styles from "@/styles/Questionnaire.module.scss";
 import { useRouter } from "next/router";
 import { map, isEmpty, groupBy, isEqual } from "lodash";
-import Info from "~/public/icons/info.svg";
-import backArrow from "~/public/icons/backArrow.svg";
+import illustration from "~/public/imgs/illustration.png";
 import Image from "next/image";
 import { SpinnerContext } from "@/contexts/SpinnerContextProvider";
 import Tooltip from "@mui/material/Tooltip";
 import ImageUpload from "@/pages/components/ImageUpload";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { QuestionnaireListType } from "@/pages/api/questionaire/initData";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import AddIcon from "@mui/icons-material/Add";
+import CheckIcon from "@mui/icons-material/Check";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { insertLogs } from "@/utils/shared";
 import OpenDialog from "@/pages/components/Modal";
@@ -87,6 +86,18 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
   });
 
   const selectorOptions: SelectorOptionsType = {
+    ReferralOptions: [
+      { value: "google", name: "Google" },
+      { value: "facebook", name: "Facebook" },
+      { value: "linkedin", name: "LinkedIn" },
+      { value: "instagram", name: "Instagram" },
+      { value: "events", name: "Events/Conferences" },
+      { value: "advertisements", name: "Advertisements" },
+      { value: "referral", name: "Referral by Friend/Colleague" },
+      { value: "blog", name: "Blog/Article" },
+      { value: "other", name: "Other" },
+    ],
+
     IndustrySelectorOptions: [
       { value: "Manufacturing", name: "Manufacturing" },
       { value: "Consultancy", name: "Consultancy" },
@@ -595,7 +606,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
                     href={pageInputs[v.id].value.secure_url}
                     download={pageInputs[v.id].value.original_filename}
                   >
-                    <Button size="small" className="btn btn-secondary">
+                    <Button size="small" className="btn btn-third">
                       Download CV
                     </Button>
                   </a>
@@ -660,16 +671,17 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
           html.push(
             <div key={v.id}>
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} size="small">
+                <Table size="small">
                   <TableHead className={styles.tableHeader}>
                     <TableRow>
-                      <TableCell>
+                      <TableCell style={{ borderRight: "1px solid lightgrey" }}>
                         <div className={styles.tableCell}>
                           <div>Current Products / Services</div>
 
                           {Object.keys(tableRows).length < 15 &&
                             !alreadySubmitted && (
-                              <AddIcon
+                              <div
+                                className={styles.iconsTable}
                                 onClick={() => {
                                   const uniqueKey = Math.random()
                                     .toString(36)
@@ -683,12 +695,18 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
                                     },
                                   }));
                                 }}
-                                className={styles.iconsTable}
-                              />
+                              >
+                                <AddIcon />
+                                <div className={styles.product}>
+                                  Add product
+                                </div>
+                              </div>
                             )}
                         </div>
                       </TableCell>
-                      <TableCell>Additional information (Optional)</TableCell>
+                      <TableCell className={styles.tableCell}>
+                        Additional information (Optional)
+                      </TableCell>
                       <TableCell align="center"></TableCell>
                     </TableRow>
                   </TableHead>
@@ -697,7 +715,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
                       <TableRow key={rowId}>
                         <TableCell
                           className={` ${
-                            pageInputs[v.id].error ? "errorInput" : ""
+                            pageInputs[v.id].error ? "errorInputTable" : ""
                           }`}
                           style={{ borderRight: "1px solid lightgrey" }}
                         >
@@ -830,38 +848,42 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
     <>
       <section>
         <div className={styles.mainContainer}>
-          <div className={`${styles.title} subTitle`}>Questionnaire</div>
-          <div className={`${styles.desc} description`}>
-            <p>
-              Labels can be placed below the step icon by setting the
-              alternative label prop on the stepper component
-            </p>
-          </div>
-
           {!isEmpty(pageInputs) ? (
-            <div className="card">
-              <div className={styles.cardContent}>
-                <FormikStepper
-                  initialValues={{
-                    value: pageInputs,
-                  }}
-                  onSubmit={async (
-                    step,
-                    isFinalStep: boolean,
-                    arrayOfError?: string[]
-                  ) => {
-                    return await submitForm(step, isFinalStep, arrayOfError);
-                  }}
-                  projectId={props.projectId}
-                  alreadySubmitted={alreadySubmitted}
-                  tableRows={tableRows}
-                  userRole={props.userRole}
-                >
-                  {map(
-                    stepperDataType,
-                    (child: QuestionnaireListType[], parent) => (
-                      <FormikStep key={parent} label={parent}>
-                        <div className={styles.inputContainer}>
+            <div className={styles.cardContent}>
+              <FormikStepper
+                initialValues={{
+                  value: pageInputs,
+                }}
+                onSubmit={async (
+                  step,
+                  isFinalStep: boolean,
+                  arrayOfError?: string[]
+                ) => {
+                  return await submitForm(step, isFinalStep, arrayOfError);
+                }}
+                projectId={props.projectId}
+                alreadySubmitted={alreadySubmitted}
+                tableRows={tableRows}
+                userRole={props.userRole}
+              >
+                {map(
+                  stepperDataType,
+                  (child: QuestionnaireListType[], parent) => (
+                    <FormikStep key={parent} label={parent}>
+                      <div className={styles.inputContainer}>
+                        <div className={styles.inputSection}>
+                          <div className={styles.titleInfo}>
+                            <div className="subTitle">
+                              Let&apos;s Get to Know Your Business
+                            </div>
+                            <div className="description">
+                              To offer you tailored solutions, we need a few
+                              details about your business. Please fill out this
+                              questionnaire. You can save and continue later if
+                              needed.
+                            </div>
+                          </div>
+
                           {map(child, (v: QuestionnaireListType, i) => (
                             <div key={i}>
                               <div className={styles.title}>
@@ -871,6 +893,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
                                     <Tooltip
                                       placement="top"
                                       title={v.quest_tooltip}
+                                      arrow={true}
                                     >
                                       <HelpIcon
                                         fontSize="small"
@@ -889,16 +912,16 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
                             </div>
                           ))}
                         </div>
-                      </FormikStep>
-                    )
-                  )}
-                </FormikStepper>
-              </div>
+                      </div>
+                    </FormikStep>
+                  )
+                )}
+              </FormikStepper>
             </div>
           ) : (
             <div className={styles.loading}>
               <CircularProgress
-                style={{ color: "var(--secondaryColor)" }}
+                style={{ color: "var(--blueColor)" }}
                 size={20}
               ></CircularProgress>
             </div>
@@ -949,7 +972,6 @@ export function FormikStepper({
   const [step, setStep] = useState(0);
   const currentChild = childrenArray[step];
   const [completed, setCompleted] = useState(false);
-  const mediaQuery = useMediaQuery("(max-width:1000px)");
   const router = useRouter();
   const isLastStep = () => {
     return step === childrenArray.length - 1;
@@ -994,6 +1016,26 @@ export function FormikStepper({
     setDialogResult(v);
     setIsDialogOpen(false);
   }
+  const inactiveStep = () => (
+    <div className={styles.inactiveStep}>
+      <CheckIcon className={styles.icon} />
+    </div>
+  );
+
+  const activeStep = () => (
+    <div className={styles.activeStepContainer}>
+      {/* Outer Circle */}
+      <div className={styles.activeOuterCircle}></div>
+
+      {/* Middle Circle */}
+      <div className={styles.activeMiddleCircle}></div>
+
+      {/* Inner Circle */}
+      <div className={styles.activeInnerCircle}></div>
+
+      <CheckIcon className={styles.icon} />
+    </div>
+  );
 
   return (
     <Formik
@@ -1083,73 +1125,130 @@ export function FormikStepper({
       }}
     >
       {({ isSubmitting }) => (
-        <Form autoComplete="off">
-          <OpenDialog
-            text="Please note that submitted answers cannot be modified afterwards. Are you sure you want to proceed with the submission?"
-            title="Confirmation"
-            id="questionnaire"
-            openDialog={isDialogOpen}
-            onCloseDialog={(v) => dialogResultFn(v as string)}
-          />
-          <Stepper
-            alternativeLabel={mediaQuery ? false : true}
-            activeStep={step}
-            orientation={"vertical"}
-          >
-            {childrenArray.map((child, index) => {
-              if (
-                React.isValidElement(child) &&
-                child.props &&
-                child.props.label
-              ) {
-                return (
-                  <Step
-                    key={child.props.label}
-                    completed={step > index || completed}
-                  >
-                    <StepLabel>{child.props.label}</StepLabel>
-                  </Step>
-                );
-              }
-              return null;
-            })}
-          </Stepper>
+        <>
+          <Form autoComplete="off">
+            <OpenDialog
+              text="Please note that submitted answers cannot be modified afterwards. Are you sure you want to proceed with the submission?"
+              title="Confirmation"
+              id="questionnaire"
+              btnName="Submit"
+              openDialog={isDialogOpen}
+              onCloseDialog={(v) => dialogResultFn(v as string)}
+            />
 
-          {currentChild}
+            <div className={styles.stepsSection}>
+              <div className={styles.stepsContainer}>
+                <div className={styles.stepperSection}>
+                  <div className={styles.stepper}>
+                    <Stepper activeStep={-1} orientation={"vertical"}>
+                      {childrenArray.map((child, index) => {
+                        if (
+                          React.isValidElement(child) &&
+                          child.props &&
+                          child.props.label
+                        ) {
+                          return (
+                            <Step
+                              key={child.props.label}
+                              completed={step > index || completed}
+                            >
+                              <StepLabel
+                                StepIconComponent={
+                                  step >= index || completed
+                                    ? activeStep
+                                    : inactiveStep
+                                }
+                              >
+                                <div className={styles.stepNumber}>
+                                  Part {index + 1}
+                                </div>
+                                <div className={styles.stepInfo}>
+                                  {child.props.label}
+                                </div>
+                              </StepLabel>
+                            </Step>
+                          );
+                        }
+                        return null;
+                      })}
+                    </Stepper>
+                  </div>
 
-          <div className={styles.btnContainer}>
-            {step > 0 ? (
-              <div className={styles.back}>
-                <Button
-                  disabled={isSubmitting}
-                  className={`links`}
-                  onClick={() => {
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                    setStep((s) => s - 1);
-                  }}
-                >
-                  <Image
-                    style={{ marginRight: "0.5rem" }}
-                    src={backArrow}
-                    alt="backArrow"
-                  />
-                  Back
-                </Button>
+                  <div className={styles.stepperImage}>
+                    <Image src={illustration} alt="illustration" />
+                  </div>
+                </div>
               </div>
-            ) : null}
-            <div className={styles.next}>
-              <Button
-                type="submit"
-                className="btn btn-secondary"
-                disabled={
-                  isSubmitting || (props.alreadySubmitted && isLastStep())
-                }
-              >
-                {isSubmitting ? "Submitting" : isLastStep() ? "Submit" : "Next"}
-              </Button>
+              <div className={styles.questionsSection}>
+                <div>{currentChild}</div>
+                <div className={styles.btnSection}>
+                  <div
+                    className={`${styles.btnContainer} ${
+                      step === 0 ? styles["no-back"] : ""
+                    }`}
+                  >
+                    {step > 0 ? (
+                      <div className={styles.back}>
+                        <Button
+                          disabled={isSubmitting}
+                          size="large"
+                          className="btn btn-third"
+                          onClick={() => {
+                            window.scrollTo({ top: 0, behavior: "smooth" });
+                            setStep((s) => s - 1);
+                          }}
+                        >
+                          Previous
+                        </Button>
+                      </div>
+                    ) : null}
+
+                    <div className={styles.next}>
+                      {props.alreadySubmitted && isLastStep() ? (
+                        <Button
+                          size="large"
+                          className="btn btn-secondary"
+                          onClick={() => {
+                            if (
+                              props.userRole === "a" ||
+                              props.userRole === "c"
+                            ) {
+                              return router.push(
+                                "/consultant/dashboard-consultant"
+                              );
+                            } else {
+                              return router.push("/dashboard");
+                            }
+                          }}
+                        >
+                          Back to dashboard
+                        </Button>
+                      ) : (
+                        <Button
+                          type="submit"
+                          size="large"
+                          className="btn btn-secondary"
+                          disabled={
+                            isSubmitting ||
+                            (props.alreadySubmitted && isLastStep())
+                          }
+                        >
+                          {isSubmitting
+                            ? "Saving"
+                            : isLastStep()
+                            ? "Submit"
+                            : completed
+                            ? "next"
+                            : "Save progress"}
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </Form>
+          </Form>
+        </>
       )}
     </Formik>
   );
@@ -1209,18 +1308,25 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   let serviceTypeQueryParam = "";
   if (!isEmpty(query)) {
     //check if query is empty if yes go to /
-    serviceTypeQueryParam =
-      query.service === "ideas-generation"
-        ? "i"
-        : query.service === "business-plan"
-        ? "b"
-        : query.service === "financial-plan"
-        ? "f"
-        : query.service === "marketing-plan"
-        ? "m"
-        : query.service === "complex-business-plan"
-        ? "bc"
-        : "";
+    switch (query.service) {
+      case "ideas-generation":
+        serviceTypeQueryParam = "i";
+        break;
+      case "business-plan":
+        serviceTypeQueryParam = "b";
+        break;
+      case "financial-plan":
+        serviceTypeQueryParam = "f";
+        break;
+      case "marketing-plan":
+        serviceTypeQueryParam = "m";
+        break;
+      case "complex-business-plan":
+        serviceTypeQueryParam = "bc";
+        break;
+      default:
+        serviceTypeQueryParam = "";
+    }
 
     // check if query service is services'name else go home
     if (!((query.service as string) in routeAlliasService)) {

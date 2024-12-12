@@ -1,71 +1,53 @@
 import styles from "@/styles/Project.module.scss";
 import Image from "next/image";
-import backGroundImage from "~/public/imgs/pricing-image.png";
-import tick from "~/public/icons/tick.svg";
-import redirect from "~/public/icons/redirect.svg";
-import ContactBanner from "./Contact-Banner";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Link from "next/link";
 import Button from "@mui/material/Button";
-import Info from "~/public/icons/info.svg";
-import DownloadIcon from "@mui/icons-material/Download";
-import arrowRight from "~/public/icons/arrow-right.svg";
-import Badge from "@mui/material/Badge";
-import { useRouter } from "next/router";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import useSWR, { mutate } from "swr";
-import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { toast, ToastContainer } from "react-toastify";
-import {
-  Alert,
-  AlertTitle,
-  CircularProgress,
-  Collapse,
-  IconButton,
-  Tooltip,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { Alert, AlertTitle, CircularProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import InfoIcon from "@mui/icons-material/Info";
-import { isEmpty, map, result } from "lodash";
-import { ProjectListType } from "../api/dashboard/getProjects";
-import moment from "moment";
-import { getServerSession } from "next-auth";
-import { GetServerSidePropsContext } from "next/types";
-import { optionsAuth } from "@/pages/api/auth/[...nextauth]";
+import { isEmpty } from "lodash";
+import DownloadIcon from "@mui/icons-material/Download";
 import {
   finalDataType,
-  IMAGEValueType,
   servicesType,
 } from "../api/dashboard/getProjectDetails";
-import OpenDialog, { radioIdeaGen } from "./Modal";
+import OpenDialog from "./Modal";
 import { SpinnerContext } from "@/contexts/SpinnerContextProvider";
 import axios from "axios";
-
+import SquareComponent from "@/pages/components/Square-component";
+import ProjectInfoComponent from "@/pages/components/Project-Info-component";
+import StarIcon from "@mui/icons-material/Star";
+import ideaGenBanner from "~/public/imgs/ideaGenBanner.png";
+import { useRouter } from "next/router";
 interface ProjectDetailsProps {
   projectId: number;
+  userRole: string;
+}
+interface serviceIdObjectType {
+  serviceId: number | null;
+  orderId: number | null;
+  serviceName: string | null;
 }
 
 export default function ProjectDetails(props: ProjectDetailsProps) {
-  const mediaQuery = useMediaQuery("(max-width:1000px)");
-  const mediaQuery14 = useMediaQuery("(max-width:1400px)");
-  const mediaQuery6 = useMediaQuery("(max-width:600px)");
-  const router = useRouter();
-
   const { data, error, isValidating } = useSWR(
     `/api/dashboard/getProjectDetails?project=${props.projectId}`,
     {
-      revalidateOnFocus: false,
+      revalidateOnFocus: true,
     }
   );
+  const [openDialogType, setOpenDialogType] = useState<string | null>(null);
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogResult, setDialogResult] = useState("");
-  const [serviceId, setServiceId] = useState<number | null>();
-  const [ideaPicked, setIdeaPicked] = useState<string>("");
+  const [serviceObject, setServiceId] = useState<serviceIdObjectType>({
+    serviceId: null,
+    orderId: null,
+    serviceName: null,
+  });
   const services: servicesType[] = data?.result?.services;
   const finalData: finalDataType = data?.result?.finalData;
-
-  const [open, setOpen] = React.useState(false);
+  const router = useRouter();
   const { showSpinner } = React.useContext(SpinnerContext);
   useEffect(() => {
     const handleAsyncEffect = async () => {
@@ -75,11 +57,12 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
 
           showSpinner(true);
           const params = {
-            serviceId,
+            serviceId: serviceObject?.serviceId,
             projectId: props.projectId,
-            last: services[servicesFinalIndex].serviceId === serviceId,
-            ideaPicked,
-            type: finalData.projectType,
+            last:
+              services[servicesFinalIndex].serviceId ===
+              serviceObject?.serviceId,
+            serviceOrderId: serviceObject?.orderId,
           };
           const response = await axios.put(
             "/api/dashboard/confirmFile",
@@ -101,33 +84,307 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
           toast.error("Sorry, something went wrong!");
         } finally {
           setDialogResult("no");
-          setServiceId(null);
-          setIdeaPicked("");
+          setServiceId({ serviceId: null, orderId: null, serviceName: null });
         }
+      }
+
+      if (dialogResult === "yesIdeaGen") {
+        try {
+          showSpinner(true);
+          const params = {
+            serviceId: serviceObject?.serviceId,
+            projectId: props.projectId,
+          };
+          const response = await axios.put(
+            "/api/dashboard/confirmIdeaPicking",
+            params
+          );
+
+          if (response.data.success) {
+            showSpinner(false);
+            toast.success("Idea picked succussfully!");
+            mutate(
+              `/api/dashboard/getProjectDetails?project=${props.projectId}`
+            );
+          } else {
+            showSpinner(false);
+            toast.error("Sorry, something went wrong!");
+          }
+        } catch (error) {
+          showSpinner(false);
+          toast.error("Sorry, something went wrong!");
+        } finally {
+          setDialogResult("no");
+          setServiceId({ serviceId: null, orderId: null, serviceName: null });
+        }
+      }
+      if (dialogResult === "okey") {
+        setDialogResult("no");
+        setServiceId({ serviceId: null, orderId: null, serviceName: null });
       }
     };
 
     handleAsyncEffect();
   }, [dialogResult]);
 
-  async function confirmFile(v: number) {
-    setIsDialogOpen(true);
-    setServiceId(v);
-  }
-  async function dialogResultFn(v: string | radioIdeaGen) {
-    if (typeof v !== "string") {
-      if (v.result.type === "ideaGen") {
-        setDialogResult(v.result.answer);
-        setIdeaPicked(v.result.radioPicked || "");
-      }
-    } else {
-      setDialogResult(v);
+  async function confirmFile(
+    serviceId: number,
+    order: number,
+    serviceName: string,
+    dialogType: string
+  ) {
+    if (finalData.projectStatusValue === "complete") {
+      router.push({
+        pathname: "/pricing",
+        query: {
+          upgradeProjectType: finalData.projectType,
+          projectId: finalData.project_id,
+          originalProjectId: finalData.upgradeFromProjectId
+            ? finalData.upgradeFromProjectId
+            : finalData.project_id,
+          originalProjectType: finalData.upgradeFromProjectType
+            ? finalData.upgradeFromProjectType
+            : finalData.projectType,
+        },
+      });
+      return;
     }
 
-    setIsDialogOpen(false);
+    setOpenDialogType(dialogType);
+    setIsDialogOpen(true);
+    setServiceId({
+      serviceId: serviceId,
+      orderId: order,
+      serviceName: serviceName,
+    });
   }
+  async function dialogResultFn(v: string) {
+    setDialogResult(v);
+    setIsDialogOpen(false);
+    setOpenDialogType(null);
+  }
+
+  function renderStatus(finalData: finalDataType, v: servicesType) {
+    if (
+      finalData.projectType === "i" &&
+      v.status_value === "complete" &&
+      v.serviceOrder !== 3
+    ) {
+      return v.confirmed ? (
+        <div className={v.status_color}>
+          <div>
+            <StarIcon />
+          </div>
+          <div>Picked</div>
+        </div>
+      ) : (
+        ""
+      );
+    }
+    return <div className={v.status_color}>{v.status_label}</div>;
+  }
+
   return (
     <>
+      {isValidating && (
+        <div className={styles.loading}>
+          <CircularProgress
+            style={{ color: "var(--blueColor)" }}
+            size={50}
+          ></CircularProgress>
+        </div>
+      )}
+      <div className={styles.projectContainer}>
+        <div className={styles.content}>
+          {!isValidating &&
+            !error &&
+            !isEmpty(finalData) &&
+            !isEmpty(services) && (
+              <>
+                <ProjectInfoComponent
+                  project_id={finalData.project_id}
+                  status_value={finalData.projectStatusValue}
+                  companyName={finalData.companyName}
+                  projectTypeName={finalData.projectTypeName}
+                  date_creation={finalData.date_creation}
+                  status_color={finalData.projectColorStatus}
+                  status_label={finalData.projectLabelStatus}
+                  originalProjectId={finalData.upgradeFromProjectId}
+                  info={finalData.info}
+                  paymentLink={finalData.paymentLink}
+                  currentServiceName={
+                    finalData.projectType !== "i" ||
+                    (finalData.projectType === "i" &&
+                      services[0]?.status_value === "complete")
+                      ? finalData.currentServiceName
+                      : ""
+                  }
+                  userRole={props.userRole}
+                  invoice={finalData.invoice}
+                  consultantName={finalData.consultantName}
+                  comingFrom="details"
+                />
+                <div className={styles.stepsContainer}>
+                  <>
+                    {services?.map((v: servicesType, i: number) => (
+                      <div key={v.serviceName} className={styles.services}>
+                        <div
+                          className={`${styles.serviceImgContainer} ${
+                            finalData.projectType === "i" && i !== 2
+                              ? styles.serviceImgContainerTypeIdea
+                              : ""
+                          }`}
+                        >
+                          <Image
+                            className={styles.serviceImg}
+                            width={158}
+                            height={94}
+                            src={`/imgs/services/${v.serviceImg}.png`}
+                            alt={v.serviceImg}
+                          />
+                        </div>
+                        <div className={styles.serviceName}>
+                          {v.serviceName}
+                        </div>
+
+                        <div className={styles.status}>
+                          {renderStatus(finalData, v)}
+                        </div>
+
+                        <div className={`${styles.action}`}>
+                          <div>
+                            {v.serviceValue?.secure_url && (
+                              <>
+                                <div className={styles.download}>
+                                  <a
+                                    href={v.serviceValue?.secure_url}
+                                    download={v.serviceValue?.original_filename}
+                                  >
+                                    <DownloadIcon />
+                                    Download File
+                                  </a>
+                                </div>
+                              </>
+                            )}
+                          </div>
+                          {v.status_value === "NotConfirmed" &&
+                            !v.confirmed && (
+                              <div>
+                                <Button
+                                  size="large"
+                                  className="btn btn-third"
+                                  onClick={() =>
+                                    confirmFile(
+                                      v.serviceId,
+                                      v.serviceOrder,
+                                      v.serviceName,
+                                      finalData.projectType === "i" &&
+                                        (i === 0 || i === 1)
+                                        ? `ideagen`
+                                        : "confirm"
+                                    )
+                                  }
+                                >
+                                  {finalData.projectType === "i" &&
+                                  (i === 0 || i === 1)
+                                    ? `choose idea ${i + 1}`
+                                    : "confirm"}
+                                </Button>
+                              </div>
+                            )}
+                        </div>
+                      </div>
+                    ))}
+
+                    {!finalData.project_upgraded &&
+                      finalData.projectUpgradeCount < 2 &&
+                      finalData.projectType !== "b" &&
+                      finalData.projectType !== "bc" && (
+                        <div className={styles.contactSection}>
+                          <Image
+                            quality={100}
+                            src={ideaGenBanner}
+                            alt="contactus"
+                          />
+                          <div className={styles.contentBanner}>
+                            <h2 className={`subTitle ${styles.subTitle} `}>
+                              {finalData.projectType == "i"
+                                ? "Turn your idea into a business"
+                                : "upgrade business to be changed"}
+                            </h2>
+                            <div className={`description ${styles.desc}`}>
+                              {finalData.projectType == "i"
+                                ? `We believe the workspaces of tomorrow begin with
+                                people, a collaboration between your team and
+                                ours. Horizontal is a global network of expertise.
+                                Bridging geographical and cultural differences`
+                                : `upgrade business to be changed people, a collaboration between your team and
+                                ours. Horizontal is a global network of expertise.`}
+                            </div>
+                            <div className={styles.btn}>
+                              <Button
+                                size="large"
+                                onClick={() => confirmFile(0, 0, "", "alert")}
+                                className="btn btn-white"
+                              >
+                                get quotation
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                  </>
+                </div>
+                {openDialogType === "ideagen" && (
+                  <OpenDialog
+                    title="Idea picking"
+                    btnName="Choose"
+                    id="ideagen"
+                    type="ideagen"
+                    text={`${serviceObject.serviceName}`}
+                    openDialog={isDialogOpen}
+                    onCloseDialog={(v) => dialogResultFn(v as string)}
+                  />
+                )}
+
+                {openDialogType === "alert" && (
+                  <OpenDialog
+                    btnName="Ok"
+                    title="Upgrading plan"
+                    type="alert"
+                    id="alert"
+                    text="You can upgrade once you finish your idea generation plan To be changed by nour"
+                    openDialog={isDialogOpen}
+                    onCloseDialog={(v) => dialogResultFn(v as string)}
+                  />
+                )}
+
+                {openDialogType === "confirm" && (
+                  <OpenDialog
+                    btnName="Confirm"
+                    title="Confirmation"
+                    id="confirm"
+                    text="Are you sure you want to confirm? You cannot modify it later. If unsure, consult your consultant in the chatroom."
+                    openDialog={isDialogOpen}
+                    onCloseDialog={(v) => dialogResultFn(v as string)}
+                  />
+                )}
+              </>
+            )}
+          {error && (
+            <div>
+              <Alert severity="error" sx={{ mt: 2 }}>
+                <AlertTitle>Something went wrong</AlertTitle>
+                Try reloading this page , or contact customer service if this
+                issue persists!
+              </Alert>
+            </div>
+          )}
+        </div>
+        {(!isValidating || error) && (
+          <SquareComponent chatroom={error ? 0 : 1} customer={2} />
+        )}
+      </div>
       <ToastContainer
         position="bottom-right"
         autoClose={3000}
@@ -139,187 +396,6 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
         draggable
         pauseOnHover={false}
       />
-      {!isValidating && !error && !isEmpty(finalData) && !isEmpty(services) && (
-        <div>
-          <div className={`subTitle`}>
-            <div>
-              <ArrowBackIosNewIcon
-                style={{ cursor: "pointer" }}
-                onClick={() => router.push("/dashboard")}
-              />{" "}
-              {finalData.companyName}
-            </div>
-          </div>
-          <div className={styles.upperBtn}>
-            <div style={{ paddingLeft: "2.3rem" }}>
-              <div style={{ paddingBottom: "0.5rem" }}>
-                Project ID: <strong>{finalData.project_id}</strong>
-              </div>
-              <div>
-                Created on{" "}
-                {moment.utc(finalData.date_creation).format("DD-MM-YYYY")}
-              </div>
-            </div>
-
-            <div>
-              {finalData.consultantName && (
-                <div style={{ paddingBottom: "0.5rem" }}>
-                  Assigned to <strong>{finalData.consultantName}</strong>
-                </div>
-              )}
-              {!finalData.consultantName && (
-                <div style={{ paddingBottom: "0.5rem" }}>
-                  <small>Consultant not assigned yet</small>{" "}
-                </div>
-              )}
-              <div className={styles.status}>
-                <Badge
-                  className={finalData.projectColorStatus}
-                  variant="dot"
-                ></Badge>
-                <div>{finalData.projectLabelStatus}</div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <Collapse in={open}>
-              <Alert
-                severity="info"
-                action={
-                  <IconButton
-                    aria-label="close"
-                    color="inherit"
-                    size="small"
-                    onClick={() => {
-                      setOpen(false);
-                    }}
-                  >
-                    <CloseIcon fontSize="inherit" />
-                  </IconButton>
-                }
-                sx={{ mb: 2 }}
-              >
-                <AlertTitle>Info</AlertTitle>
-                {isNaN(finalData.info as number)
-                  ? finalData.info
-                  : `Estimatinh time is around ${finalData.info} business days`}
-              </Alert>
-            </Collapse>
-          </div>
-
-          <div className="card">
-            <>
-              <div className={styles.header}>
-                <div className={styles.steps}>
-                  <div>Steps</div>
-                </div>
-                <div className={styles.statu}>
-                  <div>Status</div>
-                  <div>
-                    <Image
-                      onClick={() => setOpen(true)}
-                      style={{ cursor: "pointer" }}
-                      alt="info"
-                      src={Info}
-                    />
-                  </div>
-                </div>
-                <div className={styles.action}>Actions</div>
-              </div>
-              {services?.map((v: servicesType, i: number) => (
-                <div key={v.serviceName} className={styles.services}>
-                  <div className={styles.steps}>
-                    {v.serviceName}
-                    {i === 0 &&
-                      finalData.projectType === "i" &&
-                      finalData.ideaPicked && (
-                        <>
-                          <span>-</span>
-                          <span style={{ color: "var(--secondaryColor)" }}>
-                            {finalData.ideaPicked}
-                          </span>
-                        </>
-                      )}
-                  </div>
-                  <div className={styles.statu}>
-                    <Badge className={v.status_color} variant="dot"></Badge>
-                    <div>{v.status_label}</div>
-                  </div>
-                  <div className={`${styles.action} ${styles.btnConf} `}>
-                    {v.status_value === "NotConfirmed" && !v.confirmed && (
-                      <div>
-                        <Tooltip placement="top" title={"Confirm"}>
-                          <CheckCircleRoundedIcon
-                            onClick={() => confirmFile(v.serviceId)}
-                            style={{
-                              cursor: "pointer",
-                              color: "var(--toastify-color-success)",
-                            }}
-                          />
-                        </Tooltip>
-                      </div>
-                    )}
-
-                    {v.serviceValue?.secure_url && (
-                      <div>
-                        <a
-                          href={v.serviceValue?.secure_url}
-                          download={v.serviceValue?.original_filename}
-                        >
-                          <Button
-                            disabled={!v.serviceValue?.secure_url}
-                            size="small"
-                            className="btn btn-secondary"
-                          >
-                            Download
-                          </Button>
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </>
-          </div>
-          {!finalData.ideaPicked && finalData.projectType === "i" ? (
-            <OpenDialog
-              title="Choose Idea"
-              id="idea"
-              type="ideaGen"
-              data={finalData}
-              text="After you carefully reading the idea generation documnet u have to pick one from these ideas , if you feel not sure can go to chatroom and discuss it with yoyur cobnsultanbt"
-              openDialog={isDialogOpen}
-              onCloseDialog={(v) => dialogResultFn(v as radioIdeaGen)}
-            />
-          ) : (
-            <OpenDialog
-              title="Confirmation"
-              id="confirm"
-              text="Are you sure you want to confirm , you cannot modify it later on if you submit , if you feel not sure you can go to chatroom and discuss it with your consultant"
-              openDialog={isDialogOpen}
-              onCloseDialog={(v) => dialogResultFn(v as string)}
-            />
-          )}
-        </div>
-      )}
-
-      {isValidating && (
-        <div className={styles.loading}>
-          <CircularProgress
-            style={{ color: "var(--secondaryColor)" }}
-            size={50}
-          ></CircularProgress>
-        </div>
-      )}
-      {error && (
-        <div>
-          <Alert severity="error" sx={{ mt: 2 }}>
-            <AlertTitle>Something went wrong</AlertTitle>
-            Try reloading this page , or contact customer service if this issue
-            persists!
-          </Alert>
-        </div>
-      )}
     </>
   );
 }

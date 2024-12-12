@@ -1,43 +1,23 @@
 import styles from "@/styles/ProjectConsultant.module.scss";
 import Image from "next/image";
-import backGroundImage from "~/public/imgs/pricing-image.png";
-import tick from "~/public/icons/tick.svg";
-import redirect from "~/public/icons/redirect.svg";
-import ContactBanner from "./Contact-Banner";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Link from "next/link";
 import Button from "@mui/material/Button";
-import Info from "~/public/icons/info.svg";
 import DownloadIcon from "@mui/icons-material/Download";
-import arrowRight from "~/public/icons/arrow-right.svg";
-import Badge from "@mui/material/Badge";
-import { useRouter } from "next/router";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import CheckIcon from "@mui/icons-material/Check";
 import useSWR, { mutate } from "swr";
-import OpenDialog, { InfoEmailAlertValueType } from "@/pages/components/Modal";
+import OpenDialog, { AdminDialogType } from "@/pages/components/Modal";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-
 import {
   Alert,
   AlertTitle,
   CircularProgress,
-  Collapse,
-  IconButton,
   Input,
   MenuItem,
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect, useState } from "react";
-import InfoIcon from "@mui/icons-material/Info";
-import { isEmpty, map, result } from "lodash";
-import { ProjectListType } from "../api/dashboard/getProjects";
-import moment from "moment";
-import { getServerSession } from "next-auth";
-import { GetServerSidePropsContext } from "next/types";
-import { optionsAuth } from "@/pages/api/auth/[...nextauth]";
+import { isEmpty, map } from "lodash";
+import SquareComponent from "@/pages/components/Square-component";
+import StarIcon from "@mui/icons-material/Star";
 import {
   finalDataType,
   servicesType,
@@ -50,6 +30,7 @@ import ImageUpload from "./ImageUpload";
 
 import { configs } from "@/utils/config";
 import { insertLogs } from "@/utils/shared";
+import ProjectInfoComponent from "./Project-Info-component";
 
 interface ProjectDetailsProps {
   projectId: number;
@@ -59,13 +40,14 @@ interface DashType {
   assignedConsultant: string;
   idea1: string;
   idea2: string;
-  idea3: string;
+  quotationLink: string;
+  extraService?: { id: string; name: string; image: string };
 }
 interface DialogModal {
   [key: string]: {
     isOpen: boolean;
     text?: string;
-    type: string;
+    type?: string;
     title: string;
     id: string;
   };
@@ -77,46 +59,69 @@ interface DurationType {
 }
 
 export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
-  const mediaQuery = useMediaQuery("(max-width:1000px)");
-  const mediaQuery14 = useMediaQuery("(max-width:1400px)");
-  const mediaQuery6 = useMediaQuery("(max-width:600px)");
-  const router = useRouter();
   const { showSpinner } = React.useContext(SpinnerContext);
+  const [isUploadingFocus, setIsUploading] = useState(false);
   const { data, error, isValidating } = useSWR(
     `/api/consultant/getProjectsDetails-consultant?project=${props.projectId}`,
     {
-      revalidateOnFocus: false,
+      revalidateOnFocus: !isUploadingFocus,
     }
   );
 
   const services: servicesType[] = data?.result?.services;
   const finalData: finalDataType = data?.result?.finalData;
   const usersInfo: UsersConsultantType[] = data?.result?.usersInfo;
-  const [open, setOpen] = useState(false);
+
+  const ExtraService = [
+    {
+      id: "designAndDev",
+      name: "Design and development plan",
+      image: "Design and development plan",
+    },
+    {
+      id: "opeAndMang",
+      name: "Operations and management",
+      image: "Operations and management",
+    },
+    { id: "landlord", name: "Landlord deck", image: "Landlord deck" },
+    {
+      id: "franchise",
+      name: "Franchise overview",
+      image: "Franchise overview",
+    },
+  ];
 
   const [durationInputs, setDuration] = useState<DurationType>();
 
   const [dashValue, setDash] = useState<DashType>({
+    quotationLink: "",
     assignedConsultant: "",
     idea1: "",
     idea2: "",
-    idea3: "",
+    extraService: { id: "", name: "", image: "" },
   });
   const [isDialogOpen, setIsDialogOpen] = useState<DialogModal>({
+    quotationAlert: {
+      isOpen: false,
+      type: "quotation",
+      title: "Alert Stripe payments links Meta Data",
+      text: "Have you added the Meta data (projectId) (projectType) (userId) on stripe payment links before adding the quotation ?",
+      id: "quotationAlert",
+    },
     readyToPay: {
       isOpen: false,
       title: "Questionnaire reviewed successfully alert",
       type: "inputEmailAlert",
       id: "readyToPay",
     },
-    changeOfPlan: {
+    AddExtraService: {
       isOpen: false,
-      type: "inputEmailAlert",
-      title: "Plan modification alert",
-      id: "changeOfPlan",
+      title: "Add the service order number",
+      type: "addServiceOrder",
+      id: "AddExtraService",
     },
   });
-  const [dialogResult, setDialogResult] = useState<InfoEmailAlertValueType>();
+  const [dialogResult, setDialogResult] = useState<AdminDialogType>();
   const [modalName, setModalName] = useState<string>("");
 
   async function getSignature(id: number, name: string): Promise<any> {
@@ -147,12 +152,15 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
       setDash((state) => ({
         ...state,
         assignedConsultant: finalData.consultantId || "",
-        idea1: finalData.idea1 || "",
-        idea2: finalData.idea2 || "",
-        idea3: finalData.idea3 || "",
+        quotationLink: finalData.paymentLink || "",
       }));
 
       if (services) {
+        setDash((state) => ({
+          ...state,
+          idea1: services[0]?.serviceName || "",
+          idea2: services[1]?.serviceName || "",
+        }));
         services.map((v) => {
           setDuration((curr) => ({
             ...curr,
@@ -165,7 +173,7 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
     }
   }, [finalData, services]);
 
-  async function handleModalFunction(v: InfoEmailAlertValueType) {
+  async function handleModalFunction(v: AdminDialogType) {
     try {
       showSpinner(true);
       switch (v.result.type) {
@@ -183,27 +191,68 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
             params
           );
           if (res.data.success) {
+            toast.success("User alerted succussfully!");
             mutate(RefetchUrl);
-            showSpinner(false);
           } else {
-            showSpinner(false);
             toast.error("Sorry, something went wrong!");
           }
           break;
+        case "addServiceOrder":
+          const paramsOrder = {
+            service: dashValue.extraService,
+            userId: finalData.userId,
+            projectId: props.projectId,
+            order: v.result.inputValue,
+          };
 
+          const resOrder = await axios.put(
+            "/api/consultant/admin/addServiceWithOrder",
+            paramsOrder
+          );
+          if (resOrder.data.success) {
+            toast.success("Service added succussfully!");
+            mutate(RefetchUrl);
+          } else {
+            toast.error("Sorry, something went wrong!");
+          }
+          setDash((state) => ({
+            ...state,
+            extraService: { id: "", name: "", image: "" },
+          }));
+          break;
+
+        case "quotation":
+          const paramsQuotation = {
+            quotationLink: dashValue.quotationLink,
+            projectId: props.projectId,
+          };
+
+          const resQuotation = await axios.put(
+            "/api/consultant/admin/addQuotation",
+            paramsQuotation
+          );
+          if (resQuotation.data.success) {
+            toast.success("Quotation added succussfully!");
+            mutate(RefetchUrl);
+          } else {
+            toast.error("Sorry, something went wrong!");
+          }
+
+          break;
         default:
-          showSpinner(false);
           return null;
       }
     } catch (error) {
       toast.error("Sorry, something went wrong!");
+      showSpinner(false);
+    } finally {
       showSpinner(false);
     }
   }
 
   useEffect(() => {
     const handleModalResult = async () => {
-      if (dialogResult?.result.answer === "yes" && isDialogOpen[modalName]) {
+      if (dialogResult?.result?.answer === "yes" && isDialogOpen[modalName]) {
         handleModalFunction(dialogResult);
         setModalName("");
       }
@@ -236,7 +285,7 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
     }
   }
 
-  function dialogResultFn(v: InfoEmailAlertValueType) {
+  function dialogResultFn(v: AdminDialogType) {
     setDialogResult(v);
     setIsDialogOpen((state: DialogModal) => ({
       ...state,
@@ -252,10 +301,17 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
     }));
   }
 
+  function checkIfFirstUploadIdeaPicking() {
+    let check = false;
+    if (isEmpty(services[0].serviceValue)) {
+      check = true;
+    }
+    return check;
+  }
+
   const retrunImage = (id: number) => async (v: File) => {
     try {
       showSpinner(true);
-
       const url: string = `${configs.cloudinary_url}`;
       const { signature, timestamp } = await getSignature(id, v.name);
       const formData = new FormData();
@@ -292,6 +348,17 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
           serviceId: id,
           userEmail: finalData.userEmail,
           projectId: props.projectId,
+          // check on second upload to alert the user only when second upload on idea gen
+          ideaPickingFirstUpload:
+            finalData.projectType === "i"
+              ? checkIfFirstUploadIdeaPicking()
+              : false,
+
+          // check if the value for services are empty then we are still picking idea on idea gen
+          ideaPickingPhase:
+            (isEmpty(services[0].serviceValue) ||
+              isEmpty(services[1].serviceValue)) &&
+            finalData.projectType === "i",
         };
 
         const res = await axios.put("/api/consultant/addServiceImage", params);
@@ -306,6 +373,7 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
       toast.error("Sorry, something went wrong!");
       insertLogs("client", "formData", "project-consultant", error?.message);
     } finally {
+      setIsUploading(false);
       mutate(RefetchUrl);
       showSpinner(false);
     }
@@ -357,6 +425,9 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
           isDelete: true,
           userEmail: finalData.userEmail,
           projectId: props.projectId,
+          ideaPickingPhase:
+            serviceId === (services[0].serviceId || services[1].serviceId) &&
+            finalData.projectType === "i",
         };
         const resDeleteApi = await axios.put(
           "/api/consultant/addServiceImage",
@@ -378,6 +449,7 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
       insertLogs("client", "removeImage", "project-consultant", error?.message);
       toast.error("Sorry, something went wrong!");
     } finally {
+      setIsUploading(false);
       mutate(RefetchUrl);
       showSpinner(false);
     }
@@ -390,14 +462,19 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
         projectId: props.projectId,
         idea1: dashValue.idea1,
         idea2: dashValue.idea2,
-        idea3: dashValue.idea3,
       };
       const res = await axios.put(
         "/api/consultant/admin/addIdeaGeneration",
         params
       );
       if (res.data.success) {
-        toast.success("Idea added succussfully!");
+        toast.success("Ideas Names added succussfully!");
+        mutate(RefetchUrl);
+        setDash((state) => ({
+          ...state,
+          idea1: "",
+          idea2: "",
+        }));
       } else {
         throw {
           message: "Sorry, something went wrong!",
@@ -410,372 +487,393 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
     }
   }
 
+  function renderStatus(finalData: finalDataType, v: servicesType) {
+    if (
+      finalData.projectType === "i" &&
+      v.status_value === "complete" &&
+      v.serviceName !== "Idea analysis"
+    ) {
+      return v.confirmed ? (
+        <div className={v.status_color}>
+          <div>
+            <StarIcon />
+          </div>
+          <div>Picked</div>
+        </div>
+      ) : (
+        ""
+      );
+    }
+    return <div className={v.status_color}>{v.status_label}</div>;
+  }
+
   return (
     <>
-      {!isValidating && !error && !isEmpty(finalData) && !isEmpty(services) && (
-        <div>
-          <div className={`subTitle`}>
-            <div>
-              <ArrowBackIosNewIcon
-                style={{ cursor: "pointer" }}
-                onClick={() => router.push("/consultant/dashboard-consultant")}
-              />{" "}
-              {finalData.companyName}
-            </div>
-          </div>
-          <div className={styles.upperBtn}>
-            <div style={{ paddingLeft: "2.3rem" }}>
-              <div style={{ paddingBottom: "0.5rem" }}>
-                Project ID: <strong>{finalData.project_id}</strong>
-              </div>
-              <div>
-                Created on{" "}
-                {moment.utc(finalData.date_creation).format("DD-MM-YYYY")}
-              </div>
-            </div>
-
-            <div>
-              {finalData.consultantName && (
-                <div style={{ paddingBottom: "0.5rem" }}>
-                  Assigned to <strong>{finalData.consultantName}</strong>
-                </div>
-              )}
-              {!finalData.consultantName && (
-                <div style={{ paddingBottom: "0.5rem" }}>
-                  <small>Consultant not assigned yet</small>{" "}
-                </div>
-              )}
-              <div className={styles.status}>
-                <Badge
-                  className={finalData.projectColorStatus}
-                  variant="dot"
-                ></Badge>
-                <div>{finalData.projectLabelStatus}</div>
-              </div>
-            </div>
-          </div>
-
-          {props.userRole === "a" && (
-            <div className={styles.adminDash}>
-              <div className="card">
-                <div className={styles.stepsAdmin}>
-                  <label className={styles.left}>
-                    <strong>Admin steps</strong>
-                  </label>
-                  <div className={styles.right}></div>
-                  <div className={styles.btnss}>
-                    <div>
-                      <strong>Actions</strong>
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.stepsAdmin}>
-                  <label className={styles.left}>Prepare a quotation</label>
-                  <div className={styles.right}></div>
-                  <div className={styles.btnss}>
-                    <Button disabled className={`links `}>
-                      quotation
-                    </Button>
-                  </div>
-                </div>
-                <div className={styles.stepsAdmin}>
-                  <label className={styles.left}>Assign this project to</label>
-                  <Select
-                    className={`${styles.right} textInput selectInput`}
-                    value={dashValue.assignedConsultant}
-                    onChange={(e: SelectChangeEvent) =>
-                      setDash((state) => ({
-                        ...state,
-                        assignedConsultant: e.target.value,
-                      }))
-                    }
-                  >
-                    <MenuItem key={"none"} value={""}>
-                      Not Assigned
-                    </MenuItem>
-                    {map(usersInfo, (v: UsersConsultantType) => (
-                      <MenuItem key={v.id} value={v.id}>
-                        {v.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  <div className={styles.btnss}>
-                    <Button
-                      onClick={() => submitAssignee()}
-                      className={`links `}
-                    >
-                      Assign
-                    </Button>
-                  </div>
-                </div>
-                <div className={styles.stepsAdmin}>
-                  <label className={styles.left}>
-                    Questionnaire review is done and ready to pay
-                  </label>
-                  <div className={styles.right}></div>
-                  <div className={styles.btnss}>
-                    <Button
-                      onClick={() => openModal("readyToPay")}
-                      className={`links `}
-                    >
-                      Ready to pay
-                    </Button>
-                  </div>
-                </div>
-                <div className={styles.stepsAdmin}>
-                  <label className={styles.left}>Change to complex Plan</label>
-                  <div className={styles.right}></div>
-                  <div className={styles.btnss}>
-                    <Button
-                      onClick={() => openModal("changeOfPlan")}
-                      className={`links `}
-                    >
-                      Change
-                    </Button>
-                  </div>
-                </div>
-
-                {finalData.projectType === "i" && (
-                  <>
-                    <div className={styles.stepsAdmin}>
-                      <label className={styles.left}>idea 1</label>
-                      <Input
-                        className={`textInput ${styles.right}`}
-                        type="text"
-                        value={dashValue.idea1}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setDash((state) => ({
-                            ...state,
-                            idea1: e.target.value,
-                          }))
-                        }
-                      />
-                      <div className={styles.btnss}>
-                        <Button
-                          onClick={() => addIdeaGen()}
-                          className={`links `}
-                        >
-                          Add idea1
-                        </Button>
-                      </div>
-                    </div>
-                    <div className={styles.stepsAdmin}>
-                      <label className={styles.left}>idea 2</label>
-                      <Input
-                        className={`textInput ${styles.right}`}
-                        type="text"
-                        value={dashValue.idea2}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setDash((state) => ({
-                            ...state,
-                            idea2: e.target.value,
-                          }))
-                        }
-                      />
-                      <div className={styles.btnss}>
-                        <Button
-                          onClick={() => addIdeaGen()}
-                          className={`links `}
-                        >
-                          Add idea2
-                        </Button>
-                      </div>
-                    </div>
-                    <div className={styles.stepsAdmin}>
-                      <label className={styles.left}>idea 3</label>
-                      <Input
-                        className={`textInput ${styles.right}`}
-                        type="text"
-                        value={dashValue.idea3}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setDash((state) => ({
-                            ...state,
-                            idea3: e.target.value,
-                          }))
-                        }
-                      />
-                      <div className={styles.btnss}>
-                        <Button
-                          onClick={() => addIdeaGen()}
-                          className={`links `}
-                        >
-                          Add idea3
-                        </Button>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-          )}
-          <div>
-            <Collapse in={open}>
-              <Alert
-                severity="info"
-                action={
-                  <IconButton
-                    aria-label="close"
-                    color="inherit"
-                    size="small"
-                    onClick={() => {
-                      setOpen(false);
-                    }}
-                  >
-                    <CloseIcon fontSize="inherit" />
-                  </IconButton>
-                }
-                sx={{ mb: 2 }}
-              >
-                <AlertTitle>Info</AlertTitle>
-                {isNaN(finalData.info as number)
-                  ? finalData.info
-                  : `Estimatinh time is around ${finalData.info} business days`}
-              </Alert>
-            </Collapse>
-          </div>
-
-          <div className="card">
-            <>
-              <div className={styles.header}>
-                <div className={styles.steps}>
-                  <div>Steps</div>
-                </div>
-                <div className={styles.statu}>
-                  <div>Status</div>
-                  <div>
-                    <Image
-                      onClick={() => setOpen(true)}
-                      style={{ cursor: "pointer" }}
-                      alt="info"
-                      src={Info}
-                    />
-                  </div>
-                </div>
-                {props.userRole === "a" && (
-                  <div className={styles.duration}>Duration (days)</div>
-                )}
-                <div className={styles.action}>Actions</div>
-              </div>
-              {services?.map((v: servicesType, i: number) => (
-                <div key={v.serviceName} className={styles.services}>
-                  <div className={styles.steps}>
-                    {v.serviceName}{" "}
-                    {i === 0 &&
-                      finalData.projectType === "i" &&
-                      finalData.ideaPicked && (
-                        <>
-                          <span>-</span>
-                          <span style={{ color: "var(--secondaryColor)" }}>
-                            {finalData.ideaPicked}
-                          </span>
-                        </>
-                      )}
-                  </div>
-                  <div className={styles.statu}>
-                    <Badge className={v.status_color} variant="dot"></Badge>
-                    <div>{v.status_label}</div>
-                  </div>
-                  {props.userRole === "a" && (
-                    <div className={styles.duration}>
-                      <Input
-                        style={{ width: "80px" }}
-                        className="textInput"
-                        type="number"
-                        value={
-                          (durationInputs &&
-                            durationInputs[v.serviceId]?.duration) ||
-                          ""
-                        }
-                        onChange={(e) =>
-                          setDuration((curr) => ({
-                            ...curr,
-                            [v.serviceId]: { duration: e.target.value },
-                          }))
-                        }
-                      />
-                      <CheckCircleRoundedIcon
-                        onClick={() => confirmDuration(v.serviceId)}
-                        style={{
-                          marginLeft: ".2rem",
-                          cursor: "pointer",
-                          color: "var(--toastify-color-success)",
-                        }}
-                      />
-                    </div>
-                  )}
-                  <div className={styles.action}>
-                    {props.userRole === "c" && v.serviceValue?.secure_url && (
-                      <a
-                        href={v.serviceValue?.secure_url}
-                        download={v.serviceValue?.original_filename}
-                      >
-                        <Button
-                          disabled={!v.serviceValue?.secure_url}
-                          size="small"
-                          className="btn btn-secondary"
-                        >
-                          Download
-                        </Button>
-                      </a>
-                    )}
-
-                    {props.userRole === "a" && (
-                      <div>
-                        <ImageUpload
-                          returnFunction={retrunImage(v.serviceId)}
-                          removeFunction={removeImage(
-                            v.serviceValue,
-                            v.serviceId
-                          )}
-                          disableRemove={false}
-                          imageValue={v.serviceValue || undefined}
-                          onError={false}
-                          fromConsultant={true}
-                        />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </>
-          </div>
-          <ToastContainer
-            position="bottom-right"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover={false}
-          />
-        </div>
-      )}
-
       {isValidating && (
         <div className={styles.loading}>
           <CircularProgress
-            style={{ color: "var(--secondaryColor)" }}
+            style={{ color: "var(--blueColor)" }}
             size={50}
           ></CircularProgress>
         </div>
       )}
-      {error && (
-        <div>
-          <Alert severity="error" sx={{ mt: 2 }}>
-            <AlertTitle>Something went wrong</AlertTitle>
-            Try reloading this page , or contact customer service if this issue
-            persists!
-          </Alert>
+
+      <div className={styles.projectContainer}>
+        <div className={styles.content}>
+          {!isValidating &&
+            !error &&
+            !isEmpty(finalData) &&
+            !isEmpty(services) && (
+              <>
+                <ProjectInfoComponent
+                  project_id={finalData.project_id}
+                  status_value={finalData.projectStatusValue}
+                  companyName={finalData.companyName}
+                  projectTypeName={finalData.projectTypeName}
+                  date_creation={finalData.date_creation}
+                  originalProjectId={finalData.upgradeFromProjectId}
+                  status_color={finalData.projectColorStatus}
+                  status_label={finalData.projectLabelStatus}
+                  paymentLink={finalData.paymentLink}
+                  info={finalData.info}
+                  currentServiceName={
+                    finalData.projectType !== "i" ||
+                    (finalData.projectType === "i" &&
+                      services[0]?.status_value === "complete")
+                      ? finalData.currentServiceName
+                      : ""
+                  }
+                  invoice={finalData.invoice}
+                  consultantName={finalData.consultantName}
+                  comingFrom="details"
+                  userRole={props.userRole}
+                  userName={finalData.userName}
+                  userEmail={finalData.userEmail}
+                  userId={finalData.userId}
+                />
+
+                {props.userRole === "a" && (
+                  <div className={styles.adminDash}>
+                    <div style={{ overflowX: "auto" }} className="card">
+                      <div className={styles.stepsAdmin}>
+                        <label className={styles.left}>
+                          <strong>Admin steps</strong>
+                        </label>
+                        <div className={styles.right}></div>
+                        <div className={styles.btnss}>
+                          <div>
+                            <strong>Actions</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div className={styles.stepsAdmin}>
+                        <label className={styles.left}>
+                          Prepare a quotation
+                        </label>
+                        <div className={styles.right}>
+                          <Input
+                            className={`textInput ${styles.right}`}
+                            type="text"
+                            value={dashValue.quotationLink}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) =>
+                              setDash((state) => ({
+                                ...state,
+                                quotationLink: e.target.value,
+                              }))
+                            }
+                          />
+                        </div>
+                        <div className={styles.btnss}>
+                          <Button
+                            onClick={() => openModal("quotationAlert")}
+                            className={`links `}
+                            disabled={!dashValue.quotationLink}
+                          >
+                            Add quotation
+                          </Button>
+                        </div>
+                      </div>
+                      <div className={styles.stepsAdmin}>
+                        <label className={styles.left}>
+                          Assign this project to
+                        </label>
+                        <Select
+                          className={`${styles.right} textInput selectInput`}
+                          value={dashValue.assignedConsultant}
+                          onChange={(e: SelectChangeEvent) =>
+                            setDash((state) => ({
+                              ...state,
+                              assignedConsultant: e.target.value,
+                            }))
+                          }
+                        >
+                          <MenuItem key={"none"} value={""}>
+                            Not Assigned
+                          </MenuItem>
+                          {map(usersInfo, (v: UsersConsultantType) => (
+                            <MenuItem key={v.id} value={v.id}>
+                              {v.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                        <div className={styles.btnss}>
+                          <Button
+                            disabled={isEmpty(dashValue.assignedConsultant)}
+                            onClick={() => submitAssignee()}
+                            className={`links `}
+                          >
+                            Assign
+                          </Button>
+                        </div>
+                      </div>
+                      {finalData.projectType !== "i" && (
+                        <div className={styles.stepsAdmin}>
+                          <label className={styles.left}>
+                            Add extra service{" "}
+                          </label>
+                          <Select
+                            className={`${styles.right} textInput selectInput adminWidthSelector `}
+                            value={dashValue.extraService?.id || ""}
+                            onChange={(e: SelectChangeEvent) => {
+                              const selectedService = ExtraService.find(
+                                (service) => service.id === e.target.value
+                              );
+
+                              if (selectedService) {
+                                setDash((state) => ({
+                                  ...state,
+                                  extraService: selectedService,
+                                }));
+                              }
+                            }}
+                          >
+                            <MenuItem key={"none"} value={""}>
+                              None
+                            </MenuItem>
+                            {map(
+                              ExtraService,
+                              (v: { id: string; name: string }) => (
+                                <MenuItem key={v.id} value={v.id}>
+                                  {v.name}
+                                </MenuItem>
+                              )
+                            )}
+                          </Select>
+                          <div className={styles.btnss}>
+                            <Button
+                              onClick={() => openModal("AddExtraService")}
+                              className={`links `}
+                              disabled={isEmpty(dashValue.extraService?.id)}
+                            >
+                              Add service
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+
+                      <div className={styles.stepsAdmin}>
+                        <label className={styles.left}>
+                          Questionnaire review and quotation is done and ready
+                          to pay
+                        </label>
+                        <div className={styles.right}></div>
+                        <div className={styles.btnss}>
+                          <Button
+                            onClick={() => openModal("readyToPay")}
+                            className={`links `}
+                            disabled={!dashValue.quotationLink}
+                          >
+                            Ready to pay
+                          </Button>
+                        </div>
+                      </div>
+
+                      {finalData.projectType === "i" && (
+                        <>
+                          <div className={styles.stepsAdmin}>
+                            <label className={styles.left}>idea 1</label>
+                            <Input
+                              className={`textInput ${styles.right}`}
+                              type="text"
+                              value={dashValue.idea1}
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) =>
+                                setDash((state) => ({
+                                  ...state,
+                                  idea1: e.target.value,
+                                }))
+                              }
+                            />
+                            <div className={styles.btnss}></div>
+                          </div>
+                          <div className={styles.stepsAdmin}>
+                            <label className={styles.left}>idea 2</label>
+                            <Input
+                              className={`textInput ${styles.right}`}
+                              type="text"
+                              value={dashValue.idea2}
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) =>
+                                setDash((state) => ({
+                                  ...state,
+                                  idea2: e.target.value,
+                                }))
+                              }
+                            />
+                            <div className={styles.btnss}>
+                              <Button
+                                disabled={!dashValue.idea1 || !dashValue.idea2}
+                                onClick={() => addIdeaGen()}
+                                className={`links `}
+                              >
+                                Add ideas Name
+                              </Button>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                <div className={styles.stepsContainer}>
+                  <>
+                    {services?.map((v: servicesType, i: number) => (
+                      <div key={v.serviceName} className={styles.services}>
+                        <div
+                          className={`${styles.serviceImgContainer} ${
+                            finalData.projectType === "i" && i !== 2
+                              ? styles.serviceImgContainerTypeIdea
+                              : ""
+                          }`}
+                        >
+                          <Image
+                            className={styles.serviceImg}
+                            width={158}
+                            height={94}
+                            src={`/imgs/services/${v.serviceImg}.png`}
+                            alt={v.serviceImg}
+                          />
+                        </div>
+                        <div className={styles.serviceName}>
+                          {v.serviceName}
+                        </div>
+
+                        {props.userRole === "a" && (
+                          <div className={styles.duration}>
+                            {(i !== 1 || finalData.projectType !== "i") && (
+                              <>
+                                <Input
+                                  className="textInput"
+                                  type="number"
+                                  value={
+                                    (durationInputs &&
+                                      durationInputs[v.serviceId]?.duration) ||
+                                    ""
+                                  }
+                                  onChange={(e) =>
+                                    setDuration((curr) => ({
+                                      ...curr,
+                                      [v.serviceId]: {
+                                        duration: e.target.value,
+                                      },
+                                    }))
+                                  }
+                                />
+                                <CheckCircleRoundedIcon
+                                  onClick={() => confirmDuration(v.serviceId)}
+                                  style={{
+                                    marginLeft: ".2rem",
+                                    cursor: "pointer",
+                                    color: "var(--toastify-color-success)",
+                                  }}
+                                />
+                              </>
+                            )}
+                          </div>
+                        )}
+
+                        <div className={styles.status}>
+                          {renderStatus(finalData, v)}
+                        </div>
+
+                        <div>
+                          {v.serviceValue?.secure_url && (
+                            <div className={styles.download}>
+                              <a
+                                href={v.serviceValue?.secure_url}
+                                download={v.serviceValue?.original_filename}
+                              >
+                                <DownloadIcon />
+                                Download File
+                              </a>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className={`${styles.action}`}>
+                          {props.userRole === "a" && (
+                            <div>
+                              <ImageUpload
+                                returnFunction={retrunImage(v.serviceId)}
+                                removeFunction={removeImage(
+                                  v.serviceValue,
+                                  v.serviceId
+                                )}
+                                disableRemove={false}
+                                imageValue={v.serviceValue || undefined}
+                                onError={false}
+                                fromConsultant={true}
+                                setIsUploading={setIsUploading}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                </div>
+              </>
+            )}
+
+          {error && (
+            <div>
+              <Alert severity="error" sx={{ mt: 2 }}>
+                <AlertTitle>Something went wrong</AlertTitle>
+                Try reloading this page , or contact customer service if this
+                issue persists!
+              </Alert>
+            </div>
+          )}
         </div>
-      )}
+        {(!isValidating || error) && (
+          <SquareComponent chatroom={1} customer={0} />
+        )}
+      </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+      />
+
       <OpenDialog
         title={isDialogOpen[modalName]?.title}
         id={isDialogOpen[modalName]?.id}
+        btnName="Confirm"
         type={isDialogOpen[modalName]?.type}
+        text={isDialogOpen[modalName]?.text}
         openDialog={isDialogOpen[modalName]?.isOpen || false}
-        onCloseDialog={(v) => dialogResultFn(v as InfoEmailAlertValueType)}
+        onCloseDialog={(v) => dialogResultFn(v as AdminDialogType)}
       />
     </>
   );

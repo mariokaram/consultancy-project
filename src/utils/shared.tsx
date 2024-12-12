@@ -3,7 +3,9 @@ import { Resend } from "resend";
 import EmailTemplate from "@/pages/components/EmailTemplate";
 import { configs } from "@/utils/config";
 import { CreateEmailResponse } from "resend/build/src/emails/interfaces";
-
+import consultantProf1 from "~/public/imgs/khara.png";
+import consultantProf2 from "~/public/imgs/consultant1.png";
+import { StaticImageData } from "next/image";
 export async function insertLogs(
   type: string,
   fn: string,
@@ -121,3 +123,179 @@ export async function sendEmail(paramsEmail: EmailParams) {
     throw error;
   }
 }
+
+// utils/services.ts
+
+export type ServiceEntry = [
+  string,
+  number,
+  number,
+  number | undefined,
+  string,
+  string
+];
+
+export const insertServiceTable = (
+  serviceType: string,
+  projectId: number | undefined,
+  userId: string
+): ServiceEntry[] => {
+  let returnedValue: ServiceEntry[] = [];
+
+  switch (serviceType) {
+    case "b":
+      returnedValue = [
+        ["Business model", 5, 1, projectId, userId, "Business model"],
+        ["Marketing plan", 5, 2, projectId, userId, "Marketing Plan"],
+        [
+          "Description of management and organization",
+          5,
+          3,
+          projectId,
+          userId,
+          "Description of Management and",
+        ],
+        [
+          "Potential risks and mitigation strategies",
+          5,
+          4,
+          projectId,
+          userId,
+          "Potential risks and mitigation strategies",
+        ],
+        [
+          "Financial projections",
+          5,
+          5,
+          projectId,
+          userId,
+          "Financial Projections",
+        ],
+        ["Growth strategy", 5, 6, projectId, userId, "Growth strategy"],
+        ["Executive summary", 5, 7, projectId, userId, "Executive Summary"],
+        ["Execution plan", 5, 8, projectId, userId, "Execution plan"],
+        ["Business plan", 5, 9, projectId, userId, "businessPlan"],
+      ];
+      break;
+    case "m":
+      returnedValue = [
+        ["Business model", 5, 1, projectId, userId, "Business model"],
+        ["Lead generation", 5, 2, projectId, userId, "leadgeneration"],
+        [
+          "Competitor assessment",
+          5,
+          3,
+          projectId,
+          userId,
+          "Competitor assessment",
+        ],
+        ["Marketing strategy", 5, 4, projectId, userId, "Marketing Plan"],
+        ["Expansion strategy", 5, 5, projectId, userId, "expansion"],
+      ];
+      break;
+    case "f":
+      returnedValue = [
+        ["Idea validation", 5, 1, projectId, userId, "ideaValidation"],
+        ["Business model", 5, 2, projectId, userId, "Business model"],
+        ["Financial plan", 5, 3, projectId, userId, "Financial Projections"],
+        ["Idea & finance", 5, 4, projectId, userId, "ideaFinance"],
+      ];
+      break;
+    case "bc":
+      returnedValue = [
+        ["Business model", 5, 1, projectId, userId, "Business model"],
+        ["Marketing plan", 5, 2, projectId, userId, "Marketing Plan"],
+        [
+          "Description of management and organization",
+          5,
+          3,
+          projectId,
+          userId,
+          "Description of Management and",
+        ],
+        [
+          "Potential risks and mitigation strategies",
+          5,
+          4,
+          projectId,
+          userId,
+          "Potential risks and mitigation strategies",
+        ],
+        [
+          "Financial projections",
+          5,
+          5,
+          projectId,
+          userId,
+          "Financial Projections",
+        ],
+        ["Growth strategy", 5, 6, projectId, userId, "Growth strategy"],
+        ["Executive summary", 5, 7, projectId, userId, "Executive Summary"],
+        ["Execution plan", 5, 8, projectId, userId, "Execution plan"],
+        ["Business plan", 5, 9, projectId, userId, "businessPlan"],
+      ];
+      break;
+    case "i":
+      returnedValue = [
+        ["Idea 1", 5, 1, projectId, userId, "Idea 1"],
+        ["Idea 2", 5, 2, projectId, userId, "Idea 2"],
+        ["Idea analysis", 5, 3, projectId, userId, "ideaAnalaysis"],
+      ];
+      break;
+  }
+
+  return returnedValue;
+};
+
+export type ConsultantProfile = {
+  name: string;
+  field: string;
+  focus: string;
+  bio: string;
+  quote: string;
+  imageSrc: StaticImageData;
+  id: string;
+};
+
+export const consultants: ConsultantProfile[] = [
+  {
+    id: "141a3960-cdf6-4c87-a76a-d85e1d4d2116",
+    name: "Mario K.",
+    field: "PhD, Entrepreneurship, Stanford University",
+    focus: "Healthcare and Biotechnology",
+    bio: "Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...",
+    quote:
+      "I thrive on transforming complex ideas into compelling strategies that drive growth...",
+    imageSrc: consultantProf1,
+  },
+  {
+    id: "efade3aa-57ec-42f1-9364-6fba8df2316c",
+    name: "Tony. D",
+    field: "MBA, Finance, Harvard Business School",
+    focus: "Financial Services",
+    bio: "John has extensive experience in financial planning and investment strategies...",
+    quote:
+      "My goal is to leverage financial acumen to maximize returns and ensure long-term stability...",
+    imageSrc: consultantProf2,
+  },
+  {
+    id: "sdsd",
+    name: "John",
+    field: "MBA, Finance, Harvard Business School",
+    focus: "Financial Services and Investment",
+    bio: "John has extensive experience in financial planning and investment strategies...",
+    quote:
+      "My goal is to leverage financial acumen to maximize returns and ensure long-term stability...",
+    imageSrc: consultantProf2,
+  },
+  {
+    id: "sdsd",
+    name: "John",
+    field: "MBA, Finance, Harvard Business School",
+    focus: "Financial Services and Investment",
+    bio: "John has extensive experience in financial planning and investment strategies...",
+    quote:
+      "My goal is to leverage financial acumen to maximize returns and ensure long-term stability...",
+    imageSrc: consultantProf2,
+  },
+];

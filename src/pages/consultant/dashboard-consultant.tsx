@@ -1,49 +1,29 @@
 import styles from "@/styles/Dashboard-consultant.module.scss";
 import Image from "next/image";
-import backGroundImage from "~/public/imgs/pricing-image.png";
-import tick from "~/public/icons/tick.svg";
-import redirect from "~/public/icons/redirect.svg";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Link from "next/link";
-import Info from "~/public/icons/info.svg";
-
+import { ProjectConsultantListType } from "../api/consultant/getProjects-consultant";
 import Button from "@mui/material/Button";
-import arrowRight from "~/public/icons/arrow-right.svg";
-import Badge from "@mui/material/Badge";
 import { useRouter } from "next/router";
 import useSWR, { mutate } from "swr";
-import {
-  Alert,
-  AlertTitle,
-  CircularProgress,
-  Collapse,
-  IconButton,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { Alert, AlertTitle, CircularProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import InfoIcon from "@mui/icons-material/Info";
-import { isEmpty, map, result } from "lodash";
-import { ProjectListType } from "@/pages/api/dashboard/getProjects";
-import moment from "moment";
+import { isEmpty, map } from "lodash";
 import { getServerSession } from "next-auth";
 import { GetServerSidePropsContext } from "next/types";
 import { optionsAuth } from "@/pages/api/auth/[...nextauth]";
-import ProjectDetails from "@/pages/components/projects";
+import ProjectConsultantDetails from "@/pages/components/projects-consultant";
+import banner from "~/public/imgs/banner.webp";
+import ProjectInfoComponent from "@/pages/components/Project-Info-component";
+import noResult from "~/public/imgs/noResult.webp";
 
-interface ISOPENTYPE {
-  [id: number]: boolean;
-}
 interface DashboardPropsType {
   userRole: string;
 }
 
 export default function DashboardConsultantPage(props: DashboardPropsType) {
-  const mediaQuery = useMediaQuery("(max-width:1000px)");
-  const mediaQuery14 = useMediaQuery("(max-width:1400px)");
-  const mediaQuery6 = useMediaQuery("(max-width:600px)");
   const router = useRouter();
 
   const [viewProject, setViewProject] = useState(null);
+  const [initPage, setInitPage] = useState(true);
 
   const { data, error, isValidating } = useSWR(
     "/api/consultant/getProjects-consultant",
@@ -60,14 +40,17 @@ export default function DashboardConsultantPage(props: DashboardPropsType) {
   useEffect(() => {
     if (isEmpty(router.query)) {
       setViewProject(null);
-      mutate("/api/consultant/getProjects-consultant");
+      if (!initPage) {
+        mutate("/api/consultant/getProjects-consultant");
+      }
     } else {
-      const project: any = router.query.project;
+      const project: any = router.query?.project;
       setViewProject(project);
     }
-  }, [router]);
 
-  const [open, setOpen] = React.useState<ISOPENTYPE>({});
+    // Set initPage to false after initial load
+    setInitPage(false);
+  }, [router]);
 
   return (
     <>
@@ -76,199 +59,102 @@ export default function DashboardConsultantPage(props: DashboardPropsType) {
           {isValidating && (
             <div className={styles.loading}>
               <CircularProgress
-                style={{ color: "var(--secondaryColor)" }}
+                style={{ color: "var(--blueColor)" }}
                 size={50}
               ></CircularProgress>
             </div>
           )}
           {!isValidating && (
             <>
-              <div className={styles.sideBar}>
-                <div className={styles.dashTitle}>My Dashboard</div>
-                <div className={styles.btns}>
-                  <Button
-                    fullWidth
-                    className={`btn btn-secondary ${styles.btnInfo}`}
-                  >
-                    Projects
-                  </Button>
-                  <Button
-                    fullWidth
-                    className={`links ${styles.infoNotSelected}`}
-                  >
-                    Order Details
-                  </Button>
-                  <Button
-                    fullWidth
-                    className={`links ${styles.infoNotSelected}`}
-                  >
-                    Chatroom
-                  </Button>
+              <div className={styles.projectBanner}>
+                <Image quality={100} alt="image banner" priority src={banner} />
+                <div className={styles.bannerTitle}>
+                  {viewProject ? "Project Overview" : "Projects"}
                 </div>
               </div>
 
               {viewProject && !error ? (
-                <div className={styles.rightSide}>
-                  <ProjectConsultantDetails
-                    userRole={props.userRole}
-                    projectId={viewProject}
-                  />
-                </div>
+                <ProjectConsultantDetails
+                  userRole={props.userRole}
+                  projectId={viewProject}
+                />
               ) : (
-                <div className={styles.rightSide}>
-                  <div className={styles.upperBtn}>
-                    <div className={`subTitle ${styles.titles}`}>Projects</div>
-                  </div>
+                <div className={styles.projectContainer}>
+                  <div className={styles.content}>
+                    {!isEmpty(dataResult) &&
+                      !error &&
+                      map(dataResult, (v: ProjectConsultantListType) => (
+                        <ProjectInfoComponent
+                          key={v.project_id}
+                          project_id={v.project_id}
+                          companyName={v.companyName}
+                          projectTypeName={v.projectTypeName}
+                          date_creation={v.date_creation}
+                          comingFrom="project"
+                          userRole={props.userRole}
+                          originalProjectId={v.upgradeFromProjectId}
+                          userName={v.userName}
+                          paymentLink={v.paymentLink}
+                          userEmail={v.userEmail}
+                          currentServiceName={
+                            v.projectTypeName !== "Ideas generation" ||
+                            (v.projectTypeName === "Ideas generation" &&
+                              v.currentServiceName === "Idea analysis")
+                              ? v.currentServiceName
+                              : ""
+                          }
+                          userId={v.userId}
+                          status_value={v.status_value}
+                          invoice={v.invoice}
+                          status_color={v.status_color}
+                          status_label={v.status_label}
+                          info={v.info}
+                          consultantName={v.consultantName}
+                          openProjectDetails={openProjectDetails}
+                        />
+                      ))}
 
-                  {!isEmpty(dataResult) &&
-                    map(dataResult, (v: ProjectConsultantListType) => (
-                      <div key={v.project_id} className={styles.projects}>
-                        <div className="card">
-                          <div style={{ paddingBottom: "1rem" }}>
-                            <Collapse in={open[v.project_id]}>
-                              <Alert
-                                severity="info"
-                                action={
-                                  <IconButton
-                                    aria-label="close"
-                                    color="inherit"
-                                    size="small"
-                                    onClick={() => {
-                                      setOpen((prevOpen) => ({
-                                        ...prevOpen,
-                                        [v.project_id]: false,
-                                      }));
-                                    }}
-                                  >
-                                    <CloseIcon fontSize="inherit" />
-                                  </IconButton>
-                                }
-                                sx={{ mb: 2 }}
-                              >
-                                <AlertTitle>
-                                  Info seen by the client {v.userName}
-                                </AlertTitle>
-                                {isNaN(v.info as number)
-                                  ? v.info
-                                  : `Estimatinh time is around ${v.info} business days`}
-                              </Alert>
-                            </Collapse>
-                          </div>
-                          <div className={styles.cardInfo}>
-                            <div className={styles.cardTitle}>
-                              <div className="title">{v.companyName}</div>
-                              <div>
-                                Project ID: <strong>{v.project_id}</strong>
-                              </div>
-                              <div>
-                                User name: <strong>{v.userName}</strong>
-                              </div>
-                              {props.userRole === "a" && (
-                                <div>
-                                  User ID: <strong>{v.userId}</strong>
-                                </div>
-                              )}
-
-                              <div>
-                                User email: <strong>{v.userEmail}</strong>
-                              </div>
-                              <div>
-                                Service plan :{" "}
-                                <strong
-                                  style={{ color: "var(--secondaryColor)" }}
-                                >
-                                  {v.projectType}
-                                </strong>
-                              </div>
-                              <div>
-                                Created on{" "}
-                                {moment
-                                  .utc(v.date_creation)
-                                  .format("DD-MM-YYYY")}
-                              </div>
-                            </div>
-                            <div className={styles.statusInfo}>
-                              {v.consultantName && (
-                                <div style={{ paddingBottom: "0.5rem" }}>
-                                  Assigned to{" "}
-                                  <strong>{v.consultantName}</strong>
-                                </div>
-                              )}
-                              {!v.consultantName && (
-                                <div style={{ paddingBottom: "0.5rem" }}>
-                                  <small>Consultant not assigned yet</small>{" "}
-                                </div>
-                              )}
-
-                              <div className={styles.status}>
-                                <div>
-                                  <Badge
-                                    className={v.status_color}
-                                    variant="dot"
-                                  ></Badge>
-                                </div>
-                                <div>{v.status_label}</div>
-                                {!open[v.project_id] && (
-                                  <div>
-                                    <Image
-                                      onClick={() => {
-                                        setOpen((prevOpen) => ({
-                                          ...prevOpen,
-                                          [v.project_id]: true,
-                                        }));
-                                      }}
-                                      style={{ cursor: "pointer" }}
-                                      alt="info"
-                                      src={Info}
-                                    />
-                                  </div>
-                                )}
-                              </div>
-                              <div
-                                className={styles.review}
-                                onClick={() =>
-                                  router.push(
-                                    `/questionnaire?service=${v.projectType}&project=${v.project_id}&userId=${v.userId}`
-                                  )
-                                }
-                              >
-                                <div>Review questionnaire</div>
-                                <div>
-                                  <Image alt="arrow" src={arrowRight} />
-                                </div>
-                              </div>
+                    {isEmpty(dataResult) && !error && (
+                      <div className={styles.EmptyListSection}>
+                        <div className={styles.info}>
+                          <div>
+                            <div className="subTitle">
+                              It seems you haven&apos;t started any projects
+                              yet.
                             </div>
                           </div>
-                          <div className={styles.btnCards}>
-                            <div>
-                              <Button
-                                onClick={() => openProjectDetails(v.project_id)}
-                                className="btn btn-secondary"
-                              >
-                                View Project
-                              </Button>
-                            </div>
+                          <div className="description">
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Error amet libero soluta vel, reiciendis
+                            incidunt maiores dolore! Perspiciatis architecto
+                            iusto odit at harum, officia suscipit minima quae
+                            expedita excepturi ratione.
+                          </div>
+                          <div>
+                            <Button
+                              onClick={() => router.push("/pricing")}
+                              className="btn btn-secondary"
+                              size="large"
+                            >
+                              Start a new Project
+                            </Button>
                           </div>
                         </div>
+                        <div>
+                          <Image src={noResult} alt="norResultImg" />
+                        </div>
                       </div>
-                    ))}
-
-                  {isEmpty(dataResult) && !error && (
-                    <div>
-                      <Alert severity="info" sx={{ mt: 2 }}>
-                        <AlertTitle>No projects found</AlertTitle>
-                      </Alert>
-                    </div>
-                  )}
-                  {error && (
-                    <div>
-                      <Alert severity="error" sx={{ mt: 2 }}>
-                        <AlertTitle>Something went wrong</AlertTitle>
-                        Try reloading this page , or contact customer service if
-                        this issue persists!
-                      </Alert>
-                    </div>
-                  )}
+                    )}
+                    {error && (
+                      <div className={styles.error}>
+                        <Alert severity="error" sx={{ mt: 2 }}>
+                          <AlertTitle>Something went wrong</AlertTitle>
+                          Try reloading this page , or contact customer service
+                          if this issue persists!
+                        </Alert>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </>
@@ -279,9 +165,7 @@ export default function DashboardConsultantPage(props: DashboardPropsType) {
   );
 }
 import { executeQuery } from "@/lib/db";
-import { ProjectConsultantListType } from "../api/consultant/getProjects-consultant";
-import ProjectConsultantDetails from "../components/projects-consultant";
-import axios from "axios";
+
 const sql = require("sql-template-strings");
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerSession(context.req, context.res, optionsAuth);
@@ -308,7 +192,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       ) {
         return {
           redirect: {
-            destination: "/dashboard",
+            destination: "/consultant/dashboard-consultant",
             permanent: false,
           },
         };

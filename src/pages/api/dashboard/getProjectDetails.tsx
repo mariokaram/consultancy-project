@@ -14,16 +14,21 @@ export interface ProjectListDetailsType {
   projectColorStatus: string;
   serviceName: string;
   serviceId: number;
+  serviceOrder : number;
   serviceValue: string;
   projectType: string;
   confirmed: number;
   status_color: string;
   status_label: string;
+  invoice: string;
   status_value: string;
-  idea1: string;
-  idea2: string;
-  idea3: string;
-  ideaPicked: string;
+  paymentLink: string;
+  upgradeFromProjectType: string;
+  upgradeFromProjectId: number;
+  project_upgraded: number;
+  projectUpgradeCount:number;
+  currentServiceName: string;
+
 }
 
 export interface IMAGEValueType {
@@ -38,22 +43,29 @@ export interface servicesType {
   status_color: string;
   serviceId: number;
   confirmed: number;
+  serviceOrder : number;
   status_label: string;
   status_value: string;
+  serviceImg: string;
 }
 export interface finalDataType {
   project_id: number;
+  paymentLink: string;
   date_creation: Date | null;
   info: string | number;
   consultantName: string;
+  projectUpgradeCount:number;
   projectType: string;
   companyName: string;
-  idea1: string;
-  idea2: string;
-  idea3: string;
-  ideaPicked: string;
+  currentServiceName: string;
+  invoice: string;
   projectLabelStatus: string;
   projectColorStatus: string;
+  projectStatusValue: string;
+  projectTypeName: string;
+  upgradeFromProjectType: string;
+  upgradeFromProjectId: number;
+  project_upgraded: number;
 }
 
 interface ResponseType {
@@ -67,10 +79,20 @@ export default getHandler({}).get(async (req, res) => {
 
     const projectId = req.query?.project;
     answers = await executeQuery(sql` 
-    select s.id as serviceId , p.project_service as projectType, p.idea1 , p.idea2 , p.idea3 , p.ideaPicked  ,s.confirmed , s.serviceName , st.status_color , st.status_label , st.status_value , s.serviceValue , p.info,  p.project_id, u.name as consultantName , p.date_creation ,
+    select s.id as serviceId , s.statusOrder  as serviceOrder , p.upgradeFromProjectType , p.upgradeFromProjectId , p.project_upgraded , p.invoice , p.paymentLink , p.project_service as projectType ,    
+    (select serviceName from services se where se.serviceStatus = p.status and se.serviceStatus <> 7 and se.projectId= ${projectId} limit 1 ) as currentServiceName , 
+    case 
+    when p.project_service = 'i' then 'Ideas generation'
+    when p.project_service = 'f' then 'Financial plan'
+    when p.project_service = 'm' then 'Marketing plan'
+    when p.project_service = 'bc' then 'Complex business plan'    
+    else "Business plan" end as projectTypeName,
+    (SELECT COUNT(*) FROM projects WHERE upgradeFromProjectId = p.upgradeFromProjectId and s.userId = ${req.userId} ) as projectUpgradeCount , 
+    s.confirmed , s.serviceName , st.status_color , st.status_label , st.status_value , s.serviceImg , s.serviceValue , p.info,  p.project_id, u.name as consultantName , p.date_creation ,
     ( select sta.status_label from statuses sta where sta.id = p.status ) as projectLabelStatus ,
+    ( select sta.status_value from statuses sta where sta.id = p.status ) as projectStatusValue ,
     ( select sta.status_color from statuses sta where sta.id = p.status ) as projectColorStatus , 
-    ( select answers from quest_users q where q.quest_type= 'projectName' and q.project_id = ${projectId}   ) as companyName  
+    (SELECT answers FROM quest_users q WHERE q.quest_type = 'projectName' AND q.project_id = IF(p.upgradeFromProjectId IS NULL,${projectId}, p.upgradeFromProjectId) ) AS companyName 
     from services s 
     inner join projects p on p.project_id = s.projectId  and p.customer_id = ${req.userId}
     left join users u on u.id = p.consultant_id
@@ -89,24 +111,32 @@ export default getHandler({}).get(async (req, res) => {
           services.push({
             serviceName: v.serviceName,
             serviceId: v.serviceId,
+            serviceImg: v.serviceImg,
             serviceValue: v.serviceValue ? JSON.parse(v.serviceValue) : null,
             status_color: v.status_color,
+            serviceOrder : v.serviceOrder ,
             confirmed: v.confirmed,
             status_label: v.status_label,
             status_value: v.status_value,
           });
-          (finalData.companyName = v.companyName),
+            (finalData.companyName = v.companyName),
             (finalData.consultantName = v.consultantName),
             (finalData.date_creation = v.date_creation),
             (finalData.info = v.info),
             (finalData.projectType = v.projectType),
             (finalData.projectColorStatus = v.projectColorStatus),
             (finalData.projectLabelStatus = v.projectLabelStatus),
-            (finalData.project_id = v.project_id);
-            (finalData.idea1 = v.idea1),
-            (finalData.idea2 = v.idea2),
-            (finalData.idea3 = v.idea3),
-            (finalData.ideaPicked = v.ideaPicked);
+            (finalData.projectStatusValue = v.projectStatusValue),
+            (finalData.upgradeFromProjectType = v.upgradeFromProjectType),
+            (finalData.upgradeFromProjectId = v.upgradeFromProjectId),
+            (finalData.project_upgraded = v.project_upgraded),
+            (finalData.paymentLink = v.paymentLink),
+            (finalData.projectTypeName = v.projectTypeName),
+            (finalData.projectUpgradeCount = v.projectUpgradeCount),
+            (finalData.project_id = v.project_id),
+            (finalData.invoice = v.invoice),
+            (finalData.currentServiceName = v.currentServiceName)
+          
         });
       }
 

@@ -1,159 +1,296 @@
 .mainContainer {
-  background-color: var(--backgroundBeige);
-  display: flex;
-  min-height: 890px;
-
   .loading {
     display: flex;
     width: 100%;
     align-items: center;
     justify-content: center;
+    min-height: 100vh;
+  }
+  .projectBanner {
+    position: relative;
+    padding: 2rem;
+
+    img {
+      border-radius: 4px;
+      height: 100px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .bannerTitle {
+      position: absolute;
+      left: 4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: white;
+      font-size: var(--primaryFontSize);
+      font-weight: bold;
+    }
   }
 
-  .rightSide {
-    flex: 1 0 75%;
-    padding: 4rem 2rem;
-    .upperBtn {
-      display: flex;
-      justify-content: space-between;
-    }
-    .projects {
-      padding-top: 2rem;
+  .projectContainer {
+    padding: 0rem 2rem;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+
+    .content {
+      width: 100%;
+      gap: 2rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      flex: 3 0 60%;
 
-      .cardInfo {
+      .error {
+        min-height: 250px;
+      }
+
+      .msgContent {
         display: flex;
-        justify-content: space-between;
+        border: 2px solid #e2dff1;
+        border-radius: 4px;
+        margin-bottom: 4rem;
 
-        .cardTitle,
-        .statusInfo {
+        .convSection {
+          flex: 3;
           display: flex;
           flex-direction: column;
-          gap: 0.5rem;
-          color: var(--primaryColor);
+          gap: 1rem;
+          background-color: #f8f9fe;
+          margin: 2rem 0rem 2rem 2rem;
+          border-radius: 4px;
+          padding: 3rem 4rem;
+          padding-bottom: 0;
+
+          .convList {
+            .existingPdf {
+              display: inline-flex;
+              align-items: center;
+              border: 1px solid;
+              border-radius: 4px;
+              border-color: transparent;
+              background-color: var(--backgroundBeige);
+              font-size: small;
+              padding: 5px 20px;
+              color: var(--primaryColor);
+              a {
+                color: var(--primaryColor);
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
+            }
+            overflow-y: auto;
+            min-height: 450px;
+            max-height: 450px;
+            /* Modern Scrollbar Styling */
+            scrollbar-width: thin; /* Firefox */
+            scrollbar-color: #c1c1c1 transparent; /* Scrollbar and track colors */
+
+            /* Edge Legacy */
+            -ms-overflow-style: none; /* Hides scrollbars in IE and Edge Legacy */
+
+            .userMessage {
+              .avatarInitials {
+                color: var(--blueColor);
+                font-weight: bold;
+                font-size: 1rem;
+                background-color: #b6dde2;
+              }
+              display: flex;
+              gap: 1rem;
+
+              .convInfo {
+                width: 100%;
+                padding-bottom: 2rem;
+                .cardMsg {
+                  position: relative;
+                  background: white; /* Adds a soft gradient */
+                  padding: 1rem 1.5rem;
+                  border-radius: 4px; /* Rounds the edges more for a modern look */
+                  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06); /* Softer shadow */
+                  line-height: 1.3;
+                  color: var(--primaryColor);
+                  line-break: anywhere;
+
+                  &:after {
+                    content: "";
+                    position: absolute;
+                    top: 15%; /* Vertically aligns the arrow */
+                    right: -7px; /* Places the arrow to the right */
+                    width: 0;
+                    height: 0;
+                    border-style: solid;
+                    border-width: 10px 0 10px 10px; /* Triangle shape with the arrow pointing to the right */
+                    border-color: transparent transparent transparent #ffffff; /* Matches card background */
+                  }
+                }
+
+                .dateMsg {
+                  margin-top: 0.5rem;
+                  font-size: 12px;
+                  color: #999;
+                  display: flex;
+                  padding-left: 0.5rem;
+                  text-transform: capitalize;
+                }
+              }
+              .convImg {
+                padding-right: 1rem;
+              }
+            }
+            .consultantMsg {
+              display: flex;
+              gap: 1rem;
+
+              .convInfo {
+                width: 100%;
+                padding-bottom: 2rem;
+                padding-right: 1rem;
+                .cardMsg {
+                  position: relative;
+                  background: white; /* Adds a soft gradient */
+                  padding: 1rem 1.5rem;
+                  border-radius: 4px; /* Rounds the edges more for a modern look */
+                  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06); /* Softer shadow */
+                  line-height: 1.3;
+                  color: var(--primaryColor);
+
+                  &:after {
+                    content: "";
+                    position: absolute;
+                    top: 15%; /* Vertically aligns the arrow */
+                    left: -7px; /* Slightly larger arrow */
+                    width: 0;
+                    height: 0;
+                    border-style: solid;
+                    border-width: 10px 10px 10px 0;
+                    border-color: transparent #ffffff transparent transparent; /* Matches card background */
+                  }
+                }
+
+                .dateMsg {
+                  margin-top: 0.5rem;
+                  font-size: 12px;
+                  color: #999;
+                  display: flex;
+                  justify-content: flex-end;
+                  padding-right: 0.5rem;
+                }
+              }
+            }
+          }
+          .messageInput {
+            position: sticky; /* Keeps it visible at the bottom when scrolling */
+            bottom: 0;
+            background-color: #fff; /* Matches the background to avoid overlap */
+            padding: 1rem 2rem;
+            z-index: 10; /* Ensures it's above the scrolling messages */
+            display: flex;
+            margin: 3rem 1rem;
+            margin-left: 0;
+            padding-left: 0;
+            border-radius: 4px;
+            align-items: center;
+
+            .btnSend {
+              margin-left: 1rem;
+              padding: 0.6rem 0;
+              height: fit-content;
+              svg {
+                color: white;
+              }
+            }
+
+            .attachWrapper {
+              display: flex;
+              align-items: center;
+              gap: 10px; /* Space between icon and line */
+            }
+
+            .verticalLine {
+              height: 60px; /* Adjust height based on input field */
+              width: 1px;
+              background-color: lightgrey; /* Grey color */
+              margin-left: 0.5rem;
+              margin-right: 0.5rem;
+            }
+          }
         }
-        .status,
-        .review {
-          display: flex;
-          gap: 0.7rem;
-          color: var(--primaryColor);
-          flex: 1;
-          align-items: center;
+
+        .infoSection {
+          flex: 1.5;
+          background-color: white;
+          padding: 2rem;
+
+          .consultImg {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+          }
+
+          .consultName {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+          }
+
+          .consultField {
+            text-align: center;
+            font-size: 0.85rem;
+            margin-bottom: 1.2rem;
+            color: var(--primaryColor);
+          }
+
+          .consultTitle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            color: #8c66d8;
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
+          }
+
+          .horizontal {
+            width: 100%;
+            height: 1px;
+            background-color: #e2e2e2;
+            margin: 2rem 0;
+          }
+
+          .fileTitle {
+            margin-bottom: 1rem;
+            font-weight: bold;
+          }
+
+          .fileSection {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            a {
+              font-size: 0.9rem;
+              color: var(--primaryColor);
+              text-decoration: none;
+              max-width: max-content;
+
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+          }
         }
-        .review {
-          color: var(--secondaryColor);
-          cursor: pointer;
-        }
-      }
-      .btnCards {
-        padding-top: 1rem;
-        display: flex;
-        gap: 0.5rem;
       }
     }
   }
+}
 
-  .sideBar {
-    background: white;
-    border-top: 2px solid var(--greyColor);
-    border-bottom: 2px solid var(--greyColor);
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    max-width: 250px;
-    flex: 1 0 25%;
-    padding: 1rem;
-    .dashTitle {
-      padding-top: 1rem;
-      color: var(--primaryColor);
-      font-weight: 500;
-    }
-    .btns {
-      width: 100%;
-      padding-top: 2rem;
-      .btnInfo {
-        border-bottom-left-radius: 0 !important;
-        border-top-right-radius: 0 !important;
-        border-radius: 20px;
-        margin-bottom: 1rem;
-      }
-      .infoNotSelected {
-        margin-bottom: 1rem;
-      }
-    }
+@media (max-width: 600px) {
+  .projectBanner {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
   }
-}
-
-
-/* Chatroom.css */
-.chatContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 70vh;
-  padding: 0 !important;
-  margin: 0 !important;
-  padding-top: 1rem !important;
-  scrollbar-width: thin; /* For Firefox */
-  scrollbar-color: #ccc #f5f5f5; /* For Firefox */
-}
-
-.chatMessages {
-  flex: 1;
-  overflow-y: auto;
-  margin-bottom: 16px;
-  -ms-overflow-style: none; /* Hide scrollbar in IE and Edge */
-  scrollbar-width: thin; /* For WebKit browsers (Chrome, Safari) */
-  background-color: transparent;
-  box-shadow: var(--box-shadow) !important;
-}
-
-.chatMessages::-webkit-scrollbar {
-  width: 5px; /* Adjust the width as needed */
-}
-
-.chatMessages::-webkit-scrollbar-track {
-  background: #f5f5f5; /* Track color */
-}
-
-.chatMessages::-webkit-scrollbar-thumb {
-  background-color: #ccc; /* Thumb color */
-  border-radius: 10px; /* Rounded thumb */
-}
-
-.message {
-  width: fit-content;
-  padding: 0.5rem 1rem;
-  margin: 0.5rem 2rem;
-  border-radius: 10px;
-  &:first-child {
-    margin-top: 2rem;
-  }
-}
-.userMessage {
-  background-color: #dcf8c6; /* Background color for user messages */
-  float: right;
-  position: relative;
-  clear: both;
-}
-
-.consultantMessage {
-  background-color: #e6e6e6; /* Background color for consultant messages */
-  float: left;
-  position: relative;
-  clear: both;
-}
-
-/* Style for user name */
-.userName {
-  font-weight: bold;
-  margin-right: 5px; /* Add a small margin to separate from the date */
-}
-
-.messageInput {
-  padding-top: 1rem;
-  display: flex;
-  gap: 1rem;
 }

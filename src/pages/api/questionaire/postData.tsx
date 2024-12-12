@@ -2,7 +2,7 @@ import { getHandler, messageSuccess, messageError } from "@/utils/handlers";
 import { db } from "@/lib/db";
 import { isEmpty, map } from "lodash";
 const sql = require("sql-template-strings");
-import { insertLogs, sendEmail } from "@/utils/shared";
+import { insertLogs, insertServiceTable, sendEmail } from "@/utils/shared";
 
 export default getHandler({}).post(async (req, res) => {
   try {
@@ -11,51 +11,7 @@ export default getHandler({}).post(async (req, res) => {
     const step = data.step ? (data.step - 14213) / 14343 : 0;
 
     let getNewProjectId: number | undefined;
-    const insertServiceTable = (
-      projectId: number | undefined
-    ): [string, number, number, number | undefined, string][] => {
-      let returnedValue: any;
 
-      switch (data.serviceType) {
-        case "b":
-          returnedValue = [
-            ["Business modal", 5, 1, projectId, req.userId],
-            ["Marketing strategy", 5, 2, projectId, req.userId],
-            ["Risk mitigation", 5, 3, projectId, req.userId],
-            ["Financial projections and strategy", 5, 4, projectId, req.userId],
-            ["Growth strategy and execution plan", 5, 5, projectId, req.userId],
-          ];
-          break;
-        case "m":
-          returnedValue = [
-            ["Business modal", 5, 1, projectId, req.userId],
-            ["Marketing strategy", 5, 2, projectId, req.userId],
-            ["Risk mitigation", 5, 3, projectId, req.userId],
-            ["Financial projections and strategy", 8, 4, projectId, req.userId],
-            ["Growth strategy and execution plan", 8, 5, projectId, req.userId],
-          ];
-          break;
-        case "f":
-          returnedValue = [
-            ["Business modal", 5, 1, projectId, req.userId],
-            ["Financial projections and strategy", 5, 2, projectId, req.userId],
-            ["Growth strategy and execution plan", 5, 3, projectId, req.userId],
-            ["Marketing strategy", 8, 4, projectId, req.userId],
-            ["Risk mitigation", 8, 5, projectId, req.userId],
-       
-          ];
-          break;
-        case "i":
-          returnedValue = [
-            ["TBD1", 5, 1, projectId, req.userId],
-            ["TBD2", 5, 2, projectId, req.userId],
-            ["TBD3", 5, 3, projectId, req.userId],
-          ];
-          break;
-      }
-
-      return returnedValue;
-    };
     const info = `Complete the questionnaire in order to review it , noura hone fike tzabte l kalem aktr`;
     const infoFinal = `We are reviewing your questionnaire , it will take around 2 business days, we will inform you by email or you can check your dashboard's statuss`;
     if (data.projectId === "new" && step === 0) {
@@ -96,8 +52,8 @@ export default getHandler({}).post(async (req, res) => {
         ])
         .query(() => {
           return [
-            "insert into services ( serviceName , serviceStatus , statusOrder ,  projectId , userId )  values ?",
-            [insertServiceTable(getNewProjectId)],
+            "insert into services ( serviceName , serviceStatus , statusOrder ,  projectId , userId , serviceImg )  values ?",
+            [insertServiceTable(data.serviceType, getNewProjectId, req.userId)],
           ];
         })
 
@@ -144,7 +100,7 @@ export default getHandler({}).post(async (req, res) => {
               [
                 req.userId,
                 step,
-                data.serviceType,
+                data.serviceType === "bc" ? "b" : data.serviceType,
                 req.userId,
                 data.projectId,
                 1,
@@ -167,7 +123,7 @@ export default getHandler({}).post(async (req, res) => {
         .query((r: any) => {
           if (data.isFinalStep && !isEmpty(r)) {
             return [
-              `update projects set status = 3, info = ? where project_id = ? and customer_id = ?`,
+              `update projects set status = 3 , info = ? where project_id = ? and customer_id = ?`,
               [infoFinal, data.projectId, req.userId],
             ];
           } else {

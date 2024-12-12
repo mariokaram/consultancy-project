@@ -16,4 +16,6 @@ export const configs = {
   cloudinary_api_key: process.env.NEXT_PUBLIC_cloudinary_api_key,
   cloudinary_api_secret: process.env.cloudinary_api_secret,
   cloudinary_url: process.env.NEXT_PUBLIC_cloudinary_url,
+  STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+  STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
 };

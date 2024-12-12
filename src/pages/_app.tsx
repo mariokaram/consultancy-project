@@ -74,6 +74,8 @@ export default function App(props: MyAppProps) {
               <SWRConfig
                 value={{
                   fetcher: (url) => axios(url).then((r) => r.data),
+                  errorRetryCount: 3,
+                  errorRetryInterval: 5000,
                 }}
               >
                 <main className={`${Aeonik.className} main`}>

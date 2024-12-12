@@ -17,10 +17,10 @@
     background-color: var(--backgroundBeige);
   }
   .avatarInitials {
-    color: var(--secondaryColor);
+    color: var(--blueColor);
     font-weight: bold;
     font-size: 1rem;
-    background-color: var(--backgroundBeige);
+    background-color: #b6dde2;
   }
 
   .btnInfo {
@@ -40,7 +40,7 @@
       height: 2px;
       bottom: -5px;
       left: 0;
-      background-color: var(--secondaryColor);
+      background-color: var(--blueColor);
       width: 100%;
       transform: scaleX(0.99);
     }

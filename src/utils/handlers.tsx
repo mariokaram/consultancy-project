@@ -10,6 +10,13 @@ export interface NextApiRequestExtended extends NextApiRequest {
   userRole: string;
   userName: string;
 }
+interface SessionType {
+  user: {
+    id: string;
+    role: string;
+    name: string;
+  };
+}
 
 export function getHandler({
   auth = true,
@@ -48,10 +55,13 @@ export function getHandler({
     .use(handleCors)
     .use(async (req, res, next) => {
       try {
+        console.log(auth,"marioo")
         if (auth) {
-          const session: any = await getServerSession(req, res, optionsAuth);
-
-          console.log(session, "marioooooooooooooo");
+          const session: SessionType | null = await getServerSession(
+            req,
+            res,
+            optionsAuth
+          );
 
           if (session) {
             const { isRateLimited } = limiter.check(session.user["id"]);

@@ -7,8 +7,73 @@ import ContactBanner from "./components/Contact-Banner";
 import Button from "@mui/material/Button";
 import CustomizedAccordions from "./components/Accordion-component";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { SpinnerContext } from "@/contexts/SpinnerContextProvider";
+import axios from "axios";
+import React from "react";
+import { toast, ToastContainer } from "react-toastify";
 
-export default function PricingPage() {
+type PricingPageProps = {
+  filteredCardsData: typeof cardsData;
+  upgradeProjectType: string;
+  projectId: number;
+  originalProjectId: number;
+  originalProjectType: string;
+};
+
+export default function PricingPage(props: PricingPageProps) {
+  const router = useRouter();
+  const { showSpinner } = React.useContext(SpinnerContext);
+
+  async function handleChoosePlan(
+    questionnaireUrl: string,
+    projectTypeToBeUpgraded: string
+  ) {
+    try {
+      if (
+        props.upgradeProjectType &&
+        props.projectId &&
+        props.originalProjectId &&
+        props.originalProjectType
+      ) {
+        showSpinner(true);
+        const params = {
+          upgradeProjectType: props.upgradeProjectType,
+          projectTypeToBeUpgraded,
+          originalProjectId: props.originalProjectId,
+          originalProjectType: props.originalProjectType,
+          projectId: props.projectId,
+        };
+        const response = await axios.post(
+          "/api/dashboard/upgradeService",
+          params
+        );
+
+        if (response.data.success && !response.data?.result) {
+          router.replace("/dashboard");
+          showSpinner(false);
+        } else {
+          showSpinner(false);
+          if (response.data?.result) {
+            return toast.error(response.data?.result);
+          }
+          toast.error("Sorry, something went wrong!");
+        }
+      } else {
+        router.push({
+          pathname: "/questionnaire",
+          query: {
+            service: questionnaireUrl,
+            project: "new",
+          },
+        });
+      }
+    } catch (error) {
+      showSpinner(false);
+      toast.error("Sorry, something went wrong!");
+    }
+  }
+
   // const cardsData = [
   //   {
   //     id: 1,
@@ -94,76 +159,76 @@ export default function PricingPage() {
   //   },
   // ];
 
-  const cardsData = [
-    {
-      id: 1,
-      title: "Idea Generation",
-      pricing: "$1,500",
-      currency: "CAD",
-      serviceUrl: "/services/proposing-business-ideas",
-      questionnaireUrl: "ideas-generation",
-      backgroundClass: styles.cardBlue,
-      points: [
-        "Customized plan",
-        "Dynamic dashboard",
-        "Website chatroom",
-        "2 to 3 answer oriented and specific idea proposals",
-        "2 free idea proposals revision",
-        "In-depth analysis of your answers",
-      ],
-    },
-    {
-      id: 2,
-      title: "Business Model and Financial Study",
-      pricing: "$3,000",
-      currency: "CAD",
-      serviceUrl: "/services/business-plan",
-      questionnaireUrl: "financial-plan",
-      backgroundClass: styles.darkBlue,
-      points: [
-        "Customized strategies",
-        "Dynamic dashboard",
-        "Website chatroom",
-        "Business model",
-        "2 free business model revisions",
-        "Financial projections",
-      ],
-    },
-    {
-      id: 3,
-      title: "Business Model and Marketing Strategy",
-      pricing: "$4,500",
-      currency: "CAD",
-      serviceUrl: "/services/business-plan",
-      questionnaireUrl: "marketing-plan",
-      backgroundClass: styles.darkBlack,
-      points: [
-        "Customized strategies",
-        "Dynamic dashboard",
-        "Website chatroom",
-        "Business model",
-        "2 free business model revisions",
-        "Market research",
-      ],
-    },
-    {
-      id: 4,
-      title: "Business Plan",
-      pricing: "$2,000",
-      currency: "CAD",
-      serviceUrl: "/services/business-plan",
-      questionnaireUrl: "business-plan",
-      backgroundClass: styles.cardGreen,
-      points: [
-        "Customized strategies",
-        "Dynamic dashboard",
-        "Website chatroom",
-        "Business model",
-        "2 free business model revisions",
-        "Marketing strategy",
-      ],
-    },
-  ];
+  // const cardsData = [
+  //   {
+  //     id: "i",
+  //     title: "Idea Generation",
+  //     pricing: "$1,500",
+  //     currency: "CAD",
+  //     serviceUrl: "/services/proposing-business-ideas",
+  //     questionnaireUrl: "ideas-generation",
+  //     backgroundClass: styles.cardBlue,
+  //     points: [
+  //       "Customized plan",
+  //       "Dynamic dashboard",
+  //       "Website chatroom",
+  //       "2 to 3 answer oriented and specific idea proposals",
+  //       "2 free idea proposals revision",
+  //       "In-depth analysis of your answers",
+  //     ],
+  //   },
+  //   {
+  //     id: "f",
+  //     title: "Business Model and Financial Study",
+  //     pricing: "$3,000",
+  //     currency: "CAD",
+  //     serviceUrl: "/services/business-plan",
+  //     questionnaireUrl: "financial-plan",
+  //     backgroundClass: styles.darkBlue,
+  //     points: [
+  //       "Customized strategies",
+  //       "Dynamic dashboard",
+  //       "Website chatroom",
+  //       "Business model",
+  //       "2 free business model revisions",
+  //       "Financial projections",
+  //     ],
+  //   },
+  //   {
+  //     id: "m",
+  //     title: "Business Model and Marketing Strategy",
+  //     pricing: "$4,500",
+  //     currency: "CAD",
+  //     serviceUrl: "/services/business-plan",
+  //     questionnaireUrl: "marketing-plan",
+  //     backgroundClass: styles.darkBlack,
+  //     points: [
+  //       "Customized strategies",
+  //       "Dynamic dashboard",
+  //       "Website chatroom",
+  //       "Business model",
+  //       "2 free business model revisions",
+  //       "Market research",
+  //     ],
+  //   },
+  //   {
+  //     id: "b",
+  //     title: "Business Plan",
+  //     pricing: "$2,000",
+  //     currency: "CAD",
+  //     serviceUrl: "/services/business-plan",
+  //     questionnaireUrl: "business-plan",
+  //     backgroundClass: styles.cardGreen,
+  //     points: [
+  //       "Customized strategies",
+  //       "Dynamic dashboard",
+  //       "Website chatroom",
+  //       "Business model",
+  //       "2 free business model revisions",
+  //       "Marketing strategy",
+  //     ],
+  //   },
+  // ];
   return (
     <>
       <section>
@@ -191,7 +256,7 @@ export default function PricingPage() {
 
           {/* Card Section */}
           <div className={styles.cardContainer}>
-            {cardsData.map((card) => (
+            {props.filteredCardsData?.map((card) => (
               <div key={card.id} className={styles.card}>
                 <div className={`${styles.cardBackg} ${card.backgroundClass}`}>
                   <div className={styles.cardTitle}>{card.title}</div>
@@ -214,16 +279,15 @@ export default function PricingPage() {
                 </div>
 
                 <div className={styles.cardBtn}>
-                  <Link
-                    href={{
-                      pathname: "/questionnaire",
-                      query: { service: card.questionnaireUrl, project: "new" },
-                    }}
+                  <Button
+                    onClick={() =>
+                      handleChoosePlan(card.questionnaireUrl, card.id)
+                    }
+                    size="large"
+                    className="btn btn-secondary"
                   >
-                    <Button size="large" className="btn btn-secondary">
-                      Choose Plan
-                    </Button>
-                  </Link>
+                    Choose Plan
+                  </Button>
                 </div>
               </div>
             ))}
@@ -278,19 +342,15 @@ export default function PricingPage() {
                 </div>
 
                 <div className={styles.bannerBtn}>
-                  <Link
-                    href={{
-                      pathname: "/questionnaire",
-                      query: {
-                        service: "complex-business-plan",
-                        project: "new",
-                      },
-                    }}
+                  <Button
+                    onClick={() =>
+                      handleChoosePlan("complex-business-plan", "bc")
+                    }
+                    size="large"
+                    className="btn btn-secondary"
                   >
-                    <Button size="large" className="btn btn-secondary">
-                      Get quotation
-                    </Button>
-                  </Link>
+                    Get quotation
+                  </Button>
                 </div>
               </div>
               <Image
@@ -325,7 +385,185 @@ export default function PricingPage() {
             <ContactBanner />
           </div>
         </div>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover={false}
+        />
       </section>
     </>
   );
+}
+
+const cardsData = [
+  {
+    id: "i",
+    title: "Idea Generation",
+    pricing: "$1,500",
+    currency: "CAD",
+    serviceUrl: "/services/proposing-business-ideas",
+    questionnaireUrl: "ideas-generation",
+    backgroundClass: styles.cardBlue,
+    points: [
+      "Customized plan",
+      "Dynamic dashboard",
+      "Website chatroom",
+      "2 to 3 answer oriented and specific idea proposals",
+      "2 free idea proposals revision",
+      "In-depth analysis of your answers",
+    ],
+  },
+  {
+    id: "f",
+    title: "Business Model and Financial Study",
+    pricing: "$3,000",
+    currency: "CAD",
+    serviceUrl: "/services/business-plan",
+    questionnaireUrl: "financial-plan",
+    backgroundClass: styles.darkBlue,
+    points: [
+      "Customized strategies",
+      "Dynamic dashboard",
+      "Website chatroom",
+      "Business model",
+      "2 free business model revisions",
+      "Financial projections",
+    ],
+  },
+  {
+    id: "m",
+    title: "Business Model and Marketing Strategy",
+    pricing: "$4,500",
+    currency: "CAD",
+    serviceUrl: "/services/business-plan",
+    questionnaireUrl: "marketing-plan",
+    backgroundClass: styles.darkBlack,
+    points: [
+      "Customized strategies",
+      "Dynamic dashboard",
+      "Website chatroom",
+      "Business model",
+      "2 free business model revisions",
+      "Market research",
+    ],
+  },
+  {
+    id: "b",
+    title: "Business Plan",
+    pricing: "$2,000",
+    currency: "CAD",
+    serviceUrl: "/services/business-plan",
+    questionnaireUrl: "business-plan",
+    backgroundClass: styles.cardGreen,
+    points: [
+      "Customized strategies",
+      "Dynamic dashboard",
+      "Website chatroom",
+      "Business model",
+      "2 free business model revisions",
+      "Marketing strategy",
+    ],
+  },
+];
+
+type Params = {
+  query: {
+    upgradeProjectType: string;
+    projectId: number;
+    originalProjectId: number;
+    originalProjectType: string;
+  };
+};
+
+import { executeQuery } from "@/lib/db";
+const sql = require("sql-template-strings");
+import { getServerSession } from "next-auth/next";
+import { GetServerSidePropsContext } from "next/types";
+import { optionsAuth } from "@/pages/api/auth/[...nextauth]";
+import { isEmpty } from "lodash";
+export async function getServerSideProps(
+  context: GetServerSidePropsContext & Params
+) {
+  const {
+    upgradeProjectType,
+    projectId,
+    originalProjectId,
+    originalProjectType,
+  } = context.query;
+
+  let filteredCardsData = cardsData;
+
+  if (
+    projectId &&
+    (!["i", "m", "f"].includes(originalProjectType) ||
+      !["i", "m", "f"].includes(upgradeProjectType))
+  ) {
+    return {
+      redirect: {
+        destination: "/dashboard",
+        permanent: false,
+      },
+    };
+  }
+
+  if (
+    upgradeProjectType &&
+    originalProjectId &&
+    originalProjectType &&
+    projectId
+  ) {
+    let filteredData = [...cardsData];
+
+    if (upgradeProjectType !== "i") {
+      delete filteredData[0];
+    }
+    filteredCardsData = filteredData.filter(
+      (card) => card.id !== upgradeProjectType
+    );
+
+    const session = await getServerSession(
+      context.req,
+      context.res,
+      optionsAuth
+    );
+    const id: string = session?.user.id!;
+    const SQL = sql`select p.project_id from projects p where customer_id = ${id} and project_service = ${originalProjectType} and project_id=${originalProjectId} and invoice is not null and status = 7  `;
+
+    const checkIfhasProjects: {
+      successQuery: boolean;
+      data: any;
+    } = (await executeQuery(SQL)) as {
+      successQuery: boolean;
+      data: any;
+    };
+
+    //check if User has this project
+    if (
+      !checkIfhasProjects.successQuery ||
+      isEmpty(JSON.parse(checkIfhasProjects.data))
+    ) {
+      return {
+        redirect: {
+          destination: "/dashboard",
+          permanent: false,
+        },
+      };
+    }
+  }
+
+  return {
+    props: {
+      filteredCardsData: filteredCardsData,
+      upgradeProjectType: upgradeProjectType ? upgradeProjectType : "",
+      projectId: projectId ? projectId : null,
+      originalProjectId: originalProjectId ? originalProjectId : null,
+      originalProjectType: originalProjectType ? originalProjectType : "",
+    },
+  };
 }

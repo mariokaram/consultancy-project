@@ -2,9 +2,10 @@
   outline: 0;
   padding: 0.5rem 0.7rem;
   border: 1px solid;
-  box-shadow: var(--box-shadow);
-  border-radius: 20px;
+  box-shadow: var(--shadowInputs);
+  border-radius: 4px;
   border-color: transparent;
+  background-color: var(--rmedeColor);
   line-height: 1.4375em;
   box-sizing: border-box;
   cursor: pointer;
@@ -18,7 +19,7 @@
       display: flex;
       align-items: center;
       border: 1px solid;
-      border-radius: 20px;
+      border-radius: 4px;
       border-color: transparent;
       background-color: var(--backgroundBeige);
       padding: 5px 20px;

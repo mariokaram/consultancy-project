@@ -8,8 +8,7 @@ export interface ChatListType {
   msgFrom: string;
   message: string;
   date: Date;
-  consultantName: string;
-  userName: string;
+  fileUpload: string;
 }
 interface ResponseType {
   successQuery: boolean;
@@ -18,23 +17,27 @@ interface ResponseType {
 
 export default getHandler({}).get(async (req, res) => {
   try {
+    const dataRequest = req.query;
+    let id: string = req.userId;
+
     let answers: ResponseType;
 
-    const checkIfUser = req.userRole === "u";
-    let id: string;
-    if (checkIfUser) {
-      id = req.userId;
+    if (req.userRole === "u") {
+      answers = await executeQuery(sql` 
+      select c.id , c.message , c.msgFrom , c.fileUpload ,  c.date 
+      from chatroom c 
+      where c.userId = ${id} and projectId = ${dataRequest.projectId}  `);
+    } else if (req.userRole === "c") {
+      answers = await executeQuery(sql` 
+      select c.id , c.message , c.msgFrom , c.fileUpload , c.date 
+      from chatroom c 
+      where c.consultantId = ${id} and projectId = ${dataRequest.projectId}  `);
     } else {
-      id = req.query?.userID as string;
+      answers = await executeQuery(sql` 
+      select c.id , c.message , c.msgFrom , c.fileUpload , c.date 
+      from chatroom c 
+      where projectId = ${dataRequest.projectId} `);
     }
-
-    answers = await executeQuery(sql` 
-      select c.id , c.message , c.msgFrom ,
-      ( select u.name  from users u where u.id = c.consultantId ) as consultantName ,  
-      ( select u.name  from users u where u.id = c.userId ) as userName , c.date from chatroom c 
-      where c.userId = ${id} 
-     
-        `);
 
     if (answers.successQuery) {
       const result: any = answers.data;

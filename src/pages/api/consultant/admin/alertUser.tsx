@@ -41,7 +41,7 @@ export default getHandler({}).put(async (req, res) => {
     res.json(messageError(500, error?.message));
     insertLogs(
       "api",
-      "put assignUser",
+      "put alert user",
       "consultant admin",
       error?.message,
       req.userId

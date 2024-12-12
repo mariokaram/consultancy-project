@@ -84,7 +84,7 @@ export default function Header(props: any) {
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h2" component="div">
         <Link href="/">
-          <Image alt="logo" className={styles.logo} src={Logo} />
+          <Image alt="logo" priority className={styles.logo} src={Logo} />
         </Link>
       </Typography>
       <Divider />
@@ -151,7 +151,7 @@ export default function Header(props: any) {
                 component="div"
               >
                 <Link href="/">
-                  <Image alt="logo" className={styles.logo} src={Logo} />
+                  <Image alt="logo" priority className={styles.logo} src={Logo} />
                 </Link>
               </Typography>
 
@@ -200,12 +200,12 @@ export default function Header(props: any) {
                     >
                       <div className="badgeAvatar">
                         <Badge
-                          invisible
                           anchorOrigin={{
                             vertical: "top",
                             horizontal: "right",
                           }}
                           variant="dot"
+                          invisible
                         >
                           {/* <Avatar className={styles.avatar} /> */}
                           <Avatar

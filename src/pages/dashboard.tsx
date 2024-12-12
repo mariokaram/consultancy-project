@@ -1,47 +1,28 @@
 import styles from "@/styles/Dashboard.module.scss";
 import Image from "next/image";
-import backGroundImage from "~/public/imgs/pricing-image.png";
-import tick from "~/public/icons/tick.svg";
-import redirect from "~/public/icons/redirect.svg";
-import ContactBanner from "./components/Contact-Banner";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Link from "next/link";
-import Info from "~/public/icons/info.svg";
-
+import banner from "~/public/imgs/banner.webp";
+import noResult from "~/public/imgs/noResult.webp";
 import Button from "@mui/material/Button";
-import arrowRight from "~/public/icons/arrow-right.svg";
-import Badge from "@mui/material/Badge";
 import { useRouter } from "next/router";
 import useSWR, { mutate } from "swr";
-import {
-  Alert,
-  AlertTitle,
-  CircularProgress,
-  Collapse,
-  IconButton,
-  Tooltip,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { Alert, AlertTitle, CircularProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import InfoIcon from "@mui/icons-material/Info";
-import { isEmpty, map, result } from "lodash";
+import { isEmpty, map } from "lodash";
 import { ProjectListType } from "./api/dashboard/getProjects";
-import moment from "moment";
 import { getServerSession } from "next-auth";
 import { GetServerSidePropsContext } from "next/types";
 import { optionsAuth } from "@/pages/api/auth/[...nextauth]";
 import ProjectDetails from "./components/projects";
+import SquareComponent from "./components/Square-component";
+import ProjectInfoComponent from "./components/Project-Info-component";
 
-interface ISOPENTYPE {
-  [id: number]: boolean;
+interface DashboardPropsType {
+  userRole: string;
 }
 
-export default function DashboardPage() {
-  const mediaQuery = useMediaQuery("(max-width:1000px)");
-  const mediaQuery14 = useMediaQuery("(max-width:1400px)");
-  const mediaQuery6 = useMediaQuery("(max-width:600px)");
+export default function DashboardPage(props: DashboardPropsType) {
   const router = useRouter();
-
+  const [initPage, setInitPage] = useState(true); // Add initPage boolean
   const [viewProject, setViewProject] = useState(null);
 
   const { data, error, isValidating } = useSWR("/api/dashboard/getProjects", {
@@ -52,244 +33,147 @@ export default function DashboardPage() {
   function openProjectDetails(projectId: number) {
     router.push(`dashboard?project=${projectId}`);
   }
+  function checkUrlIfPaid(): boolean {
+    // Get the current URL's search parameters
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Check if the "paymentStatus" parameter is set to "success"
+    return urlParams.get("paymentStatus") === "success";
+  }
 
   useEffect(() => {
-    if (isEmpty(router.query)) {
+    const delay = 5000; // 5 seconds delay
+
+    // Check if payment is successful
+    if (checkUrlIfPaid()) {
+      const timeout = setTimeout(async () => {
+        // Trigger mutation to revalidate the data
+        router.replace("/dashboard");
+      }, delay); // Wait for 3 seconds before executing the mutation
+
+      // Cleanup on component unmount
+      return () => clearTimeout(timeout);
+    }
+  }, []); // Depending on dataResult, you can trigger this effect
+
+  useEffect(() => {
+    if (isEmpty(router.query?.project)) {
       setViewProject(null);
-      mutate("/api/dashboard/getProjects");
+      if (!initPage) {
+        mutate("/api/dashboard/getProjects");
+      }
     } else {
-      const project: any = router.query.project;
+      const project: any = router.query?.project;
       setViewProject(project);
     }
+
+    // Set initPage to false after initial load
+    setInitPage(false);
   }, [router]);
-
-  const [open, setOpen] = React.useState<ISOPENTYPE>({});
-
-  // TODO later to rediret to checkout page
-  async function checkout(v: number) {
-    try {
-      const params = {
-        projectId: v,
-      };
-      const res = await axios.post("/api/dashboard/checkout", params);
-      if (res.data.success) {
-        mutate("/api/dashboard/getProjects");
-      } else {
-      }
-    } catch (error) {}
-  }
 
   return (
     <>
-      <section>
+      <section style={{ margin: "0 5rem" }}>
         <div className={styles.mainContainer}>
           {isValidating && (
             <div className={styles.loading}>
               <CircularProgress
-                style={{ color: "var(--secondaryColor)" }}
+                style={{ color: "var(--blueColor)" }}
                 size={50}
               ></CircularProgress>
             </div>
           )}
           {!isValidating && (
             <>
-              <div className={styles.sideBar}>
-                <div className={styles.dashTitle}>My Dashboard</div>
-                <div className={styles.btns}>
-                  <Button
-                    fullWidth
-                    className={`btn btn-secondary ${styles.btnInfo}`}
-                  >
-                    Projects
-                  </Button>
-                  <Button
-                    fullWidth
-                    className={`links ${styles.infoNotSelected}`}
-                  >
-                    Order Details
-                  </Button>
-                  <Button
-                    fullWidth
-                    className={`links ${styles.infoNotSelected}`}
-                    onClick={() => router.push("/chatroom")}
-                  >
-                    Chatroom
-                  </Button>
+              <div className={styles.projectBanner}>
+                <Image quality={100} alt="image banner" priority src={banner} />
+                <div className={styles.bannerTitle}>
+                  {viewProject ? "Project Overview" : "Projects"}
                 </div>
               </div>
 
               {viewProject && !error ? (
-                <div className={styles.rightSide}>
-                  <ProjectDetails projectId={viewProject} />
-                </div>
+                <ProjectDetails
+                  projectId={viewProject}
+                  userRole={props.userRole}
+                />
               ) : (
-                <div className={styles.rightSide}>
-                  <div className={styles.upperBtn}>
-                    <div className={`subTitle ${styles.titles}`}>Projects</div>
-                    <div>
-                      <Button
-                        onClick={() => router.push("/pricing")}
-                        className="btn btn-secondary"
-                      >
-                        New Project
-                      </Button>
-                    </div>
-                  </div>
+                <div className={styles.projectContainer}>
+                  <div className={styles.content}>
+                    {!isEmpty(dataResult) &&
+                      !error &&
+                      map(dataResult, (v: ProjectListType) => (
+                        <ProjectInfoComponent
+                          key={v.project_id}
+                          project_id={v.project_id}
+                          companyName={v.companyName}
+                          projectTypeName={v.projectTypeName}
+                          date_creation={v.date_creation}
+                          comingFrom="project"
+                          paymentLink={v.paymentLink}
+                          status_value={v.status_value}
+                          status_color={v.status_color}
+                          status_label={v.status_label}
+                          originalProjectId={v.upgradeFromProjectId}
+                          invoice={v.invoice}
+                          paymentLoader={checkUrlIfPaid()}
+                          info={v.info}
+                          currentServiceName={
+                            v.projectTypeName !== "Ideas generation" ||
+                            (v.projectTypeName === "Ideas generation" &&
+                              v.currentServiceName === "Idea analysis")
+                              ? v.currentServiceName
+                              : ""
+                          }
+                          userRole={props.userRole}
+                          consultantName={v.consultantName}
+                          openProjectDetails={openProjectDetails}
+                        />
+                      ))}
 
-                  {!isEmpty(dataResult) &&
-                    !error &&
-                    map(dataResult, (v: ProjectListType) => (
-                      <div key={v.project_id} className={styles.projects}>
-                        <div className="card">
-                          <div style={{ paddingBottom: "1rem" }}>
-                            <Collapse in={open[v.project_id]}>
-                              <Alert
-                                severity="info"
-                                action={
-                                  <IconButton
-                                    aria-label="close"
-                                    color="inherit"
-                                    size="small"
-                                    onClick={() => {
-                                      setOpen((prevOpen) => ({
-                                        ...prevOpen,
-                                        [v.project_id]: false,
-                                      }));
-                                    }}
-                                  >
-                                    <CloseIcon fontSize="inherit" />
-                                  </IconButton>
-                                }
-                                sx={{ mb: 2 }}
-                              >
-                                <AlertTitle>Info</AlertTitle>
-                                {isNaN(v.info as number)
-                                  ? v.info
-                                  : `Estimatinh time is around ${v.info} business days`}
-                              </Alert>
-                            </Collapse>
-                          </div>
-                          <div className={styles.cardInfo}>
-                            <div className={styles.cardTitle}>
-                              <div className="title">{v.companyName}</div>
-                              <div>
-                                Project ID: <strong>{v.project_id}</strong>
-                              </div>
-                              <div>
-                                Service plan :{" "}
-                                <strong
-                                  style={{ color: "var(--secondaryColor)" }}
-                                >
-                                  {v.projectType}
-                                </strong>
-                              </div>
-                              <div>
-                                Created on{" "}
-                                {moment
-                                  .utc(v.date_creation)
-                                  .format("DD-MM-YYYY")}
-                              </div>
-                            </div>
-                            <div className={styles.statusInfo}>
-                              {v.consultantName && (
-                                <div style={{ paddingBottom: "0.5rem" }}>
-                                  Assigned to{" "}
-                                  <strong>{v.consultantName}</strong>
-                                </div>
-                              )}
-                              {!v.consultantName && (
-                                <div style={{ paddingBottom: "0.5rem" }}>
-                                  <small>Consultant not assigned yet</small>{" "}
-                                </div>
-                              )}
-
-                              <div className={styles.status}>
-                                <div>
-                                  <Badge
-                                    className={v.status_color}
-                                    variant="dot"
-                                  ></Badge>
-                                </div>
-                                <div>{v.status_label}</div>
-                                {!open[v.project_id] && (
-                                  <div>
-                                    <Tooltip placement="right" title={"INFO"}>
-                                      <Image
-                                        onClick={() => {
-                                          setOpen((prevOpen) => ({
-                                            ...prevOpen,
-                                            [v.project_id]: true,
-                                          }));
-                                        }}
-                                        style={{ cursor: "pointer" }}
-                                        alt="info"
-                                        src={Info}
-                                      />
-                                    </Tooltip>
-                                  </div>
-                                )}
-                              </div>
-                              <div
-                                onClick={() =>
-                                  router.push(
-                                    `/questionnaire?service=${v.projectType}&project=${v.project_id}`
-                                  )
-                                }
-                                className={styles.review}
-                              >
-                                <div>
-                                  {v.status_value !== "notSubmitted"
-                                    ? "Review questionnaire"
-                                    : "Complete questionnaire"}
-                                </div>
-                                <div>
-                                  <Image alt="arrow" src={arrowRight} />
-                                </div>
-                              </div>
+                    {isEmpty(dataResult) && !error && (
+                      <div className={styles.EmptyListSection}>
+                        <div className={styles.info}>
+                          <div>
+                            <div className="subTitle">
+                              It seems you haven&apos;t started any projects
+                              yet.
                             </div>
                           </div>
-                          <div className={styles.btnCards}>
-                            <div>
-                              <Button
-                                onClick={() => openProjectDetails(v.project_id)}
-                                className="btn btn-secondary"
-                              >
-                                View Project
-                              </Button>
-                            </div>
-
-                            {!v.paid && v.status_value === "notPaid" && (
-                              <div>
-                                <Button
-                                  onClick={() => checkout(v.project_id)}
-                                  className="btn btn-white"
-                                >
-                                  Checkout
-                                </Button>
-                              </div>
-                            )}
+                          <div className="description">
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Error amet libero soluta vel, reiciendis
+                            incidunt maiores dolore! Perspiciatis architecto
+                            iusto odit at harum, officia suscipit minima quae
+                            expedita excepturi ratione.
+                          </div>
+                          <div>
+                            <Button
+                              onClick={() => router.push("/pricing")}
+                              className="btn btn-secondary"
+                              size="large"
+                            >
+                              Start a new Project
+                            </Button>
                           </div>
                         </div>
+                        <div>
+                          <Image src={noResult} alt="norResultImg" />
+                        </div>
                       </div>
-                    ))}
-
-                  {isEmpty(dataResult) && !error && (
-                    <div>
-                      <Alert severity="info" sx={{ mt: 2 }}>
-                        <AlertTitle>No projects found</AlertTitle>
-                        click on <strong>New Project</strong> to start a new
-                        project!
-                      </Alert>
-                    </div>
-                  )}
-                  {error && (
-                    <div>
-                      <Alert severity="error" sx={{ mt: 2 }}>
-                        <AlertTitle>Something went wrong</AlertTitle>
-                        Try reloading this page , or contact customer service if
-                        this issue persists!
-                      </Alert>
-                    </div>
+                    )}
+                    {error && (
+                      <div className={styles.error}>
+                        <Alert severity="error" sx={{ mt: 2 }}>
+                          <AlertTitle>Something went wrong</AlertTitle>
+                          Try reloading this page , or contact customer service
+                          if this issue persists!
+                        </Alert>
+                      </div>
+                    )}
+                  </div>
+                  {(!isEmpty(dataResult) || error) && (
+                    <SquareComponent customer={1} />
                   )}
                 </div>
               )}
@@ -301,7 +185,7 @@ export default function DashboardPage() {
   );
 }
 import { executeQuery } from "@/lib/db";
-import axios from "axios";
+
 const sql = require("sql-template-strings");
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerSession(context.req, context.res, optionsAuth);
@@ -333,9 +217,17 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
           },
         };
       }
-      return { props: {} };
+      return {
+        props: {
+          userRole: session.user.role,
+        },
+      };
     } else {
-      return { props: {} };
+      return {
+        props: {
+          userRole: session.user.role,
+        },
+      };
     }
   } else {
     return {

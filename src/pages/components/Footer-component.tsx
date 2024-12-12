@@ -7,7 +7,7 @@ import XIcon from "@mui/icons-material/X";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-export default function Footer({ props }: any) {
+export default function Footer() {
   return (
     <>
       <div className={styles.footer}>
@@ -16,7 +16,7 @@ export default function Footer({ props }: any) {
             <div>
               <div>
                 <Link href="/">
-                  <Image alt="logo-footer" src={Logo} />
+                  <Image alt="logo-footer" priority src={Logo} />
                 </Link>
               </div>
               <div className={styles.social}>

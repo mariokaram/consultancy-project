@@ -7,18 +7,17 @@ export default getHandler({}).put(async (req, res) => {
   try {
     const data = req.body;
 
-    const answers = await executeQuery(sql`
-    update projects set idea1 = ${data.idea1 || null} , idea2 = ${
-      data.idea2 || null
-    } , idea3 = ${data.idea3 || null}  where project_id = ${
-      data.projectId
-    }      
+    let answers1 = await executeQuery(sql`
+    update services set serviceName = ${data.idea1 || null}  where projectId = ${data.projectId} and statusOrder = 1 ;     
+    `);
+    let answers2 = await executeQuery(sql`
+    update services set serviceName = ${data.idea2 || null}  where projectId = ${data.projectId} and statusOrder = 2 ;     
     `);
 
-    if (answers?.successQuery) {
+    if (answers1?.successQuery && answers2?.successQuery) {
       res.json(messageSuccess(200, "", false));
     } else {
-      throw { message: "projects table addIdeaGeneration" };
+      throw { message: "services table addIdeaGeneration" };
     }
   } catch (error: any) {
     res.json(messageError(500, error?.message));

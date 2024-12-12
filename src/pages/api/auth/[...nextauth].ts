@@ -36,7 +36,7 @@ export const optionsAuth: NextAuthOptions = {
       );
     },
     debug(code, metadata) {
-      console.log(code, metadata)
+      console.log(code, metadata,"from next auth")
     }
   },
 

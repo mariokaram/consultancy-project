@@ -80,7 +80,7 @@ export default function LoginInPage() {
           <div className={styles.loginForm}>
             <div className={`card ${styles.cardLogin}`}>
               <div className={styles.logo}>
-                <Image alt="logo-signin" height={35} src={Logo} />
+                <Image alt="logo-signin" priority height={35} src={Logo} />
               </div>
               <div className={`subTitle ${styles.subtitle}`}>Sign in</div>
               <div className="description">

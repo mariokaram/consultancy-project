@@ -1,57 +1,168 @@
 .mainContainer {
   padding: var(--marginLayout);
   padding-top: 4rem !important;
-  background-color: var(--backgroundBeige);
-
-  .title,
-  .desc {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    p {
-      max-width: 550px;
-      padding-bottom: 1rem;
-    }
-  }
-
+  background-color: #fcfcfc;
   .cardContent {
-    padding: 2rem 15rem;
+    .stepsSection {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4rem;
+      .stepsContainer {
+        flex: 2;
 
-    .inputContainer {
-      padding-top: 3rem;
+        .stepperSection {
+          background-color: #12385d;
+          border-radius: 14px;
+          max-width: 600px;
+          height: 100%;
+          padding: 3rem;
+          display: flex;
+          flex-direction: column;
+          .stepper {
+            display: flex;
+            justify-content: center;
+            padding-bottom: 3rem;
+            margin-bottom: auto;
 
-      .minimumChar {
-        color: var(--toastify-color-error);
-        display: flex;
-        justify-content: flex-end;
-        padding-top: 0.3rem;
+            // Inactive Step
+            .inactiveStep {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              border: 1px solid white;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              .icon {
+                color: white;
+              }
+            }
+
+            // Active Step
+            .activeStepContainer {
+              position: relative;
+              width: 50px;
+              height: 50px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              // Outer Circle
+              .activeOuterCircle {
+                position: absolute;
+                width: 108%;
+                height: 108%;
+                border-radius: 50%;
+                border: 3px solid #4b6985; // Outer border color
+                box-sizing: border-box;
+              }
+
+              // Middle Circle
+              .activeMiddleCircle {
+                position: absolute;
+                width: 96%;
+                height: 96%;
+                border-radius: 50%;
+                border: 3px solid #bdc7d0; // Middle circle border color
+              }
+
+              // Inner Circle
+              .activeInnerCircle {
+                position: absolute;
+                width: 85%;
+                height: 85%;
+                border-radius: 50%;
+                background-color: #028a9d; // Inner background color
+              }
+
+              .icon {
+                z-index: 1;
+                color: white;
+              }
+            }
+
+            .stepNumber {
+              padding-left: 0.5rem;
+              color: white;
+              font-weight: 200;
+            }
+            .stepInfo {
+              color: white;
+              font-weight: 600;
+              font-size: 1.1rem;
+              padding-left: 0.5rem;
+            }
+          }
+          .stepperImage {
+            display: flex;
+            justify-content: center;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+        }
       }
 
-      .title {
-        display: flex;
-        justify-content: flex-start;
-        text-align: start !important;
-        .info {
-          padding-left: 0.5rem;
-        }
+      .questionsSection {
+        flex: 3;
+        flex-shrink: 2rem;
 
-        label {
-          font-weight: 500;
-          color: var(--primaryColor);
-          padding-bottom: 0.5rem;
+        .inputContainer {
+          display: flex;
+
+          .inputSection {
+            margin: 0 auto;
+            width: 100%;
+            .titleInfo {
+              padding-top: 2rem;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              text-align: center;
+            }
+
+            .minimumChar {
+              color: var(--toastify-color-error);
+              display: flex;
+              justify-content: flex-end;
+              padding-top: 0.3rem;
+            }
+
+            .title {
+              display: flex;
+              justify-content: flex-start;
+              text-align: start !important;
+              .info {
+                padding-left: 0.5rem;
+              }
+
+              label {
+                font-weight: 400;
+                color: black;
+                padding-bottom: 0.5rem;
+              }
+            }
+          }
         }
       }
     }
     .tableCell {
       display: flex;
+      font-weight: 600;
       gap: 0.8rem;
+      justify-content: space-between;
     }
     .iconsTable {
-      color: var(--secondaryColor);
+      color: var(--blueColor);
       cursor: pointer;
+      display: flex;
     }
     .tableHeader {
-      background-color: var(--backgroundBeige);
+      background-color: var(--rmedeColor);
     }
   }
   .loading {
@@ -62,27 +173,38 @@
     padding: 1rem;
   }
 
-  .btnContainer {
+  .btnSection {
     display: flex;
-    padding-top: 1rem;
-    width: 100%;
-    text-align: initial !important;
+    padding-top: 2rem;
+    justify-content: center;
 
-    .next {
-      flex: 1;
+    .btnContainer {
       display: flex;
+      width: 100%;
+
+      // The 'back' button section
+      .back {
+        margin-right: auto;
+      }
+
+      // The 'next' button section
+      .next {
+        margin-left: auto;
+      }
+    }
+
+    // When there's no 'back' button, align the 'next' button to the right
+    .btnContainer.no-back {
       justify-content: flex-end;
     }
   }
 }
 
-@media (max-width: 1400px) {
-  .cardContent {
-    padding: 2rem 8rem !important;
-  }
-}
 @media (max-width: 800px) {
-  .cardContent {
-    padding: 2rem !important;
+  .product {
+    display: none;
+  }
+  .stepsSection {
+    display: block !important;
   }
 }

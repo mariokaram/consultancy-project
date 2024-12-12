@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth/next";
 import { optionsAuth } from "@/pages/api/auth/[...nextauth]";
 const sql = require("sql-template-strings");
 
-export default getHandler({ auth: false, urlRateLimit: "logs" }).post(
+export default getHandler({ auth: false, urlRateLimit: "logs-" }).post(
   async (req, res) => {
     try {
       const data = req.body;

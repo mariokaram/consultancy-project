@@ -5,11 +5,9 @@ import React, {
   useRef,
   ReactNode,
 } from "react";
-import axios from "axios";
 import styles from "@/styles/ImageUpload.module.scss";
 import { SpinnerContext } from "@/contexts/SpinnerContextProvider";
 import { toast, ToastContainer } from "react-toastify";
-import Button from "@mui/material/Button";
 import attach from "~/public/icons/attach.svg";
 import pdf from "~/public/icons/pdf.svg";
 import remove from "~/public/icons/remove.svg";
@@ -29,6 +27,7 @@ interface Props {
   disableRemove?: boolean;
   onError: boolean;
   fromConsultant?: boolean;
+  setIsUploading?: (isUploading: boolean) => void;
 }
 
 export default function ImageUpload(props: Props): JSX.Element {
@@ -97,6 +96,9 @@ export default function ImageUpload(props: Props): JSX.Element {
 
   const handleClick = (): void => {
     if (fileInput.current) {
+      if (props.setIsUploading) {
+        props.setIsUploading(true);
+      }
       fileInput.current.click();
     }
   };
