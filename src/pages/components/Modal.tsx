@@ -181,7 +181,7 @@ export default function OpenDialog(props: DialogType) {
           <DialogContent dividers>
             {props.id === "ideagen" ? (
               <Typography gutterBottom>
-                You are about to choose idea "<strong>{props.text}</strong>", if
+                You are about to choose idea &quot;<strong>{props.text}</strong>&quot;, if
                 neither of the ideas suits you can chat with your consultant
                 before choosing. NB: after this step you agree to continue to
                 idea analysis
