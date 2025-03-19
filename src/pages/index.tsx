@@ -17,37 +17,42 @@ import data from "~/public/icons/data.svg";
 import contentmanagement from "~/public/icons/content-management.svg";
 import consultation from "~/public/icons/consultation.svg";
 import businessmodel from "~/public/icons/business-model.svg";
-import talking from "~/public/icons/talking.svg";
 import fill from "~/public/icons/fill.svg";
+import quotation from "~/public/icons/quotation.svg";
 import search from "~/public/icons/search.svg";
+import finalize from "~/public/icons/finalize.svg";
 import checkout from "~/public/icons/checkout.svg";
 import redirect from "~/public/icons/redirect.svg";
 import consultant from "~/public/icons/consultant.svg";
-import contactform from "~/public/icons/contact-form.svg";
+import getIdea from "~/public/icons/getIdea.svg";
 import tick from "~/public/icons/tick.svg";
+import businessAnalysis from "~/public/icons/businessAnalysis.svg";
 export default function Home() {
   type HowItWorksKeys = "business" | "idea";
   type HowItWorksStep = {
     text: string;
-    img: string;
+    img: string | React.ReactNode;
   };
   const [btnSelected, selectBtn] = useState<HowItWorksKeys>("business");
   const howItWorks: Record<HowItWorksKeys, HowItWorksStep[]> = {
     business: [
-      { text: "Register", img: contactform },
-      { text: "Fill a questionnaire", img: fill },
-      { text: "Get your answers reviewed", img: search },
-      { text: "Go through checkout", img: checkout },
-      { text: "Get your consultant assigned", img: consultant },
-      { text: "Chat with your consultant", img: talking },
+      {
+        text: "Complete Questionnaire",
+        img: fill,
+      },
+      { text: "Receive Quotation", img: quotation },
+      { text: "Make Payment", img: checkout },
+      { text: "Consultant Assigned", img: consultant },
+      { text: "Review Drafts", img: search },
+      { text: "Confirm & Finalize", img: finalize },
     ],
     idea: [
-      { text: "Register Idea", img: contactform },
-      { text: "Fill a questionnaire Idea", img: fill },
-      { text: "Get your answers reviewed Idea", img: search },
-      { text: "Go through checkout Idea", img: checkout },
-      { text: "Get your consultant assigned Idea", img: consultant },
-      { text: "Chat with your consultant Idea", img: talking },
+      { text: "Complete Questionnaire", img: fill },
+      { text: "Make Payment", img: checkout },
+      { text: "Consultant Assigned", img: consultant },
+      { text: "Get Idea Proposals", img: getIdea },
+      { text: "Review Ideas", img: search },
+      { text: "Receive Business Analysis", img: businessAnalysis },
     ],
   };
 
@@ -62,35 +67,15 @@ export default function Home() {
   const testimonials: any = [
     {
       photo: "profile1",
-      name: "Mario Karam",
-      job: "Acteos SARL",
-      url: "https://facebook.com",
-      desc: "You could even ask influencers to write a blog post for their own website that reviews your product or services, plus the tips they learned through working with you. This gets your business in front of even more readers and prospective target clients.",
-    },
-    {
-      photo: "profile2",
-      name: "Nour Dfouni",
-      job: "Horizon SARL",
-      url: "https://facebook.com",
-      desc: "You could even ask influenc usiness in front of even more readers and prospective target clients.",
-    },
-    {
-      photo: "profile3",
-      name: "George Semaan",
-      job: "Mehen SARL",
-      url: "https://facebook.com",
-      desc: "You could even ask influencers to ed through working with you. This gets your business in front of even more readers and prospective target clients.",
-    },
-    {
-      photo: "profile4",
-      name: "Mario Karam",
-      job: "Acteos SARL",
-      url: "https://facebook.com",
-      desc: "You could even ask influencers to write a blog post for their own website that reviews your product or services, plus the tips they learned through working with you. This gets your business in front of even more readers and prospective target clients.",
+      name: "Rania Bouery",
+      job: "CEO Aucanada",
+      url: "https://auCanada.co",
+      desc: "I hesitated to start a business despite having the skills, due to the complexity of the process. Horizon Consultancy's clear, step-by-step approach gave me full understanding and control, and now I feel confident and autonomous.",
     },
   ];
 
   const mediaQuery1400 = useMediaQuery("(max-width:1400px)");
+  const mediaQuery1600 = useMediaQuery("(max-width:1550px)");
 
   return (
     <>
@@ -103,13 +88,14 @@ export default function Home() {
             priority={true}
           />
           <div className={styles.textOverlay}>
-            <div className={styles.subtitle}>consulting Agency</div>
+            <div className={styles.subtitle}>Consulting Agency</div>
             <h1 className={styles.title}>
               Realize your ambitions with expert guidance and amazing results
             </h1>
             <div className={styles.desc}>
-              Our advanced processes will guarantee you a seamless business
-              launch with vivid messaging and standout communications.
+              Our innovative approach ensures a smooth business launch, complete
+              with engaging branding and clear, impactful communication
+              strategies to help your business stand out.
             </div>
             <div>
               <Link href="/dashboard">
@@ -126,7 +112,7 @@ export default function Home() {
             <h6 className="title">About you</h6>
             <h2 className="subTitle">Run your business with confidence</h2>
 
-            {mediaQuery1400 ? (
+            {mediaQuery1600 ? (
               <div className={styles.imgRespSect}>
                 <div className={styles.imgResp}>
                   <Image
@@ -134,14 +120,6 @@ export default function Home() {
                     height={290}
                     src={successWork}
                     alt="successPic"
-                  ></Image>
-                </div>
-                <div className={styles.imgResp2}>
-                  <Image
-                    width={260}
-                    height={290}
-                    src={ambitionWork}
-                    alt="ambitionPic"
                   ></Image>
                 </div>
               </div>
@@ -155,45 +133,51 @@ export default function Home() {
               </div>
               <div className={styles.aboutText}>
                 <div>
-                  Our seasoned experts will help you smoothly navigate the
-                  challenging path to launching your new company. We ensure you
-                  fully understand each phase of the process, equipping you with
-                  the knowledge needed to successfully launch and sustain your
-                  business with confidence. Embrace Independence: Forge Your
-                  Path with Us! We can help you:
+                  Our seasoned experts will help you smoothly overcome the
+                  challenges to launching your new company. We ensure you fully
+                  understand each phase of the process, equipping you with the
+                  knowledge needed to successfully launch and sustain your
+                  business with confidence.
                 </div>
 
-                <div className={styles.ticks}>
-                  <div>
-                    <div>
-                      <Image alt="tick" width={22} height={16} src={tick} />
-                      <span>Minimize uncertainty</span>
-                    </div>
-                    <div>
-                      <Image alt="tick" width={22} height={16} src={tick} />
-                      <span>Focus on your skills</span>
-                    </div>
-                    <div>
-                      <Image alt="tick" width={22} height={16} src={tick} />
-                      <span>Acquire investment</span>
-                    </div>
+                <div className={styles.helpSection}>
+                  <div className={styles.help}>
+                    <b>We can help you</b>
                   </div>
 
-                  <div>
+                  <div className={styles.ticks}>
                     <div>
-                      <Image alt="tick" width={22} height={16} src={tick} />
-                      <span>Gain relevant knowledge</span>
+                      <div>
+                        <Image alt="tick" width={22} height={16} src={tick} />
+                        <span>Minimize uncertainty</span>
+                      </div>
+                      <div>
+                        <Image alt="tick" width={22} height={16} src={tick} />
+                        <span>Focus on your skills</span>
+                      </div>
+                      <div>
+                        <Image alt="tick" width={22} height={16} src={tick} />
+                        <span>Acquire investment</span>
+                      </div>
                     </div>
+
                     <div>
-                      <Image alt="tick" width={22} height={16} src={tick} />
-                      <span>Autonomously run your firm</span>
-                    </div>
-                    <div>
-                      <Image alt="tick" width={22} height={16} src={tick} />
-                      <span>Expand in the right direction</span>
+                      <div>
+                        <Image alt="tick" width={22} height={16} src={tick} />
+                        <span>Gain relevant knowledge</span>
+                      </div>
+                      <div>
+                        <Image alt="tick" width={22} height={16} src={tick} />
+                        <span>Autonomously run your firm</span>
+                      </div>
+                      <div>
+                        <Image alt="tick" width={22} height={16} src={tick} />
+                        <span>Expand in the right direction</span>
+                      </div>
                     </div>
                   </div>
                 </div>
+
                 <div>
                   <Link href="/pricing">
                     <Button size="large" className="btn btn-secondary">
@@ -220,13 +204,12 @@ export default function Home() {
             <div className={styles.services}>
               <div className={styles.businessPlan}>
                 <div className={`${styles.rectangular} ${styles.lightBlue} `}>
-                  <div className={styles.link}>Business Plan</div>
+                  <div className={styles.link}>Business Planning</div>
                   <div>
-                    Our Business Plan template is a detailed roadmap designed to
-                    guide your startup in any industry from conception through
-                    launch and beyond. It covers every essential aspect of your
-                    business, offering a comprehensive and easy-to-follow
-                    strategy.
+                    Our business planning approach provides a detailed roadmap
+                    to guide your startup in any industry, from conception to
+                    launch and beyond. It covers all essential aspects,
+                    delivering a comprehensive and easy-to-follow strategy.
                   </div>
                 </div>
                 <div>
@@ -255,7 +238,7 @@ export default function Home() {
                     We can propose innovative ideas that align perfectly with
                     your capabilities and aspirations. Our approach involves
                     conducting a thorough analysis of your background, skills,
-                    and preferences so we can analyze and propose ideas that
+                    and preferences so we can analyse and propose ideas that
                     suit you.
                   </div>
                 </div>
@@ -309,8 +292,9 @@ export default function Home() {
                 </div>
                 <div className={styles.title}>Tailored business model</div>
                 <div className={styles.desc}>
-                  We provide an adaptive business model that distinguishes your
-                  venture from competitors, even in a competitive market.
+                  To validate your idea we make sure we fully understand it in
+                  context. The collected data enables us to either move forward
+                  or propose amendments.
                 </div>
               </div>
               <div className={`${styles.whyUsSection} ${styles.noBorder} `}>
@@ -324,7 +308,7 @@ export default function Home() {
                 </div>
                 <div className={styles.title}>Practical plan</div>
                 <div className={styles.desc}>
-                  When creating the business plan structure our aim is to
+                  When creating the Business Plan structure our aim is to
                   develop a plan that is actionable and grounded in real-world
                   implementation rather than being purely theoretical.
                 </div>
@@ -381,7 +365,7 @@ export default function Home() {
           <div className={styles.howItWorksContainer}>
             <h2 className={styles.title}>How It Works</h2>
             <div className={styles.desc}>
-              We have thoroughly analyzed all processes on our website to ensure
+              We have thoroughly analysed all processes on our website to ensure
               they are user-friendly and easy for you to navigate.
             </div>
 
@@ -391,7 +375,7 @@ export default function Home() {
                   className={styles.howitWorkBtn}
                   onClick={() => selectBtn("business")}
                 >
-                  Business Plan
+                  Business Planning
                 </Button>
               </div>
               <div
@@ -413,7 +397,7 @@ export default function Home() {
                       <Image
                         width={37}
                         height={46}
-                        src={step.img}
+                        src={step.img as string}
                         alt={step.text}
                       />
                     </div>
@@ -428,7 +412,7 @@ export default function Home() {
             <div className={styles.videoWrapper}>
               <div className={styles.videoContainer}>
                 <iframe
-                  src="https://www.youtube.com/embed/HMN3xsvAMSg"
+                  src="https://www.youtube.com/embed/cfZLumL_JI4?list=PLQlnTldJs0ZR-L-KtbBtm1WgPjmxiDuWi"
                   title="how it works"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

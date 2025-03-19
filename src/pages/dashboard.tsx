@@ -88,7 +88,7 @@ export default function DashboardPage(props: DashboardPropsType) {
               <div className={styles.projectBanner}>
                 <Image quality={100} alt="image banner" priority src={banner} />
                 <div className={styles.bannerTitle}>
-                  {viewProject ? "Project Overview" : "Projects"}
+                  {viewProject ?  "Project Overview" : "Projects"}
                 </div>
               </div>
 
@@ -136,16 +136,14 @@ export default function DashboardPage(props: DashboardPropsType) {
                         <div className={styles.info}>
                           <div>
                             <div className="subTitle">
-                              It seems you haven&apos;t started any projects
-                              yet.
+                              It looks like you haven't started a project yet.
                             </div>
                           </div>
                           <div className="description">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Error amet libero soluta vel, reiciendis
-                            incidunt maiores dolore! Perspiciatis architecto
-                            iusto odit at harum, officia suscipit minima quae
-                            expedita excepturi ratione.
+                            Our experts are here to bring your vision to life!
+                            From crafting compelling business plans to
+                            developing innovative product proposals, we've got
+                            you covered. Kickstart your project today!
                           </div>
                           <div>
                             <Button
@@ -153,7 +151,7 @@ export default function DashboardPage(props: DashboardPropsType) {
                               className="btn btn-secondary"
                               size="large"
                             >
-                              Start a new Project
+                              Start Your Project
                             </Button>
                           </div>
                         </div>

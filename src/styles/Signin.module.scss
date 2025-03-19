@@ -11,8 +11,8 @@
     align-items: center;
     justify-content: center;
 
-    .cardLogin{
-      border-radius: .5rem !important;
+    .cardLogin {
+      border-radius: 0.5rem !important;
     }
 
     .logo {
@@ -23,7 +23,7 @@
       padding-top: 0.5rem;
     }
     .btnlogin {
-      padding-top: 1rem;
+      padding-top: 2rem;
     }
     .notice {
       background-color: #f4f3f3;
@@ -35,6 +35,17 @@
       color: var(--primaryColor);
       font-size: 0.9rem;
     }
+    .googleBtn {
+      background-color: white;
+      color: #1f1f1f;
+      box-shadow: var(--box-shadow);
+      text-transform: none;
+    }
+
+    .googleBtn:hover {
+      background-color: #d9d9d9;
+    }
+
     .subtitle {
       font-size: 2rem;
       text-align: center;

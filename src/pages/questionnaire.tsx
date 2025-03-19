@@ -87,13 +87,14 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
 
   const selectorOptions: SelectorOptionsType = {
     ReferralOptions: [
-      { value: "google", name: "Google" },
-      { value: "facebook", name: "Facebook" },
-      { value: "linkedin", name: "LinkedIn" },
-      { value: "instagram", name: "Instagram" },
-      { value: "events", name: "Events/Conferences" },
+      { value: "online search", name: "Online Search" },
+      { value: "social media", name: "Social Media" },
+      { value: "events", name: "Networking Event" },
       { value: "advertisements", name: "Advertisements" },
+      { value: "partners or affiliates", name: "Partnerships or Affiliates" },
+      { value: "review or testimonial", name: "Review or Testimonial" },
       { value: "referral", name: "Referral by Friend/Colleague" },
+      { value: "community or group", name: "Community Forum or Group" },
       { value: "blog", name: "Blog/Article" },
       { value: "other", name: "Other" },
     ],
@@ -587,6 +588,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
   ): ReactNode[] {
     try {
       let html: ReactNode[] = [];
+      let requiredFieldTextId: number | null | undefined = null;
 
       switch (v.quest_type) {
         // image
@@ -641,6 +643,12 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
           break;
         // radio
         case "radio":
+          // in radio button stage options we need to take the id of the tested value so we are saving the id of the radio button
+          if (v.options === "StagesRadioOptions") {
+            requiredFieldTextId = child.find(
+              (v) => v.quest_type === "requiredIfSelectedForStageRadio"
+            )?.id;
+          }
           html.push(
             <div style={{ textAlign: "left" }} key={v.id}>
               <FormControl disabled={alreadySubmitted}>
@@ -649,16 +657,24 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
                   name="controlled-radio-buttons-group"
                   value={pageInputs[v.id]["value"]}
                   className={pageInputs[v.id].error ? "radioError" : ""}
-                  onChange={(e: any) =>
+                  onChange={(e: any) => {
+                    const value = e.target.value;
+
                     setPageInputs((state) => ({
                       ...state,
                       [v.id]: {
-                        ...pageInputs[v.id],
-                        value: e.target.value,
+                        ...state[v.id],
+                        value,
                         error: false,
                       },
-                    }))
-                  }
+                      ...(requiredFieldTextId && {
+                        [requiredFieldTextId]: {
+                          ...state[requiredFieldTextId],
+                          options: value === "Tested" ? "" : "notRequired",
+                        },
+                      }),
+                    }));
+                  }}
                 >
                   {returnRadioElement(radioOptions[v.options])}
                 </RadioGroup>
@@ -722,6 +738,9 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
                           <Input
                             className={`inputTable`}
                             fullWidth
+                            placeholder={`${
+                              rowId === "1" ? "Eg: Clothing" : ""
+                            }`}
                             disabled={alreadySubmitted}
                             value={tableRows[rowId].product}
                             onChange={(e: any) =>
@@ -740,6 +759,11 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
                         <TableCell>
                           <Input
                             fullWidth
+                            placeholder={`${
+                              rowId === "1"
+                                ? "Eg: The clothes will be manufactured in Canada and are intended for women's apparel."
+                                : ""
+                            }`}
                             className="inputTable"
                             disabled={alreadySubmitted}
                             value={tableRows[rowId].desc}
@@ -782,6 +806,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
 
         default:
           // input field
+
           html.push(
             <div key={v.id}>
               <Input
@@ -874,13 +899,16 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
                         <div className={styles.inputSection}>
                           <div className={styles.titleInfo}>
                             <div className="subTitle">
-                              Let&apos;s Get to Know Your Business
+                              {props.serviceTypeQueryParam === "i"
+                                ? "Let's Propose Ideas For You"
+                                : "Let's Get To Know Your Business"}
                             </div>
                             <div className="description">
-                              To offer you tailored solutions, we need a few
-                              details about your business. Please fill out this
-                              questionnaire. You can save and continue later if
-                              needed.
+                              Complete the questionnaire step by step, providing
+                              detailed responses for the best outcome.
+                              <br />
+                              You can save and edit your answers before
+                              submission.
                             </div>
                           </div>
 
@@ -1071,7 +1099,12 @@ export function FormikStepper({
               }
 
               // if less then characters
-              if (v.value && v.minChar && v.value.trim().length < v.minChar) {
+              if (
+                v.value &&
+                v.minChar &&
+                v.value.trim().length < v.minChar &&
+                v.options !== "notRequired"
+              ) {
                 err = "Your answer is too short";
                 arrayOfError.push(i);
               }
@@ -1129,9 +1162,9 @@ export function FormikStepper({
           <Form autoComplete="off">
             <OpenDialog
               text="Please note that submitted answers cannot be modified afterwards. Are you sure you want to proceed with the submission?"
-              title="Confirmation"
+              title="Get Your Quote"
               id="questionnaire"
-              btnName="Submit"
+              btnName="get quote"
               openDialog={isDialogOpen}
               onCloseDialog={(v) => dialogResultFn(v as string)}
             />
@@ -1192,7 +1225,7 @@ export function FormikStepper({
                         <Button
                           disabled={isSubmitting}
                           size="large"
-                          className="btn btn-third"
+                          className="btn btn-whitish"
                           onClick={() => {
                             window.scrollTo({ top: 0, behavior: "smooth" });
                             setStep((s) => s - 1);

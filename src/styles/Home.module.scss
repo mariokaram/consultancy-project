@@ -53,19 +53,27 @@
 
     .aboutDescription {
       display: flex;
-      gap: 1rem;
+      gap: 2rem;
       padding-top: 1rem;
+      width: 100%;
       .aboutText {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 2rem;
-        flex: 2;
         > div:first-child {
           text-align: center;
           line-height: 1.5;
           max-width: 600px;
         }
+      }
+      .helpSection {
+        display: flex;
+        flex-direction: column;
+      }
+      .help {
+        text-align: center;
+        padding-bottom: 1rem;
       }
       .imageLeft {
         display: flex;
@@ -80,12 +88,15 @@
       .ticks {
         display: flex;
         gap: 3rem;
+
         span {
           font-weight: bold;
           font-size: 1.02rem;
         }
         *div {
-          padding: 0.2rem 0;
+          padding: 0.5rem 0;
+          gap: 0.3rem;
+          text-align: left;
           display: flex;
           align-items: center;
         }
@@ -195,7 +206,7 @@
           top: 50%;
           width: 50px;
           height: 50px;
-          background-color: rgba(2, 139, 156, 0.05);
+          background-color: rgba(241, 163, 27, 0.08);
           border-radius: 50%;
           transform: translate(-50%, -50%);
           z-index: -1; /* to place it behind the icon */
@@ -206,7 +217,7 @@
         }
         .title {
           font-weight: bold;
-          color: black;
+          color: var(--blueColor);
           font-size: 1.125rem;
           padding-top: 1rem;
         }
@@ -243,6 +254,9 @@
       color: white;
       padding-bottom: 2rem;
       padding-top: 1.2rem;
+      max-width: 700px;
+      line-height: 1.3rem;
+      margin: 0 auto;
     }
     .btnSec {
       padding-bottom: 1rem;
@@ -304,7 +318,7 @@
       height: 100%;
       max-width: 900px;
       max-height: 480px;
-      bottom: -240px;
+      bottom: -260px;
       padding: 0 4rem;
 
       .videoContainer {
@@ -324,7 +338,7 @@
       width: 85%;
       position: relative;
       margin: 0 auto;
-      padding: 3rem 0 20rem;
+      padding: 3rem 0 13rem;
 
       .timeline {
         display: flex;
@@ -335,8 +349,12 @@
         margin: 0;
         position: relative;
         overflow-x: auto;
+        scrollbar-width: none; /* Hides scrollbar in Firefox */
+        -ms-overflow-style: none; /* Hides scrollbar in IE and Edge */
       }
-
+      .timeline::-webkit-scrollbar {
+        display: none; /* Hides scrollbar in Chrome, Safari, and Edge */
+      }
       .timeline::before {
         content: "";
         position: absolute;
@@ -389,7 +407,7 @@
 
   // testompnials
   .testimonialSection {
-    margin-top: calc(240px + 4rem);
+    margin-top: calc(260px + 2rem);
     .testimonialInfo {
       text-align: center;
       display: flex;
@@ -475,12 +493,7 @@
   }
 }
 
-@media (max-width: 1400px) {
-  .backgroundImg {
-    img {
-      object-position: -400px -80px !important;
-    }
-  }
+@media (max-width: 1550px) {
   .aboutUsContainer {
     .imageLeft,
     .imageRight {
@@ -488,6 +501,7 @@
     }
     .aboutText {
       max-width: 500px;
+      margin: 0 auto;
     }
     .imgRespSect {
       display: flex;
@@ -496,6 +510,14 @@
       justify-content: center;
     }
   }
+}
+@media (max-width: 1400px) {
+  .backgroundImg {
+    img {
+      object-position: -400px -80px !important;
+    }
+  }
+
   .servicesContainer {
     .services {
       flex-direction: column;
@@ -532,6 +554,17 @@
       transform: translate(-50%, -50%);
     }
   }
+  .testimonialSection {
+    margin-top: 4rem !important;
+  }
+  .howItWorksContainer {
+    .videoWrapper {
+      bottom: 0px !important;
+    }
+    .timelineContainer {
+      padding-bottom: 30rem !important;
+    }
+  }
 
   .servicesContainer {
     .link {
@@ -551,11 +584,6 @@
     }
   }
 }
-@media (max-width: 800px) {
-  .testimonialSection {
-    margin-top: 10rem !important;
-  }
-}
 
 @media (max-width: 600px) {
   .backgroundImg {
@@ -566,6 +594,7 @@
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      width: 80%;
       .title {
         font-size: 2rem;
       }
@@ -594,13 +623,22 @@
       object-fit: cover !important;
     }
   }
+
   .howItWorksContainer {
     .videoWrapper {
       padding: 0 1rem !important;
-      bottom: -200px !important;
     }
   }
-  .testimonialSection {
-    margin-top: 4rem !important;
+}
+
+@media (max-width: 440px) {
+  .howItWorksContainer {
+    .videoWrapper {
+      bottom: -250px !important;
+      padding: 0 1rem !important;
+    }
+    .timelineContainer {
+      padding-bottom: 15rem !important;
+    }
   }
 }

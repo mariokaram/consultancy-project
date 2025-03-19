@@ -37,7 +37,8 @@ export default function SquareComponent({
           <div className={styles.imgContent}>
             <div className={styles.title}>Customer Service</div>
             <div className={`${styles.squareDesc}`}>
-              Some text here describing customer service.
+              This is the customer support contact, where you can address any
+              concerns or inquire about the process at any time.
             </div>
             <div>
               <Button size="large" className="btn btn-white">
@@ -81,12 +82,11 @@ export default function SquareComponent({
       component: (
         <div className={styles.square} key="chatroom">
           <Image quality={100} src={chat} priority alt="chatroom" />
-          <div className={styles.imgContent} style={{ color: "black" }}>
-            <div className={styles.title} style={{ color: "#c05e08" }}>
-              Chatroom
-            </div>
+          <div className={styles.imgContent}>
+            <div className={styles.title}>Chatroom</div>
             <div className={`${styles.squareDesc}`}>
-              Some text here describing the chatroom.
+              In this chatroom, you can exchange documents, discuss various
+              sections of plans, and schedule meetings with your consultant.
             </div>
             <div>
               <Button size="large" className="btn btn-white">

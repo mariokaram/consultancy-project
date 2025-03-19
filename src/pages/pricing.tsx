@@ -3,6 +3,7 @@ import Image from "next/image";
 import backGroundImage from "~/public/imgs/pricing.webp";
 import complexPplan from "~/public/imgs/complex-business-plan.webp";
 import tick from "~/public/icons/tick.svg";
+import bestFor from "~/public/icons/bestFor.svg";
 import ContactBanner from "./components/Contact-Banner";
 import Button from "@mui/material/Button";
 import CustomizedAccordions from "./components/Accordion-component";
@@ -74,161 +75,6 @@ export default function PricingPage(props: PricingPageProps) {
     }
   }
 
-  // const cardsData = [
-  //   {
-  //     id: 1,
-  //     title: "Idea Generation",
-  //     pricing: "$1,500",
-  //     currency: "CAD",
-  //     serviceUrl: "/services/proposing-business-ideas",
-  //     backgroundClass: styles.cardBlue,
-  //     points: [
-  //       "Customized plan",
-  //       "Dynamic dashboard",
-  //       "Website chatroom",
-  //       "2 to 3 answer oriented and specific idea proposals",
-  //       "2 free idea proposals revision",
-  //       "In-depth analysis of your answers",
-  //       "Elaborate idea description",
-  //       "Solutions for concerns",
-  //       "Optimisation of skills",
-  //       "Business launch roadmap",
-  //       "5 to 8 days working full process time",
-  //       "10 to 15 pages analysis document on average",
-  //     ],
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Business Model and Financial Study",
-  //     pricing: "$3,000",
-  //     currency: "CAD",
-  //     serviceUrl: "/services/business-plan",
-  //     backgroundClass: styles.darkBlue,
-  //     points: [
-  //       "Customized strategies",
-  //       "Dynamic dashboard",
-  //       "Website chatroom",
-  //       "Business model",
-  //       "2 free business model revisions",
-  //       "Financial projections",
-  //       "9 to 11 working days full process time",
-  //       "8 to 12 pages full study",
-  //     ],
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Business Model and Marketing Strategy",
-  //     pricing: "$4,500",
-  //     currency: "CAD",
-  //     serviceUrl: "/services/business-plan",
-  //     backgroundClass: styles.darkBlack,
-  //     points: [
-  //       "Customized strategies",
-  //       "Dynamic dashboard",
-  //       "Website chatroom",
-  //       "Business model",
-  //       "2 free business model revisions",
-  //       "Market research",
-  //       "9 to 12 working days full process time",
-  //       "10 to 14 pages full study",
-  //     ],
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Business Plan",
-  //     pricing: "$2,000",
-  //     currency: "CAD",
-  //     serviceUrl: "/services/business-plan",
-  //     backgroundClass: styles.cardGreen,
-  //     points: [
-  //       "Customized strategies",
-  //       "Dynamic dashboard",
-  //       "Website chatroom",
-  //       "Business model",
-  //       "2 free business model revisions",
-  //       "Marketing strategy",
-  //       "Risk mitigation",
-  //       "Company structure and operations",
-  //       "Financial study",
-  //       "Growth prospects",
-  //       "12 to 15 working days full process time",
-  //       "25 to 30 pages full plan",
-  //       "Business presentation slides (Pitch deck)",
-  //       "Other supporting documents as per request",
-  //     ],
-  //   },
-  // ];
-
-  // const cardsData = [
-  //   {
-  //     id: "i",
-  //     title: "Idea Generation",
-  //     pricing: "$1,500",
-  //     currency: "CAD",
-  //     serviceUrl: "/services/proposing-business-ideas",
-  //     questionnaireUrl: "ideas-generation",
-  //     backgroundClass: styles.cardBlue,
-  //     points: [
-  //       "Customized plan",
-  //       "Dynamic dashboard",
-  //       "Website chatroom",
-  //       "2 to 3 answer oriented and specific idea proposals",
-  //       "2 free idea proposals revision",
-  //       "In-depth analysis of your answers",
-  //     ],
-  //   },
-  //   {
-  //     id: "f",
-  //     title: "Business Model and Financial Study",
-  //     pricing: "$3,000",
-  //     currency: "CAD",
-  //     serviceUrl: "/services/business-plan",
-  //     questionnaireUrl: "financial-plan",
-  //     backgroundClass: styles.darkBlue,
-  //     points: [
-  //       "Customized strategies",
-  //       "Dynamic dashboard",
-  //       "Website chatroom",
-  //       "Business model",
-  //       "2 free business model revisions",
-  //       "Financial projections",
-  //     ],
-  //   },
-  //   {
-  //     id: "m",
-  //     title: "Business Model and Marketing Strategy",
-  //     pricing: "$4,500",
-  //     currency: "CAD",
-  //     serviceUrl: "/services/business-plan",
-  //     questionnaireUrl: "marketing-plan",
-  //     backgroundClass: styles.darkBlack,
-  //     points: [
-  //       "Customized strategies",
-  //       "Dynamic dashboard",
-  //       "Website chatroom",
-  //       "Business model",
-  //       "2 free business model revisions",
-  //       "Market research",
-  //     ],
-  //   },
-  //   {
-  //     id: "b",
-  //     title: "Business Plan",
-  //     pricing: "$2,000",
-  //     currency: "CAD",
-  //     serviceUrl: "/services/business-plan",
-  //     questionnaireUrl: "business-plan",
-  //     backgroundClass: styles.cardGreen,
-  //     points: [
-  //       "Customized strategies",
-  //       "Dynamic dashboard",
-  //       "Website chatroom",
-  //       "Business model",
-  //       "2 free business model revisions",
-  //       "Marketing strategy",
-  //     ],
-  //   },
-  // ];
   return (
     <>
       <section>
@@ -243,13 +89,13 @@ export default function PricingPage(props: PricingPageProps) {
             />
             <div className={styles.info}>
               <h1 style={{ color: "white" }} className="subTitle">
-                Choose a Service Plan
+                Our Business Consulting Packages
               </h1>
               <div className={styles.description}>
-                Enhance your strategic decision-making, attract investors, and
-                boost business success. At Horizon Consultancy, we provide
-                comprehensive studies and detailed analysis to develop dynamic
-                business strategies tailored to your needs.
+                We provide expert business consulting services tailored to
+                entrepreneurs, startups, and businesses at every stage of
+                growth. Choose the right plan to turn your ideas into reality,
+                optimize your market strategy, and secure funding.
               </div>
             </div>
           </div>
@@ -260,8 +106,21 @@ export default function PricingPage(props: PricingPageProps) {
               <div key={card.id} className={styles.card}>
                 <div className={`${styles.cardBackg} ${card.backgroundClass}`}>
                   <div className={styles.cardTitle}>{card.title}</div>
+
                   <div className={styles.cardPricing}>
-                    {card.pricing} <small>{card.currency}</small>
+                    <div className={styles.startText}>
+                      {" "}
+                      {card.id === "i" || props.filteredCardsData.length === 1
+                        ? ""
+                        : "Starting from"}
+                    </div>
+                    {props.filteredCardsData.length === 1 ? (
+                      "Discounted Quote"
+                    ) : (
+                      <>
+                        {card.pricing} <small>{card.currency}</small>
+                      </>
+                    )}
                   </div>
                   <Link href={card.serviceUrl}>
                     <div className={styles.cardReadMore}>Learn More</div>
@@ -278,6 +137,11 @@ export default function PricingPage(props: PricingPageProps) {
                   ))}
                 </div>
 
+                <div className={styles.bestFor}>
+                  <Image alt="bestFor" width={25} height={25} src={bestFor} />
+                  {card.bestFor}
+                </div>
+
                 <div className={styles.cardBtn}>
                   <Button
                     onClick={() =>
@@ -286,7 +150,9 @@ export default function PricingPage(props: PricingPageProps) {
                     size="large"
                     className="btn btn-secondary"
                   >
-                    Choose Plan
+                    {props.filteredCardsData.length === 1
+                      ? "Upgrade Plan"
+                      : "Choose Plan"}
                   </Button>
                 </div>
               </div>
@@ -367,12 +233,10 @@ export default function PricingPage(props: PricingPageProps) {
           {/* faq Section */}
           <div className={styles.faqSection}>
             <h6 className="title">faq</h6>
-            <h2 className="subTitle">How can we help you?</h2>
+            <h2 className="subTitle">Further Insights</h2>
             <div className="description">
-              Simply put, we are a result driven company, we want you to succeed
-              even after your project is finalized. We also use a top-notch
-              process that makes the entire experience clear, easy and
-              trackable.
+              We are dedicated to transparency and to providing you with the
+              highest level of support and clear understanding.
             </div>
 
             <div className={styles.accordion}>
@@ -411,64 +275,72 @@ const cardsData = [
     questionnaireUrl: "ideas-generation",
     backgroundClass: styles.cardBlue,
     points: [
-      "Customized plan",
-      "Dynamic dashboard",
-      "Website chatroom",
-      "2 to 3 answer oriented and specific idea proposals",
-      "2 free idea proposals revision",
-      "In-depth analysis of your answers",
+      "Two expert-validated business idea proposals",
+      "A comprehensive idea and business report",
+      "Business concept and basic business structure",
+      "Value proposition differentiation",
+      "Problem-solving strategies",
+      "Simple launch roadmap",
+      "One free revision",
     ],
-  },
-  {
-    id: "f",
-    title: "Business Model and Financial Study",
-    pricing: "$3,000",
-    currency: "CAD",
-    serviceUrl: "/services/business-plan",
-    questionnaireUrl: "financial-plan",
-    backgroundClass: styles.darkBlue,
-    points: [
-      "Customized strategies",
-      "Dynamic dashboard",
-      "Website chatroom",
-      "Business model",
-      "2 free business model revisions",
-      "Financial projections",
-    ],
+    bestFor:
+      "Best for entrepreneurs exploring innovative, profitable business ideas and opportunities.",
   },
   {
     id: "m",
-    title: "Business Model and Marketing Strategy",
+    title: "Marketing Strategy",
+    pricing: "$4,000",
+    currency: "CAD",
+    serviceUrl: "/services/marketing-strategy",
+    questionnaireUrl: "marketing-plan",
+    backgroundClass: styles.cardGreen,
+    points: [
+      "An in-depth market strategy plan for sustainable growth",
+      "Standard business model",
+      "Market research and competitor analysis",
+      "Audience targeting and lead generation techniques",
+      "Two free revisions",
+    ],
+    bestFor:
+      "Best for business owners seeking to attract customers, increase sales, and scale effectively.",
+  },
+  {
+    id: "f",
+    title: "Idea and Finance",
     pricing: "$4,500",
     currency: "CAD",
-    serviceUrl: "/services/business-plan",
-    questionnaireUrl: "marketing-plan",
-    backgroundClass: styles.darkBlack,
+    serviceUrl: "/services/idea-finance",
+    questionnaireUrl: "financial-plan",
+    backgroundClass: styles.darkBlue,
     points: [
-      "Customized strategies",
-      "Dynamic dashboard",
-      "Website chatroom",
-      "Business model",
-      "2 free business model revisions",
-      "Market research",
+      "A detailed proof of concept report",
+      "Market validation and feasibility study",
+      "Projected income statement, cashflow forecast, and balance sheet",
+      "Break-even analysis, financial ratios, and funding requirements",
+      "Two free revisions",
     ],
+    bestFor:
+      "Best for entrepreneurs and startups validating business feasibility and determining funding needs.",
   },
   {
     id: "b",
     title: "Business Plan",
-    pricing: "$2,000",
+    pricing: "$6,000",
     currency: "CAD",
     serviceUrl: "/services/business-plan",
     questionnaireUrl: "business-plan",
-    backgroundClass: styles.cardGreen,
+    backgroundClass: styles.darkBlack,
     points: [
-      "Customized strategies",
-      "Dynamic dashboard",
-      "Website chatroom",
-      "Business model",
-      "2 free business model revisions",
-      "Marketing strategy",
+      "An all-inclusive business plan",
+      "Detailed business model and market strategy",
+      "Financial forecasting and feasibility study",
+      "Risk mitigation and contingency plan",
+      "Scalable growth and expansion strategy",
+      "Executive summary and investor pitch deck",
+      "One free revision",
     ],
+    bestFor:
+      "Best for entrepreneurs seeking a strategic, execution-focused plan that drives growth and attracts investors.",
   },
 ];
 
@@ -521,11 +393,13 @@ export async function getServerSideProps(
     let filteredData = [...cardsData];
 
     if (upgradeProjectType !== "i") {
-      delete filteredData[0];
+      // 3 for business plan only
+      filteredCardsData = [filteredData[3]];
+    } else {
+      filteredCardsData = filteredData.filter(
+        (card) => card.id !== upgradeProjectType
+      );
     }
-    filteredCardsData = filteredData.filter(
-      (card) => card.id !== upgradeProjectType
-    );
 
     const session = await getServerSession(
       context.req,

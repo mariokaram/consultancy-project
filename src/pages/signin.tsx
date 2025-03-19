@@ -83,9 +83,7 @@ export default function LoginInPage() {
                 <Image alt="logo-signin" priority height={35} src={Logo} />
               </div>
               <div className={`subTitle ${styles.subtitle}`}>Sign in</div>
-              <div className="description">
-                We are glad to help you and introduce you to our services.
-              </div>
+              <div className="description">Welcome! Let's get started.</div>
               <form onSubmit={(e: any) => submit(e)}>
                 <div className={styles.input}>
                   <TextField
@@ -100,14 +98,18 @@ export default function LoginInPage() {
                 </div>
 
                 <div className={styles.btnlogin}>
-                  <Button type="submit" fullWidth className="btn btn-secondary">
+                  <Button
+                    type="submit"
+                    size="large"
+                    fullWidth
+                    className="btn btn-secondary"
+                  >
                     Sign in
                   </Button>
                   <div className={styles.notice}>
                     <AutoFixHighIcon />
                     <div>
-                      We will email you a magic code for a password-free sign
-                      in.
+                    You will receive a verification email with a secure sign-in link.
                     </div>
                   </div>
                 </div>
@@ -122,16 +124,17 @@ export default function LoginInPage() {
                 <Button
                   onClick={() => signIn("google")}
                   variant="contained"
+                  size="large"
                   startIcon={
                     <Image
                       alt="google"
                       src={googleIcon}
-                      height={25}
-                      width={25}
+                      height={20}
+                      width={20}
                     />
                   }
                   fullWidth
-                  className="btn btn-white"
+                  className={styles.googleBtn}
                 >
                   Sign in with Google
                 </Button>

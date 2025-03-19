@@ -20,6 +20,7 @@ export default getHandler({}).put(async (req, res) => {
       await sendEmail({
         to: data.to,
         type: "inputEmailAlert",
+        name: data.name,
         subject: goToPayment
           ? "Go to payment to be changed later"
           : "Plan modification to be change later",

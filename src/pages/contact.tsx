@@ -18,7 +18,7 @@ export default function ContactUsPage() {
   const [formValues, setFormValues] = useState({ name: "", email: "" });
   const [message, setMessage] = useState("");
   const [charCount, setCharCount] = useState(0);
-  const maxLength = 150;
+  const maxLength = 100;
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -50,7 +50,9 @@ export default function ContactUsPage() {
       }
 
       if (message.trim() === "" || message.length < maxLength) {
-        toast.error("Message must be at least 150 characters");
+        toast.error(
+          `Please enter at least ${maxLength} characters so we can assist you.`
+        );
         return;
       }
 
@@ -100,10 +102,11 @@ export default function ContactUsPage() {
             <div className={styles.contactInfoSection}>
               <div className={`subTitle ${styles.infoTitle}`}>Get in touch</div>
               <div className={styles.infoDesc}>
-                We&apos;re here to assist you with any inquiries or questions you may
-                have. Please feel free to reach out to us using the contact
-                information below, and we&apos;ll get back to you as soon as
-                possible.
+                Feel free to reach out to us at any time if you have any
+                inquiries or would like to review a mock-up plan for better
+                understanding. If you&apos;re interested in proposing a
+                potential partnership, we welcome collaboration and look forward
+                to hearing from you.
               </div>
               <div className={styles.infoContact}>
                 <div>
@@ -139,7 +142,8 @@ export default function ContactUsPage() {
             <div className={`card ${styles.cardContact}`}>
               <div className={`subTitle ${styles.subtitle}`}>Contact Us</div>
               <div className={`description ${styles.desc}`}>
-                Send us a message and will respond as soon as possible
+                We will make sure to get back to you within one to two working
+                days.
               </div>
 
               <div className={styles.inputSection}>
@@ -171,6 +175,7 @@ export default function ContactUsPage() {
                   <textarea
                     placeholder="Your message"
                     value={message}
+                    style={{ fontSize: "1rem" }}
                     onChange={handleMessageChange}
                     rows={7}
                   ></textarea>
@@ -182,7 +187,11 @@ export default function ContactUsPage() {
                 </div>
               </div>
               <div className={styles.btnSbmt}>
-                <Button className="btn btn-secondary" onClick={() => submit()}>
+                <Button
+                  size="large"
+                  className="btn btn-secondary"
+                  onClick={() => submit()}
+                >
                   Send message
                 </Button>
               </div>

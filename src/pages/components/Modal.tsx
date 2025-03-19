@@ -83,18 +83,21 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
 export default function OpenDialog(props: DialogType) {
   const [open, setOpen] = React.useState(false);
 
+  const defaultValueForEmail =
+    "default msg Email here about review is complete and you go and pay";
+  const defaultValueForAlert =
+    "Your review is complete! Please proceed with payment at your earliest convenience.";
+
   const DefaultValueEmailAlert: inputEmailAlertType = {
     emailInfo: {
-      value:
-        "default msg Email here about review is complete and you go and pay",
+      value: defaultValueForEmail,
       automatic: true,
-      default:
-        "default msg Email here about review is complete and you go and pay",
+      default: defaultValueForEmail,
     },
     alertInfo: {
-      value: "default msg Alert here about review is complete and go to pay",
+      value: defaultValueForAlert,
       automatic: true,
-      default: "default msg Alert here about review is complete and go to pay",
+      default: defaultValueForAlert,
     },
   };
 
@@ -181,10 +184,9 @@ export default function OpenDialog(props: DialogType) {
           <DialogContent dividers>
             {props.id === "ideagen" ? (
               <Typography gutterBottom>
-                You are about to choose idea &quot;<strong>{props.text}</strong>&quot;, if
-                neither of the ideas suits you can chat with your consultant
-                before choosing. NB: after this step you agree to continue to
-                idea analysis
+                Are you sure this idea &quot;<strong>{props.text}</strong> is
+                the best fit for you? Once the analysis starts, changes cannot
+                be made.
               </Typography>
             ) : (
               <Typography gutterBottom>{props.text}</Typography>

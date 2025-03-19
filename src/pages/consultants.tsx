@@ -46,7 +46,7 @@ export default function ConsultantsPage() {
                   <div className={styles.consultName}>{consultant.name}</div>
                   <div className={styles.consultField}>{consultant.field}</div>
                   <div className={styles.consultFocus}>
-                    Industry Focus:<span> {consultant.focus}</span>
+                   <span className={consultant.color}>{consultant.focus}</span>
                   </div>
                   <div className={styles.consultBio}>{consultant.bio}</div>
                   <div className={styles.consultQuote}>

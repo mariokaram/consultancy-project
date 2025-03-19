@@ -12,8 +12,17 @@ export default getHandler({}).post(async (req, res) => {
 
     let getNewProjectId: number | undefined;
 
-    const info = `Complete the questionnaire in order to review it , noura hone fike tzabte l kalem aktr`;
-    const infoFinal = `We are reviewing your questionnaire , it will take around 2 business days, we will inform you by email or you can check your dashboard's statuss`;
+    let info = "";
+    let infoFinal = "";
+
+    if (data.serviceType === "i") {
+      info = `Complete and submit your questionnaire, then move on to finalize and receive two customized business ideas.`;
+      infoFinal = `The checkout button will appear on your dashboard within 1 business day. You will receive an email or can check your dashboard for updates to proceed.`;
+    } else {
+      info = `Complete and submit your questionnaire to receive a quotation and move on to the next planning phase.`;
+      infoFinal = `Your quotation will be available on your dashboard within two business days. You will be notified by email or can check your dashboard for updates.`;
+    }
+
     if (data.projectId === "new" && step === 0) {
       await db
         .transaction()

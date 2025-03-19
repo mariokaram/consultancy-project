@@ -29,9 +29,11 @@ export default getHandler({}).post(async (req, res) => {
               req.userId,
               data.projectTypeToBeUpgraded,
               3,
-              "Preparing quotation to be changed if needed by you nora",
+              "Your quotation will be available on your dashboard within two business days. You will be notified by email or can check your dashboard for updates.",
               data.originalProjectId ? data.originalProjectId : data.projectId,
-              data.originalProjectType ? data.originalProjectType : data.upgradeProjectType,
+              data.originalProjectType
+                ? data.originalProjectType
+                : data.upgradeProjectType,
             ],
           ];
         } else {

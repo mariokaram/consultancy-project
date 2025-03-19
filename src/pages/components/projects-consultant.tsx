@@ -110,7 +110,7 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
     },
     readyToPay: {
       isOpen: false,
-      title: "Questionnaire reviewed successfully alert",
+      title: "Go to checkout email and alert",
       type: "inputEmailAlert",
       id: "readyToPay",
     },
@@ -184,6 +184,7 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
             type: v.modalName,
             alertValue: v.result.alertValue,
             projectId: props.projectId,
+            name: finalData.userName,
           };
 
           const res = await axios.put(
@@ -277,6 +278,7 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
       if (res.data.success) {
         mutate(RefetchUrl);
         showSpinner(false);
+        toast.success("Consultant added succussfully!");
       } else {
         showSpinner(false);
       }

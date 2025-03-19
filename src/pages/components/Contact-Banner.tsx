@@ -13,19 +13,19 @@ export default function ContactBanner() {
         <div className={styles.content}>
           <h6 className={`title ${styles.title} `}>contact us</h6>
           <h2 className={`subTitle ${styles.subTitle} `}>
-            Got a project? Let&apos;s talk
+            Got more questions? Let&apos;s talk
           </h2>
           <div className={`description ${styles.desc}`}>
-            We believe the workspaces of tomorrow begin with people, a
-            collaboration between your team and ours. Horizontal is a global
-            network of expertise. Bridging geographical and cultural differences
-            we are united by our purpose to create workplaces that transform the
-            way people work.
+            Whether you have more questions or need to schedule a meeting, don't
+            hesitate to reach out. We&apos;re always ready to help and clarify any
+            concerns you may have. Additionally, we can discuss and provide a
+            mock-up plan during the meeting to give you a better understanding
+            of our approach.
           </div>
           <div className={styles.btn}>
             <Link href="/">
               <Button size="large" className="btn btn-secondary">
-                get in touch
+                contact us
               </Button>
             </Link>
           </div>

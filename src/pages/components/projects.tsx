@@ -33,7 +33,7 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
   const { data, error, isValidating } = useSWR(
     `/api/dashboard/getProjectDetails?project=${props.projectId}`,
     {
-      revalidateOnFocus: true,
+      revalidateOnFocus: false,
     }
   );
   const [openDialogType, setOpenDialogType] = useState<string | null>(null);
@@ -227,117 +227,150 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
                 <div className={styles.stepsContainer}>
                   <>
                     {services?.map((v: servicesType, i: number) => (
-                      <div key={v.serviceName} className={styles.services}>
-                        <div
-                          className={`${styles.serviceImgContainer} ${
-                            finalData.projectType === "i" && i !== 2
-                              ? styles.serviceImgContainerTypeIdea
-                              : ""
-                          }`}
-                        >
-                          <Image
-                            className={styles.serviceImg}
-                            width={158}
-                            height={94}
-                            src={`/imgs/services/${v.serviceImg}.png`}
-                            alt={v.serviceImg}
-                          />
-                        </div>
-                        <div className={styles.serviceName}>
-                          {v.serviceName}
-                        </div>
-
-                        <div className={styles.status}>
-                          {renderStatus(finalData, v)}
-                        </div>
-
-                        <div className={`${styles.action}`}>
-                          <div>
-                            {v.serviceValue?.secure_url && (
-                              <>
-                                <div className={styles.download}>
-                                  <a
-                                    href={v.serviceValue?.secure_url}
-                                    download={v.serviceValue?.original_filename}
-                                  >
-                                    <DownloadIcon />
-                                    Download File
-                                  </a>
-                                </div>
-                              </>
-                            )}
+                      <div key={v.serviceName}>
+                        <div className={styles.services}>
+                          {/* <div
+                            className={`${styles.serviceImgContainer} ${
+                              finalData.projectType === "i" && i !== 2
+                                ? styles.serviceImgContainerTypeIdea
+                                : ""
+                            }`}
+                          >
+                            <Image
+                              className={styles.serviceImg}
+                              width={158}
+                              height={94}
+                              src={`/imgs/services/${v.serviceImg}.png`}
+                              alt={v.serviceImg}
+                            />
+                          </div> */}
+                          <div
+                            className={`${styles.serviceImgContainer}`}
+                          >
+                            <div className={styles.overlay}>
+                              <span className={styles.number}>{i + 1}</span>
+                            </div>
+                            <Image
+                              className={styles.serviceImg}
+                              width={158}
+                              height={94}
+                              src={`/imgs/services/${v.serviceImg}.png`}
+                              alt={v.serviceImg}
+                            />
                           </div>
-                          {v.status_value === "NotConfirmed" &&
-                            !v.confirmed && (
-                              <div>
-                                <Button
-                                  size="large"
-                                  className="btn btn-third"
-                                  onClick={() =>
-                                    confirmFile(
-                                      v.serviceId,
-                                      v.serviceOrder,
-                                      v.serviceName,
-                                      finalData.projectType === "i" &&
-                                        (i === 0 || i === 1)
-                                        ? `ideagen`
-                                        : "confirm"
-                                    )
-                                  }
-                                >
-                                  {finalData.projectType === "i" &&
-                                  (i === 0 || i === 1)
-                                    ? `choose idea ${i + 1}`
-                                    : "confirm"}
-                                </Button>
-                              </div>
-                            )}
+                          <div className={styles.serviceSection}>
+                            <div className={styles.serviceName}>
+                              {v.serviceName}
+                            </div>
+                            <div className={styles.status}>
+                              {renderStatus(finalData, v)}
+                            </div>
+                          </div>
+
+                          <div className={`${styles.action}`}>
+                            <div>
+                              {v.serviceValue?.secure_url && (
+                                <>
+                                  <div className={styles.download}>
+                                    <Button
+                                      className="btn btn-whitish"
+                                      size="large"
+                                    >
+                                      <a
+                                        href={v.serviceValue?.secure_url}
+                                        download={
+                                          v.serviceValue?.original_filename
+                                        }
+                                        style={{
+                                          textDecoration: "none",
+                                          color: "inherit",
+                                          display: "flex",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <DownloadIcon
+                                          style={{ marginRight: ".3rem" }}
+                                        />
+                                        Download File
+                                      </a>
+                                    </Button>
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                            {v.status_value === "NotConfirmed" &&
+                              !v.confirmed && (
+                                <div>
+                                  <Button
+                                    size="large"
+                                    className="btn btn-secondary"
+                                    onClick={() =>
+                                      confirmFile(
+                                        v.serviceId,
+                                        v.serviceOrder,
+                                        v.serviceName,
+                                        finalData.projectType === "i" &&
+                                          (i === 0 || i === 1)
+                                          ? `ideagen`
+                                          : "confirm"
+                                      )
+                                    }
+                                  >
+                                    {finalData.projectType === "i" &&
+                                    (i === 0 || i === 1)
+                                      ? `choose idea ${i + 1}`
+                                      : "confirm"}
+                                  </Button>
+                                </div>
+                              )}
+                          </div>
                         </div>
+                        {i !== services.length - 1 && (
+                          <hr className={styles.horizontal} />
+                        )}
                       </div>
                     ))}
-
-                    {!finalData.project_upgraded &&
-                      finalData.projectUpgradeCount < 2 &&
-                      finalData.projectType !== "b" &&
-                      finalData.projectType !== "bc" && (
-                        <div className={styles.contactSection}>
-                          <Image
-                            quality={100}
-                            src={ideaGenBanner}
-                            alt="contactus"
-                          />
-                          <div className={styles.contentBanner}>
-                            <h2 className={`subTitle ${styles.subTitle} `}>
-                              {finalData.projectType == "i"
-                                ? "Turn your idea into a business"
-                                : "upgrade business to be changed"}
-                            </h2>
-                            <div className={`description ${styles.desc}`}>
-                              {finalData.projectType == "i"
-                                ? `We believe the workspaces of tomorrow begin with
+                  </>
+                </div>
+                {!finalData.project_upgraded &&
+                  finalData.projectUpgradeCount < 2 &&
+                  finalData.projectType !== "b" &&
+                  finalData.projectType !== "bc" && (
+                    <div className={styles.contactSection}>
+                      <Image
+                        quality={100}
+                        src={ideaGenBanner}
+                        alt="contactus"
+                      />
+                      <div className={styles.contentBanner}>
+                        <h2 className={`subTitle ${styles.subTitle} `}>
+                          {finalData.projectType == "i"
+                            ? "Turn your idea into a business"
+                            : "Upgrade your Project!"}
+                        </h2>
+                        <div className={`description ${styles.desc}`}>
+                          {finalData.projectType == "i"
+                            ? `We believe the workspaces of tomorrow begin with
                                 people, a collaboration between your team and
                                 ours. Horizontal is a global network of expertise.
                                 Bridging geographical and cultural differences`
-                                : `upgrade business to be changed people, a collaboration between your team and
-                                ours. Horizontal is a global network of expertise.`}
-                            </div>
-                            <div className={styles.btn}>
-                              <Button
-                                size="large"
-                                onClick={() => confirmFile(0, 0, "", "alert")}
-                                className="btn btn-white"
-                              >
-                                get quotation
-                              </Button>
-                            </div>
-                          </div>
+                            : `Take full advantage of our bundles by upgrading to one once this project is complete. We will send you a quotation with a discounted price as part of the upgrade.`}
                         </div>
-                      )}
-                  </>
-                </div>
+                        <div className={styles.btn}>
+                          <Button
+                            size="large"
+                            onClick={() => confirmFile(0, 0, "", "alert")}
+                            className="btn btn-white"
+                          >
+                            Upgrade plan
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 {openDialogType === "ideagen" && (
                   <OpenDialog
-                    title="Idea picking"
+                    title="Chosen idea"
                     btnName="Choose"
                     id="ideagen"
                     type="ideagen"
@@ -350,10 +383,10 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
                 {openDialogType === "alert" && (
                   <OpenDialog
                     btnName="Ok"
-                    title="Upgrading plan"
+                    title="Upgrading your project"
                     type="alert"
                     id="alert"
-                    text="You can upgrade once you finish your idea generation plan To be changed by nour"
+                    text="To upgrade this project, you must first complete the process of the bundle you are currently in."
                     openDialog={isDialogOpen}
                     onCloseDialog={(v) => dialogResultFn(v as string)}
                   />
@@ -364,7 +397,7 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
                     btnName="Confirm"
                     title="Confirmation"
                     id="confirm"
-                    text="Are you sure you want to confirm? You cannot modify it later. If unsure, consult your consultant in the chatroom."
+                    text="Are you sure you want to confirm? Once confirmed, changes cannot be made. Please ensure that everything meets your expectations before proceeding."
                     openDialog={isDialogOpen}
                     onCloseDialog={(v) => dialogResultFn(v as string)}
                   />

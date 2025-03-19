@@ -57,6 +57,7 @@ export async function sendEmail(paramsEmail: EmailParams) {
             heading: paramsEmail.heading,
             text: paramsEmail.text,
             btnLink: "dashboard",
+            name: paramsEmail.name,
           };
         case "updatedDashboard":
           return {
@@ -255,6 +256,7 @@ export type ConsultantProfile = {
   quote: string;
   imageSrc: StaticImageData;
   id: string;
+  color: string;
 };
 
 export const consultants: ConsultantProfile[] = [
@@ -267,6 +269,7 @@ export const consultants: ConsultantProfile[] = [
     quote:
       "I thrive on transforming complex ideas into compelling strategies that drive growth...",
     imageSrc: consultantProf1,
+    color: "lightBlue",
   },
   {
     id: "efade3aa-57ec-42f1-9364-6fba8df2316c",
@@ -277,6 +280,7 @@ export const consultants: ConsultantProfile[] = [
     quote:
       "My goal is to leverage financial acumen to maximize returns and ensure long-term stability...",
     imageSrc: consultantProf2,
+    color: "rose",
   },
   {
     id: "sdsd",
@@ -287,6 +291,7 @@ export const consultants: ConsultantProfile[] = [
     quote:
       "My goal is to leverage financial acumen to maximize returns and ensure long-term stability...",
     imageSrc: consultantProf2,
+    color: "salmon",
   },
   {
     id: "sdsd",
@@ -297,5 +302,6 @@ export const consultants: ConsultantProfile[] = [
     quote:
       "My goal is to leverage financial acumen to maximize returns and ensure long-term stability...",
     imageSrc: consultantProf2,
+    color: "blue",
   },
 ];

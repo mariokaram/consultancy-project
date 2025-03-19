@@ -85,29 +85,26 @@ const ProjectInfoComponent: React.FC<ProjectInfoProps> = ({
   }
   return (
     <div className={styles.projects}>
-      <div className={styles.infoBanner}>
-        <div>
-          <Image quality={100} src={Info} alt="infoBanner" />
-        </div>
-        <div className={styles.infoText}>
-          <div className={styles.infoTitle}>
-            <InfoIcon />
-            <span>Info</span>
-          </div>
-          <div>
-            {isNaN(info as number)
-              ? info
-              : `Estimating time is around ${info} business days`}
-          </div>
-        </div>
-      </div>
       <div className={styles.cardInfo}>
         <div className={styles.cardTitle}>
           <div className={styles.companyName}>{companyName}</div>
+          <div>
+            Consultant:{" "}
+            {consultantName ? (
+              <strong> Assigned to {consultantName} </strong>
+            ) : (
+              <strong>Not assigned yet</strong>
+            )}
+          </div>
           {userRole === "a" && (
-            <div>
-              User Id: <strong>{userId}</strong>{" "}
-            </div>
+            <>
+              <div>
+                User Id: <strong>{userId}</strong>{" "}
+              </div>
+              <div>
+                Project Id: <strong>{project_id}</strong>{" "}
+              </div>
+            </>
           )}
           {(userRole === "a" || userRole === "c") && (
             <>
@@ -120,9 +117,6 @@ const ProjectInfoComponent: React.FC<ProjectInfoProps> = ({
             </>
           )}
           <div>
-            Project id: <strong>{project_id}</strong>
-          </div>
-          <div>
             Service plan:{" "}
             <strong style={{ textTransform: "capitalize" }}>
               {projectTypeName}
@@ -132,23 +126,62 @@ const ProjectInfoComponent: React.FC<ProjectInfoProps> = ({
             Created on:{" "}
             <strong>{moment.utc(date_creation).format("DD-MM-YYYY")}</strong>
           </div>
+          {invoice && currentServiceName && (
+            <div>
+              Current stage: <strong>{currentServiceName}</strong>
+            </div>
+          )}
+          <div className={styles.status}>
+            <div className={status_color}>{status_label}</div>
+          </div>
+
+          {status_value !== "complete" && (
+            <div className={styles.infoTxt}>
+              <InfoIcon />
+              {isNaN(info as number) ? (
+                <div>{info}</div>
+              ) : (
+                <div>
+                  The process is expected to be completed within {info} working
+                  days.
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+        <div className={styles.statusInfo}>
           <div className={styles.btnCards}>
             {openProjectDetails && comingFrom === "project" && (
-              <div>
+              <div style={{ order: "2" }}>
                 <Button
                   size="large"
                   onClick={() => openProjectDetails(project_id)}
-                  className="btn btn-secondary"
+                  className={
+                    status_value !== "notSubmitted" &&
+                    status_value !== "awaitingPayment"
+                      ? "btn btn-secondary"
+                      : "btn btn-whitish"
+                  }
                 >
                   View Project Overview
                 </Button>
               </div>
             )}
-            <div>
-              {comingFrom === "details" && (
+            {comingFrom === "details" && (
+              <div
+                style={{
+                  order: "3",
+                }}
+              >
                 <Button
                   size="large"
-                  className="btn btn-secondary"
+                  className={
+                    status_value === "complete" ||
+                    status_value === "proccess" ||
+                    status_value === "underReview"
+                      ? "btn btn-secondary"
+                      : "btn btn-whitish"
+                  }
                   onClick={() => {
                     if (userRole === "a" || userRole === "c") {
                       return router.push(`/consultant/dashboard-consultant`);
@@ -157,16 +190,21 @@ const ProjectInfoComponent: React.FC<ProjectInfoProps> = ({
                     }
                   }}
                 >
-                  <ArrowBackIcon />
-                  Back
+                  Back to Projects
                 </Button>
-              )}
-            </div>
+              </div>
+            )}
 
             {!originalProjectId && (
-              <div>
+              <div
+                style={{ order: status_value !== "notSubmitted" ? "3" : "1" }}
+              >
                 <Button
-                  className="btn btn-third"
+                  className={
+                    status_value !== "notSubmitted"
+                      ? "btn btn-whitish"
+                      : "btn btn-secondary"
+                  }
                   size="large"
                   onClick={() => {
                     if (userRole === "a" || userRole === "c") {
@@ -190,37 +228,21 @@ const ProjectInfoComponent: React.FC<ProjectInfoProps> = ({
                 </Button>
               </div>
             )}
-          </div>
-        </div>
-        <div className={styles.statusInfo}>
-          {consultantName ? (
-            <div>
-              Assigned to <strong>{consultantName}</strong>
-            </div>
-          ) : (
-            <div>Consultant not assigned yet</div>
-          )}
-          <div className={styles.status}>
-            <div className={status_color}>{status_label}</div>
-            {invoice && (
-              <div className={styles.statusName}>{currentServiceName}</div>
-            )}
-          </div>
-          <div>
             {(userRole === "a" || userRole === "u") && invoice && (
-              <div>
+              <div style={{ order: "3" }}>
                 <a href={invoice}>
-                  <Button size="large" className="btn btn-primary">
+                  <Button size="large" className="btn btn-whitish">
                     <DownloadIcon
                       fontSize="small"
                       style={{ marginRight: ".2rem" }}
                     />
-                    My invoice
+                    Download invoice
                   </Button>
                 </a>
               </div>
             )}
-            {(userRole === "u" || userRole === "a") &&
+            
+            {/* {(userRole === "u" || userRole === "a") &&
               paymentLoader &&
               status_value === "awaitingPayment" &&
               !invoice && (
@@ -228,19 +250,19 @@ const ProjectInfoComponent: React.FC<ProjectInfoProps> = ({
                   style={{ color: "var(--blueColor)" }}
                   size={20}
                 ></CircularProgress>
-              )}
+              )} */}
             {(userRole === "u" || userRole === "a") &&
               !invoice &&
               !paymentLoader &&
               status_value === "awaitingPayment" &&
               paymentLink && (
-                <div>
+                <div style={{ order: "1" }}>
                   <Button
                     size="large"
                     onClick={() => router.replace(`${paymentLink}`)}
-                    className="btn btn-primary"
+                    className="btn btn-secondary"
                   >
-                    Proceed to Payment
+                    Proceed to payment
                   </Button>
                 </div>
               )}

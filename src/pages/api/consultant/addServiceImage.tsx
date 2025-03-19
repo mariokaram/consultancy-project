@@ -32,12 +32,15 @@ export default getHandler({}).put(async (req, res) => {
 
       if (data.ideaPickingPhase) {
         answersProject = await executeQuery(sql`
-          update projects set status = 6 , info = 'need info msg telling him to pick an idea' where project_id = ${data.projectId}  `);
+          update projects set status = 6 , info = 'Feel free to choose one of the two business ideas. If neither feels right, let''s chat so we can better understand your needs!' where project_id = ${data.projectId}  `);
       } else {
         answersProject = await executeQuery(sql`
-          update projects set status = 6 , info = 'need info msg telling him to confirm' where project_id = ${data.projectId}  `);
+          update projects set status = 6 , info = 'To move forward with the process, please confirm that you have finalized and are satisfied with the document related to the current stage.' where project_id = ${data.projectId}  `);
       }
     }
+
+    console.log(answersProject, "answersProject")
+    console.log(answersServices, "answersServices")
 
     if (answersServices?.successQuery && answersProject?.successQuery) {
       if (!isDeleteImage && !data.ideaPickingFirstUpload) {
