@@ -493,7 +493,7 @@
   }
 }
 
-@media (max-width: 1550px) {
+@media (max-width: 1535px) {
   .aboutUsContainer {
     .imageLeft,
     .imageRight {
@@ -552,6 +552,7 @@
       left: 50%;
       top: 40%;
       transform: translate(-50%, -50%);
+      width: 90%;
     }
   }
   .testimonialSection {
@@ -581,6 +582,27 @@
       .imgResp2 {
         display: none;
       }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .howItWorksContainer {
+    .videoWrapper {
+      bottom: -70px !important;
+    }
+    .timelineContainer {
+      padding-bottom: 25rem !important;
+    }
+  }
+}
+@media (max-width: 700px) {
+  .howItWorksContainer {
+    .videoWrapper {
+      bottom: -115px !important;
+    }
+    .timelineContainer {
+      padding-bottom: 22rem !important;
     }
   }
 }
@@ -631,11 +653,20 @@
   }
 }
 
-@media (max-width: 440px) {
+@media (max-width: 500px) {
+  .howItWorksContainer {
+    .videoWrapper {
+      bottom: -170px !important;
+    }
+    .timelineContainer {
+      padding-bottom: 18rem !important;
+    }
+  }
+}
+@media (max-width: 370px) {
   .howItWorksContainer {
     .videoWrapper {
       bottom: -250px !important;
-      padding: 0 1rem !important;
     }
     .timelineContainer {
       padding-bottom: 15rem !important;

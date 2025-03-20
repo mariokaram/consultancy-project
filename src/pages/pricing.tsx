@@ -11,8 +11,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { SpinnerContext } from "@/contexts/SpinnerContextProvider";
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import SEO from "@/pages/components/SEO";
 
 type PricingPageProps = {
   filteredCardsData: typeof cardsData;
@@ -20,11 +21,26 @@ type PricingPageProps = {
   projectId: number;
   originalProjectId: number;
   originalProjectType: string;
+  section: string;
 };
 
 export default function PricingPage(props: PricingPageProps) {
   const router = useRouter();
   const { showSpinner } = React.useContext(SpinnerContext);
+
+  const { section } = props;
+
+  const faqRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    // If the section prop is provided and it is not empty, scroll to it
+    if (section && section === "faq" && faqRef.current) {
+      faqRef.current.scrollIntoView({
+        behavior: "smooth", // Smooth scroll behavior
+        block: "center", // Scroll the section to the top of the viewport
+      });
+    }
+  }, [section]); // The effect will trigger when the section prop changes
 
   async function handleChoosePlan(
     questionnaireUrl: string,
@@ -77,6 +93,11 @@ export default function PricingPage(props: PricingPageProps) {
 
   return (
     <>
+      <SEO
+        title="Pricing - Horizon Consultancy"
+        description="Horizon Consultancy provides Pricing."
+        url={`${configs.PUBLIC_URL}/pricing`}
+      />
       <section>
         {/* backGroundImage Section */}
         <div className={styles.backgroundImg}>
@@ -99,7 +120,9 @@ export default function PricingPage(props: PricingPageProps) {
               </div>
             </div>
           </div>
+        </div>
 
+        <div className={styles.mainContainer}>
           {/* Card Section */}
           <div className={styles.cardContainer}>
             {props.filteredCardsData?.map((card) => (
@@ -227,14 +250,12 @@ export default function PricingPage(props: PricingPageProps) {
               />
             </div>
           </div>
-        </div>
 
-        <div className={styles.mainContainer}>
           {/* faq Section */}
           <div className={styles.faqSection}>
             <h6 className="title">faq</h6>
             <h2 className="subTitle">Further Insights</h2>
-            <div className="description">
+            <div ref={faqRef} className="description">
               We are dedicated to transparency and to providing you with the
               highest level of support and clear understanding.
             </div>
@@ -350,6 +371,7 @@ type Params = {
     projectId: number;
     originalProjectId: number;
     originalProjectType: string;
+    section: string;
   };
 };
 
@@ -359,6 +381,7 @@ import { getServerSession } from "next-auth/next";
 import { GetServerSidePropsContext } from "next/types";
 import { optionsAuth } from "@/pages/api/auth/[...nextauth]";
 import { isEmpty } from "lodash";
+import { configs } from "@/utils/config";
 export async function getServerSideProps(
   context: GetServerSidePropsContext & Params
 ) {
@@ -367,6 +390,7 @@ export async function getServerSideProps(
     projectId,
     originalProjectId,
     originalProjectType,
+    section,
   } = context.query;
 
   let filteredCardsData = cardsData;
@@ -433,6 +457,7 @@ export async function getServerSideProps(
 
   return {
     props: {
+      section: section ? section : "",
       filteredCardsData: filteredCardsData,
       upgradeProjectType: upgradeProjectType ? upgradeProjectType : "",
       projectId: projectId ? projectId : null,

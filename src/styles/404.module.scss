@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 85vh;
+  text-align: center;
+
+  .title {
+    font-size: 6rem;
+    font-weight: bold;
+    color: #5a627c;
+    margin-bottom: 1rem;
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
+    color: #8f8f8f;
+    margin-bottom: 2rem;
+  }
+}

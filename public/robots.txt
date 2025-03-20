@@ -1,0 +1,14 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /questionnaire
+Disallow: /consultant/dashboard-consultant
+Disallow: /chatroom
+Disallow: /components/*
+
+# Host
+Host: https://www.horizon-consultancy.com
+
+# Sitemaps
+Sitemap: https://www.horizon-consultancy.com/sitemap.xml

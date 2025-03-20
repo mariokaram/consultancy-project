@@ -10,11 +10,13 @@ import createCache from "@emotion/cache";
 import Header from "@/pages/components/Header-component";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Footer from "./components/Footer-component";
+import Footer from "@/pages/components/Footer-component";
 import localFont from "next/font/local";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
 import SpinnerContextProvider from "@/contexts/SpinnerContextProvider";
+import CookieConsent from "@/pages/components/CookieConsent";
+
 import "@/styles/globals.scss";
 import NextNProgress from "nextjs-progressbar";
 // Material-UI imports
@@ -71,6 +73,7 @@ export default function App(props: MyAppProps) {
           <ThemeProvider theme={theme}>
             <CacheProvider value={emotionCache}>
               <Header />
+              <CookieConsent/>
               <SWRConfig
                 value={{
                   fetcher: (url) => axios(url).then((r) => r.data),

@@ -15,6 +15,7 @@ import { optionsAuth } from "@/pages/api/auth/[...nextauth]";
 import ProjectDetails from "./components/projects";
 import SquareComponent from "./components/Square-component";
 import ProjectInfoComponent from "./components/Project-Info-component";
+import SEO from "@/pages/components/SEO";
 
 interface DashboardPropsType {
   userRole: string;
@@ -73,6 +74,7 @@ export default function DashboardPage(props: DashboardPropsType) {
 
   return (
     <>
+      <SEO noIndex={true} title="Dashboard - Horizon Consultancy" />
       <section style={{ margin: "0 5rem" }}>
         <div className={styles.mainContainer}>
           {isValidating && (
@@ -88,7 +90,7 @@ export default function DashboardPage(props: DashboardPropsType) {
               <div className={styles.projectBanner}>
                 <Image quality={100} alt="image banner" priority src={banner} />
                 <div className={styles.bannerTitle}>
-                  {viewProject ?  "Project Overview" : "Projects"}
+                  {viewProject ? "Project Overview" : "Projects"}
                 </div>
               </div>
 
@@ -136,14 +138,15 @@ export default function DashboardPage(props: DashboardPropsType) {
                         <div className={styles.info}>
                           <div>
                             <div className="subTitle">
-                              It looks like you haven't started a project yet.
+                              It looks like you haven&apos;t started a project
+                              yet.
                             </div>
                           </div>
                           <div className="description">
                             Our experts are here to bring your vision to life!
                             From crafting compelling business plans to
-                            developing innovative product proposals, we've got
-                            you covered. Kickstart your project today!
+                            developing innovative product proposals, we&apos;ve
+                            got you covered. Kickstart your project today!
                           </div>
                           <div>
                             <Button

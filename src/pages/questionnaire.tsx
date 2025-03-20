@@ -19,6 +19,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { insertLogs } from "@/utils/shared";
 import OpenDialog from "@/pages/components/Modal";
 import HelpIcon from "@mui/icons-material/Help";
+import SEO from "@/pages/components/SEO";
 
 interface InputData {
   [key: string]: {
@@ -871,6 +872,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
 
   return (
     <>
+      <SEO noIndex={true} title="Questionnaire - Horizon Consultancy" />
       <section>
         <div className={styles.mainContainer}>
           {!isEmpty(pageInputs) ? (

@@ -120,7 +120,7 @@
     }
   }
 }
-@media (max-width: 1096px) {
+@media (max-width: 1180px) {
   .contactContainer {
     height: 1050px;
     .infoTitle,
@@ -146,3 +146,8 @@
     gap: 1rem;
   }
 }
+
+@media (max-width: 383px) {
+  .contactContainer {
+    height: 1150px;
+  }}

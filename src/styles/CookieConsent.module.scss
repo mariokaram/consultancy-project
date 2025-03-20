@@ -1,0 +1,38 @@
+/* styles/CookieConsent.module.scss */
+
+.cookieBanner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  z-index: 9999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  gap: 1rem;
+
+  /* Transition Effect */
+  opacity: 0;
+  transform: translateY(100%); /* Start off-screen */
+  transition: opacity 0.4s ease, transform 0.4s ease;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0); /* Slide into view */
+  }
+}
+
+.cookieBanner p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.cookieBanner a {
+  color: var(--secondaryColor);
+  text-decoration: none;
+}

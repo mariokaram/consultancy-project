@@ -7,6 +7,7 @@ import MuiAccordionSummary, {
 } from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -137,7 +138,7 @@ export default function CustomizedAccordions() {
             aspects, we have diversified our consultants based on their
             expertise. This collection of knowledge optimizes the final result.
             Check our consultants&apos;background in{" "}
-            <a href="/consultants">Our consultants</a> page.
+            <Link href="/consultants">Our consultants</Link> page.
           </Typography>
         </AccordionDetails>
       </Accordion>

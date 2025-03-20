@@ -3,10 +3,17 @@ import Image from "next/image";
 import backGroundImage from "~/public/imgs/consultants-hero.webp";
 import ContactBanner from "@/pages/components/Contact-Banner";
 import { consultants } from "@/utils/shared";
+import SEO from "@/pages/components/SEO";
+import { configs } from "@/utils/config";
 
 export default function ConsultantsPage() {
   return (
     <>
+      <SEO
+        title="Our consultants - Horizon Consultancy"
+        description="Horizon Consultancy provides consultants."
+        url={`${configs.PUBLIC_URL}/consultants`}
+      />
       <section>
         {/* backGroundImage Section */}
         <div className={styles.backgroundImg}>

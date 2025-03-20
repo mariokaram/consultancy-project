@@ -23,6 +23,7 @@ import Avatar from "@mui/material/Avatar";
 import attach from "~/public/icons/attach.svg";
 import remove from "~/public/icons/remove.svg";
 import pdf from "~/public/icons/pdf.svg";
+import SEO from "@/pages/components/SEO";
 
 import {
   Alert,
@@ -284,6 +285,8 @@ export default function ChatroomPage(props: ChatroomProps) {
 
   return (
     <>
+      <SEO noIndex={true} title="Chatroom - Horizon Consultancy" />
+
       <section style={{ margin: "0 5rem" }}>
         <div className={styles.mainContainer}>
           <>

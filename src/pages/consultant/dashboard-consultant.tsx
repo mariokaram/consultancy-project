@@ -14,6 +14,7 @@ import ProjectConsultantDetails from "@/pages/components/projects-consultant";
 import banner from "~/public/imgs/banner.webp";
 import ProjectInfoComponent from "@/pages/components/Project-Info-component";
 import noResult from "~/public/imgs/noResult.webp";
+import SEO from "@/pages/components/SEO";
 
 interface DashboardPropsType {
   userRole: string;
@@ -54,6 +55,7 @@ export default function DashboardConsultantPage(props: DashboardPropsType) {
 
   return (
     <>
+      <SEO noIndex={true} title="Dashboard - Horizon Consultancy" />
       <section>
         <div className={styles.mainContainer}>
           {isValidating && (

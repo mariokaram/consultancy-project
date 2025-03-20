@@ -25,8 +25,39 @@ import ContactBanner from "@/pages/components/Contact-Banner";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { isEmpty } from "lodash";
+import SEO from "@/pages/components/SEO";
+import { configs } from "@/utils/config";
 
-export default function ServicesPage() {
+interface SEOType {
+  description: string;
+  url: string;
+  title: string;
+}
+
+const servicesData = {
+  "proposing-business-ideas": {
+    title: "Proposing Business Ideas - Horizon Consultancy",
+    description: "Unlock innovative business ideas tailored to your goals.",
+    url: "proposing-business-ideas",
+  },
+  "business-plan": {
+    title: "Business Plan - Horizon Consultancy",
+    description: "Craft a comprehensive business plan for your success.",
+    url: "business-plan",
+  },
+  "marketing-strategy": {
+    title: "Marketing Strategy - Horizon Consultancy",
+    description: "Develop effective marketing strategies to grow your brand.",
+    url: "marketing-strategy",
+  },
+  "idea-finance": {
+    title: "Idea and Finance - Horizon Consultancy",
+    description: "Strategic financial planning for your business growth.",
+    url: "idea-finance",
+  },
+};
+
+export default function ServicesPage({ seoData }: { seoData: SEOType }) {
   const ideagenRef = useRef(null);
   const businessplanRef = useRef(null);
   const marketingstrategyRef = useRef(null);
@@ -165,6 +196,7 @@ export default function ServicesPage() {
 
   useEffect(() => {
     const queryString = router?.query?.service ? router.query.service[0] : "";
+
     if (!isEmpty(router.query)) {
       if (scrollToAllias[queryString]) {
         scrollToAllias[queryString].current.scrollIntoView({
@@ -175,10 +207,20 @@ export default function ServicesPage() {
         router.replace("/services");
       }
     }
+    console.log(seoData, "am,rioo");
   }, [router]);
 
   return (
     <>
+      <SEO
+        title={seoData.title}
+        description={seoData.description}
+        url={
+          seoData.url
+            ? `${configs.PUBLIC_URL}/services/${seoData.url}`
+            : `${configs.PUBLIC_URL}/services`
+        }
+      />
       <section>
         {/* backGroundImage Section */}
         <div className={styles.backgroundImg}>
@@ -232,16 +274,16 @@ export default function ServicesPage() {
                   <br />
                   <br />
                   Our main Business Plan bundle offers an all-inclusive
-                  solution, yet we understand that every client's needs are
+                  solution, yet we understand that every client&apos;s needs are
                   different. Therefore, we offer flexibility with sub-bundles
                   tailored to focus specifically on either targeted marketing
                   strategy for maximum impact or financial planning, both of
                   which still provide a holistic overview of your company.
                   <br />
                   <br />
-                  In today's competitive and saturated markets, success requires
-                  a thorough yet assertive approach, and that's precisely what
-                  we provide.
+                  In today&apos;s competitive and saturated markets, success
+                  requires a thorough yet assertive approach, and that&apos;s
+                  precisely what we provide.
                 </div>
               </div>
               <div className={styles.img}>
@@ -297,7 +339,7 @@ export default function ServicesPage() {
             <div
               className={`${styles.successStorySection} ${styles.successStorySectionMarket}`}
             >
-              <h5 className={styles.smallTitle}>What's included</h5>
+              <h5 className={styles.smallTitle}>What&apos;s included</h5>
             </div>
 
             <div className={styles.ideaGenSection}>
@@ -347,7 +389,7 @@ export default function ServicesPage() {
             <div
               className={`${styles.successStorySection} ${styles.successStorySectionFinance}`}
             >
-              <h5 className={styles.smallTitle}>What's included</h5>
+              <h5 className={styles.smallTitle}>What&apos;s included</h5>
             </div>
 
             <div className={styles.businessPlanSection}>
@@ -401,7 +443,7 @@ export default function ServicesPage() {
                   We offer personalized business ideas based on questionnaire
                   responses, presenting two to three proposals, and providing a
                   comparative analysis to aid informed decision-making. This
-                  comparison outlines each idea's core values, resource
+                  comparison outlines each idea&apos;s core values, resource
                   requirements, and future prospects.
                   <br />
                   <br />
@@ -455,4 +497,35 @@ export default function ServicesPage() {
       </section>
     </>
   );
+}
+
+export async function getStaticPaths() {
+  // Generate paths for each service dynamically
+  const paths = Object.keys(servicesData).map((service) => ({
+    params: { service: [service] }, // Wrap service in an array
+  }));
+
+  return {
+    paths,
+    fallback: "blocking", // Optionally enable fallback if paths are missing
+  };
+}
+
+export async function getStaticProps({
+  params,
+}: {
+  params: { service: string };
+}) {
+  const { service } = params;
+
+  const seoData = servicesData[service as keyof typeof servicesData] || {
+    title: "Our Services - Horizon Consultancy",
+    description:
+      "Explore our comprehensive consulting services tailored for your business growth.",
+    url: "",
+  };
+
+  return {
+    props: { seoData },
+  };
 }

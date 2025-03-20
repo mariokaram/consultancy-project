@@ -13,6 +13,7 @@ import { useState, useContext, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { configs } from "@/utils/config";
+import SEO from "@/pages/components/SEO";
 
 export default function LoginInPage() {
   const { showSpinner } = useContext(SpinnerContext);
@@ -67,6 +68,11 @@ export default function LoginInPage() {
   }
   return (
     <>
+      <SEO
+        title="Signin - Horizon Consultancy"
+        description="Horizon Consultancy provides Signin."
+        url={`${configs.PUBLIC_URL}/signin`}
+      />
       <section>
         <div className={styles.signInContainer}>
           <Image
@@ -83,7 +89,9 @@ export default function LoginInPage() {
                 <Image alt="logo-signin" priority height={35} src={Logo} />
               </div>
               <div className={`subTitle ${styles.subtitle}`}>Sign in</div>
-              <div className="description">Welcome! Let's get started.</div>
+              <div className="description">
+                Welcome! Let&apos;s get started.
+              </div>
               <form onSubmit={(e: any) => submit(e)}>
                 <div className={styles.input}>
                   <TextField
@@ -109,7 +117,8 @@ export default function LoginInPage() {
                   <div className={styles.notice}>
                     <AutoFixHighIcon />
                     <div>
-                    You will receive a verification email with a secure sign-in link.
+                      You will receive a verification email with a secure
+                      sign-in link.
                     </div>
                   </div>
                 </div>

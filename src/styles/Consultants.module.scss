@@ -67,6 +67,7 @@
 
         .consultFocus {
           padding-bottom: 1rem;
+          display: inline-block;
           span {
             width: max-content;
             font-size: .95rem;
@@ -98,6 +99,9 @@
   .backgroundImg {
     .image {
       height: 350px;
+    }
+    .info{
+      top: 25% !important;
     }
   }
 }

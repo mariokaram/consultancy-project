@@ -37,7 +37,7 @@ const navItems = [
   { label: "Services", link: "/services" },
   { label: "Pricing", link: "/pricing" },
   { label: "Consultants", link: "/consultants" },
-  { label: "Insights", link: "/blogs" },
+  { label: "Insights", link: "/insights" },
 ];
 
 function ElevationScroll(props: Props) {
@@ -151,7 +151,12 @@ export default function Header(props: any) {
                 component="div"
               >
                 <Link href="/">
-                  <Image alt="logo" priority className={styles.logo} src={Logo} />
+                  <Image
+                    alt="logo"
+                    priority
+                    className={styles.logo}
+                    src={Logo}
+                  />
                 </Link>
               </Typography>
 
@@ -247,11 +252,7 @@ export default function Header(props: any) {
                       >
                         Dashboard
                       </MenuItem>
-                      <MenuItem>
-                        <Badge invisible variant="dot">
-                          Chatroom
-                        </Badge>
-                      </MenuItem>
+
                       <MenuItem onClick={signoutFn}>
                         <Logout
                           style={{ marginRight: ".2rem" }}

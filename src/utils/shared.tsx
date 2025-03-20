@@ -265,7 +265,7 @@ export const consultants: ConsultantProfile[] = [
     name: "Mario K.",
     field: "PhD, Entrepreneurship, Stanford University",
     focus: "Healthcare and Biotechnology",
-    bio: "Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...",
+    bio: "Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...",
     quote:
       "I thrive on transforming complex ideas into compelling strategies that drive growth...",
     imageSrc: consultantProf1,

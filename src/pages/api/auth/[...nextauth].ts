@@ -32,12 +32,12 @@ export const optionsAuth: NextAuthOptions = {
         "api",
         "[...nextauth]",
         "signin",
-        JSON.stringify(metadata + code)
+        `Error Code: ${code}, Details: ${JSON.stringify(metadata)}`
       );
     },
     debug(code, metadata) {
-      console.log(code, metadata,"from next auth")
-    }
+      console.log(code, metadata, "from next auth");
+    },
   },
 
   secret: configs.secret as string,
@@ -68,6 +68,7 @@ export const optionsAuth: NextAuthOptions = {
 
   pages: {
     signIn: "/signin",
+    error: "/500",
   },
 };
 

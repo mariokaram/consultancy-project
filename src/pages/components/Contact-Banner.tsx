@@ -16,14 +16,14 @@ export default function ContactBanner() {
             Got more questions? Let&apos;s talk
           </h2>
           <div className={`description ${styles.desc}`}>
-            Whether you have more questions or need to schedule a meeting, don't
+            Whether you have more questions or need to schedule a meeting, don&apos;t
             hesitate to reach out. We&apos;re always ready to help and clarify any
             concerns you may have. Additionally, we can discuss and provide a
             mock-up plan during the meeting to give you a better understanding
             of our approach.
           </div>
           <div className={styles.btn}>
-            <Link href="/">
+            <Link href="/contact">
               <Button size="large" className="btn btn-secondary">
                 contact us
               </Button>

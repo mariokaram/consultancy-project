@@ -57,7 +57,7 @@
 }
 @media (max-width: 1200px) {
   .headerNav {
-    padding: 0 calc(var(--marginLayout) - 100px) !important;
+    padding: 0 calc(8rem - 100px) !important;
   }
 }
 
@@ -79,10 +79,7 @@
   .contact {
     display: none !important;
   }
-  .logo {
-    height: 3rem;
-    width: 6rem;
-  }
+
 }
 @media (max-width: 330px) {
   .btnInfo {

@@ -11,6 +11,8 @@ import CallIcon from "@mui/icons-material/Call";
 import Button from "@mui/material/Button";
 import { insertLogs } from "@/utils/shared";
 import axios from "axios";
+import { configs } from "@/utils/config";
+import SEO from "@/pages/components/SEO";
 
 export default function ContactUsPage() {
   const { showSpinner } = useContext(SpinnerContext);
@@ -88,6 +90,11 @@ export default function ContactUsPage() {
 
   return (
     <>
+    <SEO
+        title="Contact - Horizon Consultancy"
+        description="Horizon Consultancy provides Contact."
+        url={`${configs.PUBLIC_URL}/contact`}
+      />
       <section>
         <div className={styles.contactContainer}>
           <Image

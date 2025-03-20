@@ -27,6 +27,7 @@ import consultant from "~/public/icons/consultant.svg";
 import getIdea from "~/public/icons/getIdea.svg";
 import tick from "~/public/icons/tick.svg";
 import businessAnalysis from "~/public/icons/businessAnalysis.svg";
+import SEO from "@/pages/components/SEO";
 export default function Home() {
   type HowItWorksKeys = "business" | "idea";
   type HowItWorksStep = {
@@ -75,10 +76,14 @@ export default function Home() {
   ];
 
   const mediaQuery1400 = useMediaQuery("(max-width:1400px)");
-  const mediaQuery1600 = useMediaQuery("(max-width:1550px)");
+  const mediaQuery1600 = useMediaQuery("(max-width:1535px)");
 
   return (
     <>
+      <SEO
+        title="Home - Horizon Consultancy"
+        description="Horizon Consultancy provides tailored business strategies to help you grow and succeed."
+      />
       <section>
         <div className={styles.backgroundImg}>
           <Image
