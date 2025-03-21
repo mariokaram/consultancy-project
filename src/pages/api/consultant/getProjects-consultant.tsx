@@ -46,7 +46,7 @@ export default getHandler({}).get(async (req, res) => {
         when p.project_service = 'f' then 'Financial plan'
         when p.project_service = 'm' then 'Marketing plan'
         when p.project_service = 'bc' then 'Complex business plan'    
-        else "Business plan" end as projectTypeName
+        else 'Business plan' end as projectTypeName
         from projects p 
         left join users u on u.id = p.consultant_id
         left join statuses s on s.id = p.status
@@ -64,7 +64,7 @@ export default getHandler({}).get(async (req, res) => {
         when p.project_service = 'f' then 'Financial plan'
         when p.project_service = 'm' then 'Marketing plan'
         when p.project_service = 'bc' then 'Complex business plan'    
-        else "Business plan" end as projectTypeName
+        else 'Business plan' end as projectTypeName
         from projects p 
         left join users u on u.id = p.consultant_id
         left join statuses s on s.id = p.status

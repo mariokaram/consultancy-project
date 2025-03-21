@@ -86,7 +86,7 @@ export default getHandler({}).get(async (req, res) => {
     when p.project_service = 'f' then 'Financial plan'
     when p.project_service = 'm' then 'Marketing plan'
     when p.project_service = 'bc' then 'Complex business plan'    
-    else "Business plan" end as projectTypeName,
+    else 'Business plan' end as projectTypeName,
     (SELECT COUNT(*) FROM projects WHERE upgradeFromProjectId = p.upgradeFromProjectId and s.userId = ${req.userId} ) as projectUpgradeCount , 
     s.confirmed , s.serviceName , st.status_color , st.status_label , st.status_value , s.serviceImg , s.serviceValue , p.info,  p.project_id, u.name as consultantName , p.date_creation ,
     ( select sta.status_label from statuses sta where sta.id = p.status ) as projectLabelStatus ,

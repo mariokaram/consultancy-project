@@ -103,7 +103,7 @@ export default getHandler({}).get(async (req, res) => {
         when p.project_service = 'f' then 'Financial plan'
         when p.project_service = 'm' then 'Marketing plan'
         when p.project_service = 'bc' then 'Complex business plan'    
-        else "Business plan" end as projectTypeName,
+        else 'Business plan' end as projectTypeName,
         s.serviceDuration , s.serviceName , st.status_color , st.status_label , s.serviceImg , st.status_value , s.serviceValue , p.info,  p.project_id, u.id as consultantId, p.customer_id as userId , u.name as consultantName , p.date_creation ,
         ( select sta.status_label from statuses sta where sta.id = p.status ) as projectLabelStatus ,
         ( select sta.status_color from statuses sta where sta.id = p.status ) as projectColorStatus , 
@@ -133,7 +133,7 @@ export default getHandler({}).get(async (req, res) => {
         when p.project_service = 'f' then 'Financial plan'
         when p.project_service = 'm' then 'Marketing plan'
         when p.project_service = 'bc' then 'Complex business plan'    
-        else "Business plan" end as projectTypeName,
+        else 'Business plan' end as projectTypeName,
         ( select sta.status_label from statuses sta where sta.id = p.status ) as projectLabelStatus ,
         ( select sta.status_color from statuses sta where sta.id = p.status ) as projectColorStatus , 
         ( select sta.status_value from statuses sta where sta.id = p.status ) as projectStatusValue ,
