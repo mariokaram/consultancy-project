@@ -39,9 +39,6 @@ export default getHandler({}).put(async (req, res) => {
       }
     }
 
-    console.log(answersProject, "answersProject")
-    console.log(answersServices, "answersServices")
-
     if (answersServices?.successQuery && answersProject?.successQuery) {
       if (!isDeleteImage && !data.ideaPickingFirstUpload) {
         await sendEmail({

@@ -20,7 +20,7 @@ export default function ContactUsPage() {
   const [formValues, setFormValues] = useState({ name: "", email: "" });
   const [message, setMessage] = useState("");
   const [charCount, setCharCount] = useState(0);
-  const maxLength = 100;
+  const maxLength = 50;
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;

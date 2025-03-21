@@ -4,9 +4,9 @@ import backGroundImage from "~/public/imgs/pricing.webp";
 import complexPplan from "~/public/imgs/complex-business-plan.webp";
 import tick from "~/public/icons/tick.svg";
 import bestFor from "~/public/icons/bestFor.svg";
-import ContactBanner from "./components/Contact-Banner";
+import ContactBanner from "@/pages/components/Contact-Banner";
 import Button from "@mui/material/Button";
-import CustomizedAccordions from "./components/Accordion-component";
+import CustomizedAccordions from "@/pages/components/Accordion-component";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { SpinnerContext } from "@/contexts/SpinnerContextProvider";
@@ -121,7 +121,6 @@ export default function PricingPage(props: PricingPageProps) {
             </div>
           </div>
         </div>
-
         <div className={styles.mainContainer}>
           {/* Card Section */}
           <div className={styles.cardContainer}>
@@ -181,7 +180,6 @@ export default function PricingPage(props: PricingPageProps) {
               </div>
             ))}
           </div>
-
           {/* Banner Section */}
           <div className={styles.bannerWrapper}>
             <div className={styles.bannerContainer}>
@@ -250,7 +248,6 @@ export default function PricingPage(props: PricingPageProps) {
               />
             </div>
           </div>
-
           {/* faq Section */}
           <div className={styles.faqSection}>
             <h6 className="title">faq</h6>
@@ -264,7 +261,6 @@ export default function PricingPage(props: PricingPageProps) {
               <CustomizedAccordions />
             </div>
           </div>
-
           {/* contact section */}
           <div className={styles.contactSection}>
             <ContactBanner />

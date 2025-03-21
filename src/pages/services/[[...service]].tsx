@@ -34,7 +34,7 @@ interface SEOType {
   title: string;
 }
 
-const servicesData = {
+const servicesDataSeo = {
   "proposing-business-ideas": {
     title: "Proposing Business Ideas - Horizon Consultancy",
     description: "Unlock innovative business ideas tailored to your goals.",
@@ -207,7 +207,6 @@ export default function ServicesPage({ seoData }: { seoData: SEOType }) {
         router.replace("/services");
       }
     }
-    console.log(seoData, "am,rioo");
   }, [router]);
 
   return (
@@ -501,7 +500,7 @@ export default function ServicesPage({ seoData }: { seoData: SEOType }) {
 
 export async function getStaticPaths() {
   // Generate paths for each service dynamically
-  const paths = Object.keys(servicesData).map((service) => ({
+  const paths = Object.keys(servicesDataSeo).map((service) => ({
     params: { service: [service] }, // Wrap service in an array
   }));
 
@@ -518,7 +517,7 @@ export async function getStaticProps({
 }) {
   const { service } = params;
 
-  const seoData = servicesData[service as keyof typeof servicesData] || {
+  const seoData = servicesDataSeo[service as keyof typeof servicesDataSeo] || {
     title: "Our Services - Horizon Consultancy",
     description:
       "Explore our comprehensive consulting services tailored for your business growth.",

@@ -53,6 +53,11 @@ export const optionsAuth: NextAuthOptions = {
     GoogleProvider({
       clientId: configs.GOOGLE_CLIENT_ID as string,
       clientSecret: configs.GOOGLE_CLIENT_SECRET as string,
+      authorization: {
+        params: {
+          prompt: "select_account", // Forces account selection every time
+        },
+      },
     }),
   ],
 

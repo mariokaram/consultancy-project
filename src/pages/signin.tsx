@@ -28,7 +28,7 @@ export default function LoginInPage() {
     if (router.query.error) {
       if (router.query.error === "OAuthAccountNotLinked") {
         toast.error(
-          "You already have an account linked to this gmail, try to signin via email instead."
+          "This Google account is already linked to an existing account. Please sign in using your email instead."
         );
       } else {
         toast.error("Something went wrong, please try again later");
@@ -38,6 +38,13 @@ export default function LoginInPage() {
         "signInwWithGoogle",
         "signin",
         router.query.error as string
+      );
+      router.replace(
+        {
+          pathname: "/signin",
+        },
+        undefined,
+        { shallow: true }
       );
     }
   }, [router.query.error]);
@@ -176,7 +183,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   if (session) {
     return {
       redirect: {
-        destination: "/",
+        destination:
+          session.user.role === "u"
+            ? "/dashboard"
+            : "/consultant/dashboard-consultant",
         permanent: false,
       },
     };

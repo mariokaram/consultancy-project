@@ -55,7 +55,6 @@ export function getHandler({
     .use(handleCors)
     .use(async (req, res, next) => {
       try {
-        console.log(auth,"marioo")
         if (auth) {
           const session: SessionType | null = await getServerSession(
             req,
