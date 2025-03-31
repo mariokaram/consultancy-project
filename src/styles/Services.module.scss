@@ -29,7 +29,7 @@
 }
 
 .mainContainer {
-  margin: 4rem var(--marginLayout) 0;
+  margin: 4rem calc(2rem + var(--marginLayout)) 0;
 
   .plansSection {
     .planTitle {
@@ -217,6 +217,11 @@
   }
 }
 
+@media (max-width: 1800px) {
+  .mainContainer {
+    margin: 4rem var(--marginLayout) 0 !important;
+  }
+}
 @media (max-width: 600px) {
   .plansSection {
     img {

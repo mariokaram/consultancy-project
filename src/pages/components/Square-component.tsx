@@ -5,11 +5,15 @@ import Image from "next/image";
 import customerservice from "~/public/imgs/customerservice.png";
 import chat from "~/public/imgs/chat.png";
 import meeting from "~/public/imgs/meeting.png";
+import Link from "next/link";
+import { configs } from "@/utils/config";
 
 interface SquareComponentProps {
   chatroom?: number;
   customer: number;
   schedule?: number;
+  projectId?: number;
+  isPaid?: boolean;
 }
 
 interface SquareData {
@@ -22,6 +26,8 @@ export default function SquareComponent({
   chatroom,
   customer,
   schedule,
+  projectId,
+  isPaid,
 }: SquareComponentProps) {
   // Create an array to hold the squares and their order
   const components: SquareData[] = [];
@@ -41,9 +47,11 @@ export default function SquareComponent({
               concerns or inquire about the process at any time.
             </div>
             <div>
-              <Button size="large" className="btn btn-white">
-                Contact us
-              </Button>
+              <Link href="/contact">
+                <Button size="large" className="btn btn-white">
+                  Contact us
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -64,9 +72,15 @@ export default function SquareComponent({
               Some text here describing schedule meeting.
             </div>
             <div>
-              <Button size="large" className="btn btn-white">
-                Schedule a meeting
-              </Button>
+              <Link
+                href={{ pathname: configs.NEXT_PUBLIC_BOOKING }}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button size="large" className="btn btn-white">
+                  Schedule a meeting
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -89,9 +103,17 @@ export default function SquareComponent({
               sections of plans, and schedule meetings with your consultant.
             </div>
             <div>
-              <Button size="large" className="btn btn-white">
-                Chat with consultant
-              </Button>
+              {isPaid ? (
+                <Link href={{ pathname: "/chatroom", query: { projectId } }}>
+                  <Button size="large" className="btn btn-white">
+                    Chat with consultant
+                  </Button>
+                </Link>
+              ) : (
+                <Button size="large" className="btn btn-white" disabled>
+                  Chat with consultant
+                </Button>
+              )}
             </div>
           </div>
         </div>

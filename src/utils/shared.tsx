@@ -26,6 +26,7 @@ interface EmailParams {
   text?: string;
   btnLink?: string;
   name?: string;
+  cc?: string;
 }
 
 export async function sendEmail(paramsEmail: EmailParams) {
@@ -75,6 +76,14 @@ export async function sendEmail(paramsEmail: EmailParams) {
             name: paramsEmail.name,
             text: paramsEmail.text,
           };
+        case "alertUnread":
+          return {
+            to: paramsEmail.to,
+            subject: paramsEmail.subject,
+            heading: paramsEmail.subject,
+            text: paramsEmail.text,
+            cc: paramsEmail.cc,
+          };
         case "fileConfirmation":
           return {
             to: configs.EMAIL_FROM,
@@ -98,12 +107,13 @@ export async function sendEmail(paramsEmail: EmailParams) {
 
     const resend = new Resend(configs.resend_api);
 
-    const { text, heading, btnLink, name, subject, to } = getEmailText();
+    const { text, heading, btnLink, name, subject, to, cc } = getEmailText();
 
     const emailData: CreateEmailResponse = await resend.sendEmail({
       from: configs.EMAIL_FROM || "",
       to: to || "",
       subject: subject || "",
+      cc: cc || "",
       react: (
         <EmailTemplate
           type={paramsEmail.type}
@@ -261,7 +271,7 @@ export type ConsultantProfile = {
 
 export const consultants: ConsultantProfile[] = [
   {
-    id: "141a3960-cdf6-4c87-a76a-d85e1d4d2116",
+    id: "9f6cdb33-6186-42c2-b961-68d6fd6d422d",
     name: "Mario K.",
     field: "PhD, Entrepreneurship, Stanford University",
     focus: "Healthcare and Biotechnology",

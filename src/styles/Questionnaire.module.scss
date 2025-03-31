@@ -160,9 +160,13 @@
       color: var(--blueColor);
       cursor: pointer;
       display: flex;
+      align-items: center;
     }
     .tableHeader {
       background-color: var(--rmedeColor);
+      .product{
+        text-align: center;
+      }
     }
   }
   .loading {
@@ -200,11 +204,20 @@
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 950px) {
   .product {
     display: none;
   }
   .stepsSection {
-    display: block !important;
+    // display: block !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .stepperSection {
+      align-items: center;
+      justify-content: center;
+ 
+    }
   }
 }

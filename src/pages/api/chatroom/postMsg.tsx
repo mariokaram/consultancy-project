@@ -34,7 +34,7 @@ export default getHandler({}).post(async (req, res) => {
     } else {
       answers = await executeQuery(sql` 
     
-     insert into chatroom ( userId, consultantId , message, date ,msgFrom , projectId , fileUpload ) values ( ${
+     insert into chatroom ( userId, consultantId , message, date ,msgFrom , projectId , fileUpload , unread ) values ( ${
        req.userRole === "u" ? req.userId : data.receiverId
      }, ${
         req.userRole === "c"
@@ -47,7 +47,7 @@ export default getHandler({}).post(async (req, res) => {
         req.userRole
       } , ${data.projectId} , ${
         isEmpty(data.imageInfo) ? null : JSON.stringify(data.imageInfo)
-      } ) `);
+      } , 0 ) `);
 
       if (answers?.successQuery) {
         res.json(messageSuccess(200, "", false));

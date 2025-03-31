@@ -1,18 +1,9 @@
 import styles from "@/styles/Chatroom.module.scss";
 import Image from "next/image";
-import backGroundImage from "~/public/imgs/pricing-image.png";
-import tick from "~/public/icons/tick.svg";
-import redirect from "~/public/icons/redirect.svg";
-import ContactBanner from "./components/Contact-Banner";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import Link from "next/link";
-import Info from "~/public/icons/info.svg";
 import banner from "~/public/imgs/banner.webp";
 import SquareComponent from "./components/Square-component";
 import { ConsultantProfile, consultants, insertLogs } from "@/utils/shared";
-import arrowRight from "~/public/icons/arrow-right.svg";
-import Badge from "@mui/material/Badge";
-import { useRouter } from "next/router";
 import useSWR, { mutate } from "swr";
 import { SpinnerContext } from "@/contexts/SpinnerContextProvider";
 import axios from "axios";
@@ -28,26 +19,15 @@ import SEO from "@/pages/components/SEO";
 import {
   Alert,
   AlertTitle,
-  CircularProgress,
-  Collapse,
-  IconButton,
-  Input,
   InputAdornment,
   Skeleton,
-  Tooltip,
-  Typography,
+  TextField,
+  Button,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect, useRef, useState, useContext } from "react";
-import InfoIcon from "@mui/icons-material/Info";
-import { isEmpty, map, result } from "lodash";
-import { ProjectListType } from "./api/dashboard/getProjects";
+import { isEmpty } from "lodash";
 import moment from "moment";
-import { getServerSession } from "next-auth";
-import { GetServerSidePropsContext } from "next/types";
-import { optionsAuth } from "@/pages/api/auth/[...nextauth]";
-import ProjectDetails from "./components/projects";
-import { Container, Paper, TextField, Button } from "@mui/material";
+
 interface ChatroomProps {
   role: string;
   name: string;
@@ -58,7 +38,6 @@ interface ChatroomProps {
 }
 
 export default function ChatroomPage(props: ChatroomProps) {
-  const router = useRouter();
 
   const query = `/api/chatroom/getMessages?projectId=${props.projectId}`;
 
@@ -79,8 +58,6 @@ export default function ChatroomPage(props: ChatroomProps) {
   const handleSendMessage = async () => {
     if (messageInput) {
       try {
-        showSpinner(true);
-
         const params = {
           message: messageInput,
           receiverId: props.receiverId,
@@ -102,10 +79,8 @@ export default function ChatroomPage(props: ChatroomProps) {
         const res: any = await axios.post("/api/chatroom/postMsg", params);
 
         if (res.data.success) {
-          showSpinner(false);
           setMessageInput("");
         } else {
-          showSpinner(false);
           const updatedDataWithoutNewMessage = updatedData.filter(
             (message) => message.id !== newMessage.id
           );
@@ -113,8 +88,14 @@ export default function ChatroomPage(props: ChatroomProps) {
           toast.error("Sorry, something went wrong!");
         }
       } catch (error: any) {
-        showSpinner(false);
-        toast.error("Sorry, something went wrong!");
+        const ToastMessage =
+          error?.message &&
+          error?.message === "Request failed with status code 429"
+            ? "Slow down. You are going too fast!"
+            : "Sorry, something went wrong!";
+
+        toast.error(ToastMessage);
+        mutate(query);
       }
     }
   };
@@ -133,14 +114,20 @@ export default function ChatroomPage(props: ChatroomProps) {
     addConsultantInfo();
   }, []);
 
-  // scroll down after message
   useEffect(() => {
-    // Scroll to the bottom when new messages are added
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
-    }
-  }, [data]);
+    const scrollToBottom = () => {
+      if (chatContainerRef.current) {
+        chatContainerRef.current.scrollTop =
+          chatContainerRef.current.scrollHeight;
+      }
+    };
+
+    scrollToBottom(); // Scroll on init
+
+    const timeout = setTimeout(scrollToBottom, 100); // Slight delay to ensure rendering
+
+    return () => clearTimeout(timeout); // Cleanup function
+  }, [data]); // Runs on mount and when messages update
 
   // on init skeleton
   useEffect(() => {
@@ -456,12 +443,16 @@ export default function ChatroomPage(props: ChatroomProps) {
                                 ) : (
                                   <div className={styles.consultantMsg}>
                                     <div className={styles.convImg}>
-                                      <Image
-                                        alt="pic"
-                                        src={consultantinfo?.imageSrc || ""}
-                                        width={50}
-                                        height={50}
-                                      />
+                                      {!consultantinfo?.imageSrc ? (
+                                        ""
+                                      ) : (
+                                        <Image
+                                          alt="pic"
+                                          src={consultantinfo.imageSrc}
+                                          width={50}
+                                          height={50}
+                                        />
+                                      )}
                                     </div>
                                     <div className={styles.convInfo}>
                                       <div className={styles.cardMsg}>
@@ -533,6 +524,12 @@ export default function ChatroomPage(props: ChatroomProps) {
                           placeholder="Type a message"
                           value={messageInput}
                           onChange={(e) => setMessageInput(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" && !e.shiftKey) {
+                              e.preventDefault();
+                              handleSendMessage();
+                            }
+                          }}
                           InputProps={{
                             startAdornment: (
                               <InputAdornment position="start">
@@ -578,9 +575,11 @@ export default function ChatroomPage(props: ChatroomProps) {
                             width={130}
                             height={130}
                           />
+                        ) : !consultantinfo?.imageSrc ? (
+                          ""
                         ) : (
                           <Image
-                            src={consultantinfo?.imageSrc || ""}
+                            src={consultantinfo.imageSrc}
                             width={130}
                             height={130}
                             alt="consultImg"
@@ -623,6 +622,36 @@ export default function ChatroomPage(props: ChatroomProps) {
                           <>
                             <BusinessCenterIcon className={styles.icn} />
                             {consultantinfo?.focus}
+                          </>
+                        )}
+                      </div>
+                      <div className={styles.consultTitle}>
+                        {isValidating && !initLoad ? (
+                          <Skeleton
+                            animation="wave"
+                            style={{ margin: "0 auto" }}
+                            variant="text"
+                            width="30%"
+                          />
+                        ) : (
+                          <>
+                            <Link
+                              href={{
+                                pathname: `${
+                                  props.role === "u"
+                                    ? "/dashboard"
+                                    : "/consultant/dashboard-consultant"
+                                }`,
+                                query: { project: props.projectId },
+                              }}
+                            >
+                              <Button
+                                size="medium"
+                                className="btn btn-whitish"
+                              >
+                                back to projects
+                              </Button>
+                            </Link>
                           </>
                         )}
                       </div>
@@ -721,9 +750,11 @@ type Params = {
 };
 
 import { executeQuery } from "@/lib/db";
-import ImageUpload from "./components/ImageUpload";
 import { configs } from "@/utils/config";
 import { ChatListType } from "./api/chatroom/getMessages";
+import { getServerSession } from "next-auth";
+import { GetServerSidePropsContext } from "next/types";
+import { optionsAuth } from "@/pages/api/auth/[...nextauth]";
 const sql = require("sql-template-strings");
 export async function getServerSideProps(
   context: GetServerSidePropsContext & Params

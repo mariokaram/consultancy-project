@@ -196,7 +196,7 @@ export default function PricingPage(props: PricingPageProps) {
                         <Image alt="tick" width={22} height={16} src={tick} />
                       </div>
                       <div className={styles.bannerInfo}>
-                        More than 1 businness modal
+                        More than 1 businness model
                       </div>
                     </div>
                     <div>
@@ -427,7 +427,7 @@ export async function getServerSideProps(
       optionsAuth
     );
     const id: string = session?.user.id!;
-    const SQL = sql`select p.project_id from projects p where customer_id = ${id} and project_service = ${originalProjectType} and project_id=${originalProjectId} and invoice is not null and status = 7  `;
+    const SQL = sql`select p.project_id from projects p where customer_id = ${id} and project_service = ${originalProjectType} and project_id=${originalProjectId} and invoice IS NOT NULL and status = 7  `;
 
     const checkIfhasProjects: {
       successQuery: boolean;

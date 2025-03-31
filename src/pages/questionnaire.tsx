@@ -907,10 +907,8 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
                             </div>
                             <div className="description">
                               Complete the questionnaire step by step, providing
-                              detailed responses for the best outcome.
-                              <br />
-                              You can save and edit your answers before
-                              submission.
+                              detailed responses for the best outcome. You can
+                              save and edit your answers before submission.
                             </div>
                           </div>
 
@@ -921,9 +919,12 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
                                 {v.quest_tooltip && (
                                   <div className={styles.info}>
                                     <Tooltip
+                                      disableTouchListener={false}
+                                      arrow={true}
+                                      enterTouchDelay={0}
+                                      leaveTouchDelay={3000}
                                       placement="top"
                                       title={v.quest_tooltip}
-                                      arrow={true}
                                     >
                                       <HelpIcon
                                         fontSize="small"

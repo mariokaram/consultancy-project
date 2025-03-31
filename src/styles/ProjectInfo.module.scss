@@ -33,10 +33,10 @@
     .infoTxt {
       display: flex;
       color: var(--blueColor);
-      padding-top: .5rem;
+      padding-top: 0.5rem;
       gap: 0.5rem;
       line-height: 1.3;
-      max-width: 700px;
+      max-width: 500px;
       div {
         display: flex;
         align-self: center;
@@ -59,10 +59,29 @@
   }
 }
 
+@media (max-width: 1000px) {
+  .cardTitle {
+    text-align: left;
+  }
+}
+
 @media (max-width: 700px) {
+  .cardTitle {
+    text-align: center !important;
+  }
   .cardInfo {
     flex-direction: column;
+    gap: 2rem;
+    align-items: center;
     padding: 1rem !important;
+    .status {
+      justify-content: center;
+    }
+    .infoTxt{
+      flex-direction: column;
+      align-items: center;
+      gap: 0 !important;
+    }
     .statusInfo {
       border-left: none !important;
       padding-left: 0 !important;
@@ -71,19 +90,6 @@
       justify-content: center;
       flex-direction: column;
       padding-bottom: 2rem;
-    }
-  }
-
-  .infoBanner {
-    .infoTitle {
-      margin: 0 auto;
-    }
-    .infoText {
-      left: 0% !important;
-      width: 100% !important;
-    }
-    img {
-      height: 200px !important;
     }
   }
 }

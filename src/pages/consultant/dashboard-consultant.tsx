@@ -121,25 +121,8 @@ export default function DashboardConsultantPage(props: DashboardPropsType) {
                         <div className={styles.info}>
                           <div>
                             <div className="subTitle">
-                              It seems you haven&apos;t started any projects
-                              yet.
+                              It looks like you don&apos;t have a project yet.
                             </div>
-                          </div>
-                          <div className="description">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Error amet libero soluta vel, reiciendis
-                            incidunt maiores dolore! Perspiciatis architecto
-                            iusto odit at harum, officia suscipit minima quae
-                            expedita excepturi ratione.
-                          </div>
-                          <div>
-                            <Button
-                              onClick={() => router.push("/pricing")}
-                              className="btn btn-secondary"
-                              size="large"
-                            >
-                              Start a new Project
-                            </Button>
                           </div>
                         </div>
                         <div>

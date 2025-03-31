@@ -382,7 +382,7 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
 
                 {openDialogType === "alert" && (
                   <OpenDialog
-                    btnName="Ok"
+                    btnName="Close"
                     title="Upgrading your project"
                     type="alert"
                     id="alert"
@@ -415,7 +415,7 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
           )}
         </div>
         {(!isValidating || error) && (
-          <SquareComponent chatroom={error ? 0 : 1} customer={2} />
+          <SquareComponent isPaid={finalData.invoice ? true : false} projectId={props.projectId}  chatroom={error ? 0 : 1} customer={2} />
         )}
       </div>
       <ToastContainer

@@ -290,7 +290,7 @@ export default function OpenDialog(props: DialogType) {
 
         <DialogActions>
           {props.type !== "alert" && (
-            <Button className="btn btn-third" onClick={() => handleClose("no")}>
+            <Button className="btn btn-whitish" onClick={() => handleClose("no")}>
               Cancel
             </Button>
           )}

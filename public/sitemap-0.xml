@@ -5,4 +5,8 @@
 <url><loc>https://www.horizon-consultancy.com/contact</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
 <url><loc>https://www.horizon-consultancy.com/pricing</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
 <url><loc>https://www.horizon-consultancy.com/signin</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
+<url><loc>https://www.horizon-consultancy.com/services/proposing-business-ideas</loc><changefreq>daily</changefreq><priority>0.8</priority><robots>index, follow</robots></url>
+<url><loc>https://www.horizon-consultancy.com/services/business-plan</loc><changefreq>daily</changefreq><priority>0.8</priority><robots>index, follow</robots></url>
+<url><loc>https://www.horizon-consultancy.com/services/marketing-strategy</loc><changefreq>daily</changefreq><priority>0.8</priority><robots>index, follow</robots></url>
+<url><loc>https://www.horizon-consultancy.com/services/idea-finance</loc><changefreq>daily</changefreq><priority>0.8</priority><robots>index, follow</robots></url>
 </urlset>

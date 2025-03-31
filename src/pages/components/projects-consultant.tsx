@@ -853,7 +853,12 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
           )}
         </div>
         {(!isValidating || error) && (
-          <SquareComponent chatroom={1} customer={0} />
+          <SquareComponent
+            projectId={props.projectId}
+            chatroom={1}
+            customer={0}
+            isPaid={finalData.invoice ? true : false}
+          />
         )}
       </div>
       <ToastContainer

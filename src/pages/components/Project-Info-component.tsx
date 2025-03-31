@@ -91,7 +91,7 @@ const ProjectInfoComponent: React.FC<ProjectInfoProps> = ({
           <div>
             Consultant:{" "}
             {consultantName ? (
-              <strong> Assigned to {consultantName} </strong>
+              <strong>{consultantName} </strong>
             ) : (
               <strong>Not assigned yet</strong>
             )}
@@ -190,7 +190,7 @@ const ProjectInfoComponent: React.FC<ProjectInfoProps> = ({
                     }
                   }}
                 >
-                  Back to Projects
+                  Back to dashboard
                 </Button>
               </div>
             )}
