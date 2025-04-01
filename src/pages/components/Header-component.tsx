@@ -36,8 +36,8 @@ const drawerWidth = 240;
 const navItems = [
   { label: "Services", link: "/services" },
   { label: "Pricing", link: "/pricing" },
-  { label: "Consultants", link: "/consultants" },
-  { label: "Insights", link: "/insights" },
+  { label: "Case Studies", link: "/case-studies" },
+  { label: "Our Consultants", link: "/consultants" },
 ];
 
 function ElevationScroll(props: Props) {

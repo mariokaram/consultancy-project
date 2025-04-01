@@ -14,7 +14,7 @@ export default function Custom500() {
         <Typography variant="h5" className={styles.subtitle}>
           Something went wrong. Please try again later.
         </Typography>
-        <Link href="/" passHref>
+        <Link href="/">
           <Button size="large" className="btn btn-third">
             Go Back Home
           </Button>

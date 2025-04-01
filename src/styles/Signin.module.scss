@@ -1,5 +1,5 @@
 .signInContainer {
-  height: 700px;
+  height: calc(100vh - 72px);
   position: relative;
 
   .loginForm {

@@ -14,7 +14,7 @@ export default function ConsultantsPage() {
         description="Horizon Consultancy provides consultants."
         url={`${configs.PUBLIC_URL}/consultants`}
       />
-      <section>
+      <section className={styles.sectionMain}>
         {/* backGroundImage Section */}
         <div className={styles.backgroundImg}>
           <div className={styles.image}>
@@ -53,7 +53,7 @@ export default function ConsultantsPage() {
                   <div className={styles.consultName}>{consultant.name}</div>
                   <div className={styles.consultField}>{consultant.field}</div>
                   <div className={styles.consultFocus}>
-                   <span className={consultant.color}>{consultant.focus}</span>
+                    <span className={consultant.color}>{consultant.focus}</span>
                   </div>
                   <div className={styles.consultBio}>{consultant.bio}</div>
                   <div className={styles.consultQuote}>
@@ -62,11 +62,6 @@ export default function ConsultantsPage() {
                 </div>
               </div>
             ))}
-          </div>
-
-          {/* contact section */}
-          <div className={styles.contactus}>
-            <ContactBanner />
           </div>
         </div>
       </section>

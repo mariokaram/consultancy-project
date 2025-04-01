@@ -29,60 +29,62 @@
   }
 }
 
-.mainContainer {
-  margin: 4rem var(--marginLayout) 0;
+.sectionMain {
+  background-color: var(--lightblueOpac);
+  .mainContainer {
+    margin: 4rem var(--marginLayout) 0;
 
-  .consultantSection {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-
-    .consultBloc {
+    .consultantSection {
       display: flex;
       align-items: center;
-      width: 100%;
-      gap: 2.5rem;
-      padding-bottom: 4rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      .consultImg {
-        max-width: 285px;
+      flex-direction: column;
+
+      .consultBloc {
         display: flex;
-      }
-
-      .consultDesc {
-        color: var(--primaryColor);
-        max-width: 700px;
-        .consultName {
-          font-size: 1.5rem;
-          padding-bottom: 0.6rem;
-          font-weight: bold;
-          color: var(--primaryColor);
-        }
-        .consultField {
-          padding-bottom: 1rem;
-          color: var(--primaryColor);
-          font-size: .95rem;
+        align-items: center;
+        width: 100%;
+        gap: 2.5rem;
+        padding-bottom: 4rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        .consultImg {
+          max-width: 285px;
+          display: flex;
         }
 
-        .consultFocus {
-          padding-bottom: 1rem;
-          display: inline-block;
-          span {
-            width: max-content;
-            font-size: .95rem;
+        .consultDesc {
+          color: var(--primaryColor);
+          max-width: 700px;
+          .consultName {
+            font-size: 1.5rem;
+            padding-bottom: 0.6rem;
+            font-weight: bold;
+            color: var(--primaryColor);
           }
-        }
+          .consultField {
+            padding-bottom: 1rem;
+            color: var(--primaryColor);
+            font-size: 0.95rem;
+          }
 
-        .consultBio {
-          line-height: 1.35rem;
-          
-        }
+          .consultFocus {
+            padding-bottom: 1rem;
+            display: inline-block;
+            span {
+              width: max-content;
+              font-size: 0.95rem;
+            }
+          }
 
-        .consultQuote {
-          padding: 1rem 0;
-          font-weight: bold;
-          color: var(--primaryColor);
+          .consultBio {
+            line-height: 1.35rem;
+          }
+
+          .consultQuote {
+            padding: 1rem 0;
+            font-weight: bold;
+            color: var(--primaryColor);
+          }
         }
       }
     }
@@ -100,7 +102,7 @@
     .image {
       height: 350px;
     }
-    .info{
+    .info {
       top: 25% !important;
     }
   }

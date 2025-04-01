@@ -27,18 +27,21 @@ export default function Footer() {
               </div>
             </div>
             <div>
-              <div>Company</div>
-              <Link href="/dashboard">Dashboard</Link>
-              <Link href="/insights">Insights</Link>
-              <Link href="/consultants">Consultants</Link>
-              <Link href="/services">Services</Link>
+              <div>About Us</div>
+              <Link href="/about-us">Who We Are</Link>
+              <Link href="/case-studies">Case Studies</Link>
+              <Link href="/services">Our Services</Link>
+              <Link href="/consultants">Our Consultants</Link>
             </div>
+
             <div>
-              <div>Help & Support</div>
-              <Link href="/pricing?section=faq">Faq</Link>
+              <div>Explore</div>
+              <Link href="/dashboard">Dashboard</Link>
               <Link href="/pricing">Pricing</Link>
-              <Link href="/contact">Contact us</Link>
+              <Link href="/pricing?section=faq">FAQs</Link>
+              <Link href="/contact">Contact Us</Link>
             </div>
+
             <div>
               <div>Legal</div>
               <Link href="/terms">Terms & Conditions</Link>

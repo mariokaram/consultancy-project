@@ -16,7 +16,7 @@ import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
 import SpinnerContextProvider from "@/contexts/SpinnerContextProvider";
 import CookieConsent from "@/pages/components/CookieConsent";
-
+import { useRouter } from "next/router";
 import "@/styles/globals.scss";
 import NextNProgress from "nextjs-progressbar";
 // Material-UI imports
@@ -66,6 +66,9 @@ export default function App(props: MyAppProps) {
     pageProps,
     session,
   }: any = props;
+
+  const router = useRouter();
+  const hideFooterRoutes = ["/chatroom", "/signin"]; // Add more routes if needed
   return (
     <>
       <SessionProvider session={session}>
@@ -73,7 +76,7 @@ export default function App(props: MyAppProps) {
           <ThemeProvider theme={theme}>
             <CacheProvider value={emotionCache}>
               <Header />
-              <CookieConsent/>
+              <CookieConsent />
               <SWRConfig
                 value={{
                   fetcher: (url) => axios(url).then((r) => r.data),
@@ -87,9 +90,11 @@ export default function App(props: MyAppProps) {
                   {/* <Analytics /> */}
                 </main>
               </SWRConfig>
-              <footer className={`${Aeonik.className}`}>
-                <Footer />
-              </footer>
+              {!hideFooterRoutes.includes(router.pathname) && (
+                <footer className={`${Aeonik.className}`}>
+                  <Footer />
+                </footer>
+              )}
             </CacheProvider>
           </ThemeProvider>
         </SpinnerContextProvider>

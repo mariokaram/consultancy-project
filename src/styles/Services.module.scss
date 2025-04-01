@@ -119,7 +119,7 @@
 
         .planCard {
           position: relative;
-          background-color: rgba(2, 139, 156, 0.025);
+          background-color: var(--lightblueOpac);
           border-radius: 0.5rem;
           width: 400px;
           padding: 3rem 1.5rem 1.5rem 1.5rem;
@@ -167,7 +167,7 @@
 
         .planCard {
           padding: 2rem;
-          border: 1px solid #e1e1e1;
+          border: 1px solid #eee;
           width: 500px;
           display: flex;
           align-items: center;
@@ -206,11 +206,14 @@
     }
   }
   .planIdeaSection {
-    background-color: rgba(2, 139, 156, 0.025) !important;
-    margin: 0 calc(0rem - var(--marginLayout));
+    background-color: var(--lightblueOpac) !important;
+    margin: 0 calc(0rem - var(--marginLayout) - 2rem);
     padding: 4rem var(--marginLayout) 0;
     padding-top: 3rem;
     padding-bottom: 4rem;
+  }
+  .contactus {
+    margin: 0 -2rem;
   }
   .financeIdea {
     margin-top: 4rem;
@@ -220,6 +223,12 @@
 @media (max-width: 1800px) {
   .mainContainer {
     margin: 4rem var(--marginLayout) 0 !important;
+  }
+  .planIdeaSection {
+    margin: 0 calc(0rem - var(--marginLayout)) !important;
+  }
+  .contactus {
+    margin: auto !important;
   }
 }
 @media (max-width: 600px) {
