@@ -56,7 +56,7 @@ export default function AboutPage() {
               local experts in different regions. This approach guarantees that
               all aspects of your business are covered professionally, while
               keeping our solutions aligned with Canadian regulations and market
-              expectations, or other regions' local regulations when applicable.
+              expectations, or other regions&apos; local regulations when applicable.
             </div>
           </div>
           <div className={styles.aboutSection}>
