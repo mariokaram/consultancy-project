@@ -3,6 +3,7 @@ module.exports = {
   generateRobotsTxt: true,
   exclude: [
     "/dashboard",
+    "/signin",
     "/questionnaire",
     "/consultant/dashboard-consultant",
     "/chatroom",
@@ -15,6 +16,7 @@ module.exports = {
         userAgent: "*",
         disallow: [
           "/dashboard",
+          "/signin",
           "/questionnaire",
           "/consultant/dashboard-consultant",
           "/chatroom",
@@ -27,6 +29,7 @@ module.exports = {
   transform: async (config, path) => {
     const noIndexPaths = [
       "/dashboard",
+      "/signin",
       "/questionnaire",
       "/consultant/dashboard-consultant",
       "/chatroom",

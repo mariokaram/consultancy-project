@@ -75,11 +75,7 @@ export default function LoginInPage() {
   }
   return (
     <>
-      <SEO
-        title="Signin - Horizon Consultancy"
-        description="Horizon Consultancy provides Signin."
-        url={`${configs.PUBLIC_URL}/signin`}
-      />
+      <SEO title="Signin - Horizon Consultancy" noIndex={true} />
       <section>
         <div className={styles.signInContainer}>
           <Image
