@@ -99,7 +99,7 @@ export default getHandler({}).post(async (req, res) => {
           // if we have values and answerID is included
           if (!isEmpty(values) && values[0][0] && req.userRole === "u") {
             return [
-              `select  qu.id ,q.quest_order_index as indexOrder  from quest_users qu
+              `select q.quest_order_index as indexOrder  from quest_users qu
                inner join projects p  on p.project_id = qu.project_id and p.customer_id = ?
                inner join questionnaire q on q.id = qu.quest_id and q.quest_order_index = ? and q.quest_service_type = ?
                where qu.user_id = ? and qu.project_id = ? and p.status = ?
