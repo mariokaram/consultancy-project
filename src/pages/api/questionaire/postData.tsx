@@ -159,7 +159,7 @@ export default getHandler({}).post(async (req, res) => {
 
     res.json(messageSuccess(200, getNewProjectId || "", false));
   } catch (error: any) {
-    res.json(messageError(500, error?.message));
     insertLogs("api", "postData", "questionnaire", error?.message, req.userId);
+    res.json(messageError(500, "internal server error"));
   }
 });

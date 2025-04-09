@@ -9,7 +9,7 @@ export default function AboutPage() {
     <>
       <SEO
         title="About us - Horizon Consultancy"
-        description="Horizon Consultancy provides consultants."
+        description="Horizon Consultancy provides about us."
         url={`${configs.PUBLIC_URL}/about-us`}
       />
       <section className={styles.sectionMain}>
