@@ -23,7 +23,7 @@ import NextNProgress from "nextjs-progressbar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 // ----- axios base URL START
-axios.defaults.baseURL = configs.webUrl || "";
+axios.defaults.baseURL = "https://horizon-consultancy-demo.vercel.app"
 
 // --------- stuff to do in order to run material ui to works on server side START
 function createEmotionCache() {
