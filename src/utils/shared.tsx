@@ -3,7 +3,6 @@ import { Resend } from "resend";
 import EmailTemplate from "@/pages/components/EmailTemplate";
 import { configs } from "@/utils/config";
 import { CreateEmailResponse } from "resend/build/src/emails/interfaces";
-import consultantProf1 from "~/public/imgs/khara.png";
 import consultantProf2 from "~/public/imgs/consultant1.png";
 import { StaticImageData } from "next/image";
 export async function insertLogs(
@@ -137,14 +136,7 @@ export async function sendEmail(paramsEmail: EmailParams) {
 
 // utils/services.ts
 
-export type ServiceEntry = [
-  string,
-  number,
-  number,
-  number | undefined,
-  string,
-  string
-];
+export type ServiceEntry = [string, number, number, number | undefined, string];
 
 export const insertServiceTable = (
   serviceType: string,
@@ -156,101 +148,52 @@ export const insertServiceTable = (
   switch (serviceType) {
     case "b":
       returnedValue = [
-        ["Business model", 5, 1, projectId, userId, "Business model"],
-        ["Marketing plan", 5, 2, projectId, userId, "Marketing Plan"],
-        [
-          "Description of management and organization",
-          5,
-          3,
-          projectId,
-          userId,
-          "Description of Management and",
-        ],
-        [
-          "Potential risks and mitigation strategies",
-          5,
-          4,
-          projectId,
-          userId,
-          "Potential risks and mitigation strategies",
-        ],
-        [
-          "Financial projections",
-          5,
-          5,
-          projectId,
-          userId,
-          "Financial Projections",
-        ],
-        ["Growth strategy", 5, 6, projectId, userId, "Growth strategy"],
-        ["Executive summary", 5, 7, projectId, userId, "Executive Summary"],
-        ["Execution plan", 5, 8, projectId, userId, "Execution plan"],
-        ["Business plan", 5, 9, projectId, userId, "businessPlan"],
+        ["Business model", 5, 1, projectId, userId],
+        ["Marketing plan", 5, 2, projectId, userId],
+        ["Description of management and organization", 5, 3, projectId, userId],
+        ["Potential risks and mitigation strategies", 5, 4, projectId, userId],
+        ["Financial projections", 5, 5, projectId, userId],
+        ["Growth strategy", 5, 6, projectId, userId],
+        ["Executive summary", 5, 7, projectId, userId],
+        ["Execution plan", 5, 8, projectId, userId],
+        ["Business plan", 5, 9, projectId, userId],
       ];
       break;
     case "m":
       returnedValue = [
-        ["Business model", 5, 1, projectId, userId, "Business model"],
-        ["Lead generation", 5, 2, projectId, userId, "leadgeneration"],
-        [
-          "Competitor assessment",
-          5,
-          3,
-          projectId,
-          userId,
-          "Competitor assessment",
-        ],
-        ["Marketing strategy", 5, 4, projectId, userId, "Marketing Plan"],
-        ["Expansion strategy", 5, 5, projectId, userId, "expansion"],
+        ["Business model", 5, 1, projectId, userId],
+        ["Lead generation", 5, 2, projectId, userId],
+        ["Competitor assessment", 5, 3, projectId, userId],
+        ["Marketing strategy", 5, 4, projectId, userId],
+        ["Expansion strategy", 5, 5, projectId, userId],
       ];
       break;
     case "f":
       returnedValue = [
-        ["Idea validation", 5, 1, projectId, userId, "ideaValidation"],
-        ["Business model", 5, 2, projectId, userId, "Business model"],
-        ["Financial plan", 5, 3, projectId, userId, "Financial Projections"],
-        ["Idea & finance", 5, 4, projectId, userId, "ideaFinance"],
+        ["Idea validation", 5, 1, projectId, userId],
+        ["Business model", 5, 2, projectId, userId],
+        ["Financial plan", 5, 3, projectId, userId],
+        ["Idea & finance", 5, 4, projectId, userId],
       ];
       break;
     case "bc":
       returnedValue = [
-        ["Business model", 5, 1, projectId, userId, "Business model"],
-        ["Marketing plan", 5, 2, projectId, userId, "Marketing Plan"],
-        [
-          "Description of management and organization",
-          5,
-          3,
-          projectId,
-          userId,
-          "Description of Management and",
-        ],
-        [
-          "Potential risks and mitigation strategies",
-          5,
-          4,
-          projectId,
-          userId,
-          "Potential risks and mitigation strategies",
-        ],
-        [
-          "Financial projections",
-          5,
-          5,
-          projectId,
-          userId,
-          "Financial Projections",
-        ],
-        ["Growth strategy", 5, 6, projectId, userId, "Growth strategy"],
-        ["Executive summary", 5, 7, projectId, userId, "Executive Summary"],
-        ["Execution plan", 5, 8, projectId, userId, "Execution plan"],
-        ["Business plan", 5, 9, projectId, userId, "businessPlan"],
+        ["Business model", 5, 1, projectId, userId],
+        ["Marketing plan", 5, 2, projectId, userId],
+        ["Description of management and organization", 5, 3, projectId, userId],
+        ["Potential risks and mitigation strategies", 5, 4, projectId, userId],
+        ["Financial projections", 5, 5, projectId, userId],
+        ["Growth strategy", 5, 6, projectId, userId],
+        ["Executive summary", 5, 7, projectId, userId],
+        ["Execution plan", 5, 8, projectId, userId],
+        ["Business plan", 5, 9, projectId, userId],
       ];
       break;
     case "i":
       returnedValue = [
-        ["Idea 1", 5, 1, projectId, userId, "Idea 1"],
-        ["Idea 2", 5, 2, projectId, userId, "Idea 2"],
-        ["Idea analysis", 5, 3, projectId, userId, "ideaAnalaysis"],
+        ["Idea 1", 5, 1, projectId, userId],
+        ["Idea 2", 5, 2, projectId, userId],
+        ["Idea analysis", 5, 3, projectId, userId],
       ];
       break;
   }
@@ -278,7 +221,7 @@ export const consultants: ConsultantProfile[] = [
     bio: "Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...",
     quote:
       "I thrive on transforming complex ideas into compelling strategies that drive growth...",
-    imageSrc: consultantProf1,
+    imageSrc: consultantProf2,
     color: "lightBlue",
   },
   {

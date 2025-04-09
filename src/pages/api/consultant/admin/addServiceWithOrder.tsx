@@ -11,8 +11,8 @@ export default getHandler({}).put(async (req, res) => {
     update services set statusOrder = statusOrder + 1  where statusOrder >= ${data.order} and projectId = ${data.projectId}  `);
 
     const serviceInsert = await executeQuery(sql`
-    insert into services ( serviceName , serviceStatus , statusOrder ,  projectId , userId , serviceImg )  
-    values ( ${data.service.name} , 5 , ${data.order} ,   ${data.projectId} ,  ${data.userId} , ${data.service.image}   )     `);
+    insert into services ( serviceName , serviceStatus , statusOrder ,  projectId , userId  )  
+    values ( ${data.service.name} , 5 , ${data.order} ,   ${data.projectId} ,  ${data.userId} )     `);
 
     if (serviceOrder?.successQuery && serviceInsert?.successQuery) {
       res.json(messageSuccess(200, "", false));

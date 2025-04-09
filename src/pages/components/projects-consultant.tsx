@@ -1,5 +1,4 @@
 import styles from "@/styles/ProjectConsultant.module.scss";
-import Image from "next/image";
 import Button from "@mui/material/Button";
 import DownloadIcon from "@mui/icons-material/Download";
 import useSWR, { mutate } from "swr";
@@ -41,7 +40,7 @@ interface DashType {
   idea1: string;
   idea2: string;
   quotationLink: string;
-  extraService?: { id: string; name: string; image: string };
+  extraService?: { id: string; name: string };
 }
 interface DialogModal {
   [key: string]: {
@@ -57,14 +56,17 @@ interface DurationType {
     duration: number;
   };
 }
+interface ExtraServiceType {
+  name: string;
+  id: string;
+}
 
 export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
   const { showSpinner } = React.useContext(SpinnerContext);
-  const [isUploadingFocus, setIsUploading] = useState(false);
   const { data, error, isValidating } = useSWR(
     `/api/consultant/getProjectsDetails-consultant?project=${props.projectId}`,
     {
-      revalidateOnFocus: !isUploadingFocus,
+      revalidateOnFocus: false,
     }
   );
 
@@ -72,22 +74,19 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
   const finalData: finalDataType = data?.result?.finalData;
   const usersInfo: UsersConsultantType[] = data?.result?.usersInfo;
 
-  const ExtraService = [
+  const ExtraService: ExtraServiceType[] = [
     {
       id: "designAndDev",
       name: "Design and development plan",
-      image: "Design and development plan",
     },
     {
       id: "opeAndMang",
       name: "Operations and management",
-      image: "Operations and management",
     },
-    { id: "landlord", name: "Landlord deck", image: "Landlord deck" },
+    { id: "landlord", name: "Landlord deck" },
     {
       id: "franchise",
       name: "Franchise overview",
-      image: "Franchise overview",
     },
   ];
 
@@ -98,7 +97,7 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
     assignedConsultant: "",
     idea1: "",
     idea2: "",
-    extraService: { id: "", name: "", image: "" },
+    extraService: { id: "", name: "" },
   });
   const [isDialogOpen, setIsDialogOpen] = useState<DialogModal>({
     quotationAlert: {
@@ -218,7 +217,7 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
           }
           setDash((state) => ({
             ...state,
-            extraService: { id: "", name: "", image: "" },
+            extraService: { id: "", name: "" },
           }));
           break;
 
@@ -375,7 +374,6 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
       toast.error("Sorry, something went wrong!");
       insertLogs("client", "formData", "project-consultant", error?.message);
     } finally {
-      setIsUploading(false);
       mutate(RefetchUrl);
       showSpinner(false);
     }
@@ -451,7 +449,6 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
       insertLogs("client", "removeImage", "project-consultant", error?.message);
       toast.error("Sorry, something went wrong!");
     } finally {
-      setIsUploading(false);
       mutate(RefetchUrl);
       showSpinner(false);
     }
@@ -496,7 +493,7 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
       v.serviceName !== "Idea analysis"
     ) {
       return v.confirmed ? (
-        <div className={v.status_color}>
+        <div className={styles.picked}>
           <div>
             <StarIcon />
           </div>
@@ -748,19 +745,12 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
                       <div key={v.serviceName} className={styles.services}>
                         <div
                           className={`${styles.serviceImgContainer} ${
-                            finalData.projectType === "i" && i !== 2
-                              ? styles.serviceImgContainerTypeIdea
-                              : ""
+                            i === services.length - 1 ? styles.lastService : ""
                           }`}
                         >
-                          <Image
-                            className={styles.serviceImg}
-                            width={158}
-                            height={94}
-                            src={`/imgs/services/${v.serviceImg}.png`}
-                            alt={v.serviceImg}
-                          />
+                          <span className={styles.number}>{i + 1}</span>
                         </div>
+
                         <div className={styles.serviceName}>
                           {v.serviceName}
                         </div>
@@ -830,7 +820,6 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
                                 imageValue={v.serviceValue || undefined}
                                 onError={false}
                                 fromConsultant={true}
-                                setIsUploading={setIsUploading}
                               />
                             </div>
                           )}

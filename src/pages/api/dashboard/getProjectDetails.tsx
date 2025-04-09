@@ -46,7 +46,6 @@ export interface servicesType {
   serviceOrder : number;
   status_label: string;
   status_value: string;
-  serviceImg: string;
 }
 export interface finalDataType {
   project_id: number;
@@ -88,7 +87,7 @@ export default getHandler({}).get(async (req, res) => {
     when p.project_service = 'bc' then 'Complex business plan'    
     else 'Business plan' end as projectTypeName,
     (SELECT COUNT(*) FROM projects WHERE upgradeFromProjectId = p.upgradeFromProjectId and s.userId = ${req.userId} ) as projectUpgradeCount , 
-    s.confirmed , s.serviceName , st.status_color , st.status_label , st.status_value , s.serviceImg , s.serviceValue , p.info,  p.project_id, u.name as consultantName , p.date_creation ,
+    s.confirmed , s.serviceName , st.status_color , st.status_label , st.status_value , s.serviceValue , p.info,  p.project_id, u.name as consultantName , p.date_creation ,
     ( select sta.status_label from statuses sta where sta.id = p.status ) as projectLabelStatus ,
     ( select sta.status_value from statuses sta where sta.id = p.status ) as projectStatusValue ,
     ( select sta.status_color from statuses sta where sta.id = p.status ) as projectColorStatus , 
@@ -111,7 +110,6 @@ export default getHandler({}).get(async (req, res) => {
           services.push({
             serviceName: v.serviceName,
             serviceId: v.serviceId,
-            serviceImg: v.serviceImg,
             serviceValue: v.serviceValue ? JSON.parse(v.serviceValue) : null,
             status_color: v.status_color,
             serviceOrder : v.serviceOrder ,

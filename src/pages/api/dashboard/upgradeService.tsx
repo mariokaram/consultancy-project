@@ -48,7 +48,7 @@ export default getHandler({}).post(async (req, res) => {
 
         newProjectId = getInsertLastId.insertId;
         return [
-          "insert into services ( serviceName , serviceStatus , statusOrder ,  projectId , userId , serviceImg )  values ?",
+          "insert into services ( serviceName , serviceStatus , statusOrder ,  projectId , userId  )  values ?",
           [
             insertServiceTable(
               data.projectTypeToBeUpgraded,

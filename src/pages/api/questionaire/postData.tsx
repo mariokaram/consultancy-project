@@ -61,7 +61,7 @@ export default getHandler({}).post(async (req, res) => {
         ])
         .query(() => {
           return [
-            "insert into services ( serviceName , serviceStatus , statusOrder ,  projectId , userId , serviceImg )  values ?",
+            "insert into services ( serviceName , serviceStatus , statusOrder ,  projectId , userId  )  values ?",
             [insertServiceTable(data.serviceType, getNewProjectId, req.userId)],
           ];
         })

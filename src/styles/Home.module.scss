@@ -635,13 +635,13 @@
   .servicesContainer {
     .rectangular {
       height: 100% !important;
-      width: 260px !important;
+      width: auto !important;
 
       padding: 3rem 1rem !important;
     }
     img {
       height: 100% !important;
-      width: 260px !important;
+      width: 100% !important;
       object-fit: cover !important;
     }
   }

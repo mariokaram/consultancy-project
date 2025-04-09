@@ -123,7 +123,7 @@ const ProjectInfoComponent: React.FC<ProjectInfoProps> = ({
             </strong>
           </div>
           <div>
-            Created on:{" "}
+            Started on:{" "}
             <strong>{moment.utc(date_creation).format("DD-MM-YYYY")}</strong>
           </div>
           {invoice && currentServiceName && (

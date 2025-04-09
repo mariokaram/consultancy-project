@@ -171,7 +171,7 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
       v.serviceOrder !== 3
     ) {
       return v.confirmed ? (
-        <div className={v.status_color}>
+        <div className={styles.picked}>
           <div>
             <StarIcon />
           </div>
@@ -229,34 +229,14 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
                     {services?.map((v: servicesType, i: number) => (
                       <div key={v.serviceName}>
                         <div className={styles.services}>
-                          {/* <div
+                          <div
                             className={`${styles.serviceImgContainer} ${
-                              finalData.projectType === "i" && i !== 2
-                                ? styles.serviceImgContainerTypeIdea
+                              i === services.length - 1
+                                ? styles.lastService
                                 : ""
                             }`}
                           >
-                            <Image
-                              className={styles.serviceImg}
-                              width={158}
-                              height={94}
-                              src={`/imgs/services/${v.serviceImg}.png`}
-                              alt={v.serviceImg}
-                            />
-                          </div> */}
-                          <div
-                            className={`${styles.serviceImgContainer}`}
-                          >
-                            <div className={styles.overlay}>
-                              <span className={styles.number}>{i + 1}</span>
-                            </div>
-                            <Image
-                              className={styles.serviceImg}
-                              width={158}
-                              height={94}
-                              src={`/imgs/services/${v.serviceImg}.png`}
-                              alt={v.serviceImg}
-                            />
+                            <span className={styles.number}>{i + 1}</span>
                           </div>
                           <div className={styles.serviceSection}>
                             <div className={styles.serviceName}>
@@ -415,7 +395,12 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
           )}
         </div>
         {(!isValidating || error) && (
-          <SquareComponent isPaid={finalData.invoice ? true : false} projectId={props.projectId}  chatroom={error ? 0 : 1} customer={2} />
+          <SquareComponent
+            isPaid={finalData.invoice ? true : false}
+            projectId={props.projectId}
+            chatroom={error ? 0 : 1}
+            customer={2}
+          />
         )}
       </div>
       <ToastContainer
