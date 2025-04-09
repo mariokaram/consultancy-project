@@ -91,7 +91,7 @@ export default getHandler({}).post(async (req, res) => {
 
       let noNeedToUpdateImage = data.imageData
         ? "tb.answers"
-        : ' IF( quest_users.quest_type <> "imageType" or quest_users.quest_type is null , tb.answers , quest_users.answers ) ';
+        : ` IF( quest_users.quest_type <> 'imageType' or quest_users.quest_type is null , tb.answers , quest_users.answers ) `;
 
       await db
         .transaction()
