@@ -26,16 +26,16 @@ export default function CaseStudies({ caseStudies }: Props) {
       <section className={styles.mainContainer}>
         <h1>Our Case Studies</h1>
         <div className={styles.grid}>
-          {caseStudies.map((caseStudy) => (
-            <Link
-              key={caseStudy.id}
-              href={`/case-studies/${caseStudy.id}`}
-              className={styles.card}
-            >
-              <h2>{caseStudy.title}</h2>
-              <p>{caseStudy.description}</p>
-            </Link>
-          ))}
+          {/* {caseStudies.map((caseStudy) => (
+            // <Link
+            //   key={caseStudy.id}
+            //   href={`/case-studies/${caseStudy.id}`}
+            //   className={styles.card}
+            // >
+            //   <h2>{caseStudy.title}</h2>
+            //   <p>{caseStudy.description}</p>
+            // </Link>
+          ))} */}
         </div>
       </section>
     </>
@@ -44,10 +44,6 @@ export default function CaseStudies({ caseStudies }: Props) {
 
 // Fetch case studies data
 export const getStaticProps: GetStaticProps = async () => {
-  return {
-    props: {},
-    redirect: { destination: "404" },
-  };
   const caseStudies = [
     {
       id: "case1",
