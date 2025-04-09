@@ -14,6 +14,8 @@ export async function insertLogs(
 ) {
 
   console.log('Base URL:', configs.webUrl);
+  console.log('Request URL:', `${axios.defaults.baseURL}/api/logs`);  // Logs the full request URL
+
   const params = { type, fn, page, message, id };
   return await axios.post("/api/logs", params);
 }
