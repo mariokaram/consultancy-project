@@ -134,12 +134,14 @@
 }
 
 @media (max-width: 800px) {
+  .serviceImgContainer {
+    padding: 2.5rem 0;
+  }
   .stepsContainer {
     .services {
       flex-direction: column;
       gap: 1rem;
       justify-content: center;
-      align-items: center;
     }
   }
 }

@@ -71,7 +71,7 @@ export default function App(props: MyAppProps) {
   const hideFooterRoutes = ["/chatroom", "/signin"]; // Add more routes if needed
   return (
     <>
-      <SessionProvider session={session}>
+      <SessionProvider session={session} refetchInterval={60}>
         <SpinnerContextProvider>
           <ThemeProvider theme={theme}>
             <CacheProvider value={emotionCache}>

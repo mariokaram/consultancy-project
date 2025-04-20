@@ -45,7 +45,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    fallback: false, // Change to 'true' if you want to generate pages on demand
+    fallback: "blocking",
   };
 };
 
