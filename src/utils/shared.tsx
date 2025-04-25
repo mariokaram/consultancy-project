@@ -215,7 +215,7 @@ export type ConsultantProfile = {
 
 export const consultants: ConsultantProfile[] = [
   {
-    id: "9f6cdb33-6186-42c2-b961-68d6fd6d422d",
+    id: "f84fc3ac-0742-4017-8b69-98f3be23c7ab",
     name: "Mario K.",
     field: "PhD, Entrepreneurship, Stanford University",
     focus: "Healthcare and Biotechnology",

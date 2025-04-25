@@ -2,9 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 <url><loc>https://www.horizon-consultancy.com</loc><changefreq>daily</changefreq><priority>1</priority><robots>index, follow</robots></url>
 <url><loc>https://www.horizon-consultancy.com/about-us</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
+<url><loc>https://www.horizon-consultancy.com/case-studies</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
 <url><loc>https://www.horizon-consultancy.com/consultants</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
 <url><loc>https://www.horizon-consultancy.com/contact</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
 <url><loc>https://www.horizon-consultancy.com/pricing</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
+<url><loc>https://www.horizon-consultancy.com/case-studies/case1</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
+<url><loc>https://www.horizon-consultancy.com/case-studies/case2</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
 <url><loc>https://www.horizon-consultancy.com/services/proposing-business-ideas</loc><changefreq>daily</changefreq><priority>0.8</priority><robots>index, follow</robots></url>
 <url><loc>https://www.horizon-consultancy.com/services/business-plan</loc><changefreq>daily</changefreq><priority>0.8</priority><robots>index, follow</robots></url>
 <url><loc>https://www.horizon-consultancy.com/services/marketing-strategy</loc><changefreq>daily</changefreq><priority>0.8</priority><robots>index, follow</robots></url>

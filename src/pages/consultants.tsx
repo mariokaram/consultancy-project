@@ -1,7 +1,6 @@
 import styles from "@/styles/Consultants.module.scss";
 import Image from "next/image";
 import backGroundImage from "~/public/imgs/consultants-hero.webp";
-import ContactBanner from "@/pages/components/Contact-Banner";
 import { consultants } from "@/utils/shared";
 import SEO from "@/pages/components/SEO";
 import { configs } from "@/utils/config";
