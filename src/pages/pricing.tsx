@@ -196,7 +196,7 @@ export default function PricingPage(props: PricingPageProps) {
                         <Image alt="tick" width={22} height={16} src={tick} />
                       </div>
                       <div className={styles.bannerInfo}>
-                        More than 1 businness model
+                        More than 1 business model
                       </div>
                     </div>
                     <div>
@@ -305,7 +305,7 @@ const cardsData = [
   },
   {
     id: "m",
-    title: "Marketing Strategy",
+    title: "Market Strategy",
     pricing: "$4,000",
     currency: "CAD",
     serviceUrl: "/services/marketing-strategy",

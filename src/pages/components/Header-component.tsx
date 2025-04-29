@@ -37,7 +37,7 @@ const navItems = [
   { label: "Services", link: "/services" },
   { label: "Pricing", link: "/pricing" },
   { label: "Case Studies", link: "/case-studies" },
-  { label: "Our Consultants", link: "/consultants" },
+  // { label: "Our Consultants", link: "/consultants" },
 ];
 
 function ElevationScroll(props: Props) {

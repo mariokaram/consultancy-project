@@ -216,9 +216,9 @@ export type ConsultantProfile = {
 export const consultants: ConsultantProfile[] = [
   {
     id: "f84fc3ac-0742-4017-8b69-98f3be23c7ab",
-    name: "Mario K.",
+    name: "Rachel D.",
     field: "PhD, Entrepreneurship, Stanford University",
-    focus: "Healthcare and Biotechnology",
+    focus: "Financial Services",
     bio: "Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...",
     quote:
       "I thrive on transforming complex ideas into compelling strategies that drive growth...",

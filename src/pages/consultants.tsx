@@ -67,3 +67,12 @@ export default function ConsultantsPage() {
     </>
   );
 }
+// to be removed when we have consultants page
+export async function getServerSideProps() {
+  return {
+    redirect: {
+      destination: "/",
+      permanent: false,
+    },
+  };
+}

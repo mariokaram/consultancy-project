@@ -69,7 +69,8 @@ export default function SquareComponent({
           <div className={styles.imgContent}>
             <div className={styles.title}>Schedule a meeting</div>
             <div className={`${styles.squareDesc}`}>
-              Some text here describing schedule meeting.
+              Coordinate with your consultant to explore your project more
+              thoroughly at a time that suits you.
             </div>
             <div>
               <Link

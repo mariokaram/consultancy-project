@@ -31,7 +31,7 @@ export default function Footer() {
               <Link href="/about-us">Who We Are</Link>
               <Link href="/case-studies">Case Studies</Link>
               <Link href="/services">Our Services</Link>
-              <Link href="/consultants">Our Consultants</Link>
+              {/* <Link href="/consultants">Our Consultants</Link> */}
             </div>
 
             <div>
