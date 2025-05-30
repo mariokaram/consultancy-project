@@ -59,310 +59,339 @@ export default function CustomizedAccordions() {
       >
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
           <Typography style={{ fontWeight: 500 }}>
-            Can you customize a Business Plan for my specific industry?
+            What exactly does Horizon Consultancy do, and who is it for?
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Horizon Consultancy supports businesses across all industries. If we
-            encounter technicalities that require additional practical
-            knowledge, we collaborate with our partners to ensure thorough
-            coverage of every detail.
+            Horizon Consultancy partners with entrepreneurs and businesses to
+            guide them—whether they are launching, refining (identifying and
+            solving problems), or validating ideas. We offer tailored services
+            to turn concepts into sustainable businesses ready to meet market
+            demands.
           </Typography>
         </AccordionDetails>
       </Accordion>
+
       <Accordion
         expanded={expanded === "panel2"}
         onChange={handleChange("panel2")}
       >
         <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
           <Typography style={{ fontWeight: 500 }}>
-            What is the duration, planned order of section delivery, and
-            estimated progress percentage for each section?
+            How do I know which package is right for my needs?
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            The overall duration is as mentioned in the bundles however it might
-            fluctuate based on the number of revisions or needed amendments.
-            <br />
-            The order and completion percentage of the Business Plan bundle is
-            as follows: • Business Model 30% • Risk and Mitigation 5% •
-            Marketing Strategy 25% • Description of Management and Organisation
-            5% • Financial Projections 30% • Growth Strategy 5%
-            <br />
-            The order and completion percentage of the Idea and Finance is as
-            follows: • Idea Validation 15% • Business Model 45% • Financial
-            Analysis 40%
-            <br />
-            The order and completion percentage of the Market Study is as
-            follows: • Business Model 45% • Lead Generation 15% • Competitor
-            Assessment 15% • Marketing Plan 25%
-            <br />
-            The order and completion percentage of the Idea Generation is as
-            follows: • Business Idea Proposals 40% • Idea Analysis 60%
+          <Typography style={{ fontSize: "1.05rem" }}>
+            • <b>Idea Generation:</b> You need fresh, personalized business
+            ideas aligned with your skills and goals.
+            <br />• <b>Idea & Finance:</b> You have an idea and need validation
+            plus a feasibility study to determine financial viability and
+            capital requirements.
+            <br />• <b>Market Strategy:</b> You have a business model and want
+            to refine your positioning, attract leads, and build effective
+            marketing strategies.
+            <br />• <b>Business Plan:</b> You need a full, structured plan to
+            launch effectively or refine a developed business, whether for
+            internal use, partnerships, or funding purposes.
           </Typography>
         </AccordionDetails>
       </Accordion>
+
       <Accordion
         expanded={expanded === "panel3"}
         onChange={handleChange("panel3")}
       >
         <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
           <Typography style={{ fontWeight: 500 }}>
-            Do you provide financial projections?
+            Can I book a free consultation before committing?
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Yes, we provide financial projections and planning. They are
-            integral parts of our Business Plan. You can expect to have
-            financial planning in the Business Plan and Business Model and
-            Financial Planning bundles.
+            Free consultations are available to discuss the process, general
+            questions, and our past track record.
           </Typography>
         </AccordionDetails>
       </Accordion>
+
       <Accordion
         expanded={expanded === "panel4"}
         onChange={handleChange("panel4")}
       >
         <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
           <Typography style={{ fontWeight: 500 }}>
-            What qualifications and experience do your Business Plan writers
-            have?
+            How many revisions are included with each package?
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            To ensure comprehensive coverage of all industries and business
-            aspects, we have diversified our consultants based on their
-            expertise. This collection of knowledge optimizes the final result.
-            Check our consultants&apos;background in{" "}
-            <Link href="/consultants">Our consultants</Link> page.
+            Each section in every package includes two revisions—minor or major.
+            Additional revisions may incur extra fees, depending on the scope of
+            changes required.
           </Typography>
         </AccordionDetails>
       </Accordion>
+
       <Accordion
         expanded={expanded === "panel5"}
         onChange={handleChange("panel5")}
       >
         <AccordionSummary aria-controls="panel5d-content" id="panel5d-header">
           <Typography style={{ fontWeight: 500 }}>
-            Can I request revisions to the Business Plan?
+            Do you provide industry-specific expertise (e.g. tech, retail,
+            hospitality)?
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            The pillar of your Business Plan is the business model which is the
-            first section you will receive. All other sections are derived from
-            it. Developing the business model is an interactive process shaped
-            by collaborative discussions with you and backed by thorough market
-            research.
-            <br />
-            Through this process, revisions are seldom required; however, if
-            necessary, we offer two complimentary revisions.
+            Yes. Our consultants are selected for their expertise in specific
+            industries—such as tech, retail, and hospitality—to ensure no key
+            technical details are overlooked.
           </Typography>
         </AccordionDetails>
       </Accordion>
+
       <Accordion
         expanded={expanded === "panel6"}
         onChange={handleChange("panel6")}
       >
         <AccordionSummary aria-controls="panel6d-content" id="panel6d-header">
           <Typography style={{ fontWeight: 500 }}>
-            How do I communicate with my consultant during the Business Plan
-            creation process?
+            How long does each service typically take from start to finish?
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Your initial point of contact with your consultant is our chat room.
-            Here, you can leave messages, engage in real-time chats, or arrange
-            video or audio meetings at your convenience.
+            Timelines vary based on project scope and your turnaround time for
+            feedback at each stage.
           </Typography>
         </AccordionDetails>
       </Accordion>
+
       <Accordion
         expanded={expanded === "panel7"}
         onChange={handleChange("panel7")}
       >
         <AccordionSummary aria-controls="panel7d-content" id="panel7d-header">
           <Typography style={{ fontWeight: 500 }}>
-            What makes your Business Plan services stand out compared to others?
+            How often will I meet or communicate with my consultant?
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            In the early stages of developing the Business Plan template, our
-            main priority was to ensure it was not only practical and
-            implementable but also based on real data obtained from extensive
-            market research and analysis of findings. Additionally, we
-            emphasized the simplicity and clarity of the process.
-            <br />
-            Our approach is distinct because we divide the entire process into
-            clear steps to avoid confusion and ensure you fully grasp your
-            business&apos;s essence and what it requires to survive and expand.
-            We mentor you throughout the course of the project.
+            You can reach out anytime via our chat feature for messages, or
+            schedule live meetings at your convenience.
           </Typography>
         </AccordionDetails>
       </Accordion>
+
       <Accordion
         expanded={expanded === "panel8"}
         onChange={handleChange("panel8")}
       >
         <AccordionSummary aria-controls="panel8d-content" id="panel8d-header">
           <Typography style={{ fontWeight: 500 }}>
-            What level of detail should I expect in the Proposed Business Ideas?
+            Do you require a deposit or payment in instalments?
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            At first, you will receive the Idea Proposals outlining and
-            comparing ideas in a table. This document will briefly cover:
-            <br />• Value Proposition: What each idea offers or aims to achieve.{" "}
-            <br /> • Required Skills: The skills needed to execute each idea.{" "}
-            <br /> • Team Needs: Whether the idea requires a team and what roles
-            are needed. <br /> • Resources Required: What resources (such as
-            technology, equipment, etc.) are necessary. <br /> • Approximate
-            Budget: Estimated costs associated with each idea. <br /> •
-            Financing Options: How each idea could be funded or financed. <br />{" "}
-            • Pros and Cons: Advantages and disadvantages of each idea.
-            <br />• Growth Prospects: Potential for growth or scalability of
-            each idea.
+            We typically require full payment upfront. For projects over
+            $10,000, payment instalments can be arranged upon request.
           </Typography>
         </AccordionDetails>
       </Accordion>
+
       <Accordion
         expanded={expanded === "panel9"}
         onChange={handleChange("panel9")}
       >
         <AccordionSummary aria-controls="panel9d-content" id="panel9d-header">
           <Typography style={{ fontWeight: 500 }}>
-            Will the Proposed Business Ideas be tailored to my specific goals
-            and preferences?
+            What forms of payment do you accept?
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            These ideas will be unique to your background, preferences, and
-            budget. To make sure this is the case, we might contact you for
-            further details before proposing anything.
+            We accept major credit and debit cards, securely processed via
+            Stripe.
           </Typography>
         </AccordionDetails>
       </Accordion>
+
       <Accordion
         expanded={expanded === "panel10"}
         onChange={handleChange("panel10")}
       >
         <AccordionSummary aria-controls="panel10d-content" id="panel10d-header">
           <Typography style={{ fontWeight: 500 }}>
-            How many different business ideas can I expect to receive based on
-            the questionnaire?
+            Under what circumstances would I need a different quotation?
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            We usually propose two business ideas for you to choose from.
+            You may need a customized quotation for projects that are complex in
+            nature, such as:
+            <br />
+            • More than one business model
+            <br />
+            • A budget exceeding $400,000
+            <br />
+            • Intricate operations or processes
+            <br />• Medium- to large-sized enterprises
           </Typography>
         </AccordionDetails>
       </Accordion>
+
       <Accordion
         expanded={expanded === "panel11"}
         onChange={handleChange("panel11")}
       >
         <AccordionSummary aria-controls="panel11d-content" id="panel11d-header">
           <Typography style={{ fontWeight: 500 }}>
-            If I don&apos;t like the Proposed Ideas can I ask for different
-            business ideas?
+            What happens if I need changes after the project is “complete”?
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Yes, we can change the ideas for you once we understand why the
-            initial ones were not to your liking. Our goal is to help you find a
-            business that fits you well, follow market trends, and take
-            advantage of existing opportunities, as this is crucial for your
-            success.
+            Our process is divided into compartmentalized sections—each reviewed
+            before proceeding—which minimizes the need for full-scale revisions.
+            If additional changes are required post-completion, minor
+            adjustments are accommodated.
           </Typography>
         </AccordionDetails>
       </Accordion>
+
       <Accordion
         expanded={expanded === "panel12"}
         onChange={handleChange("panel12")}
       >
         <AccordionSummary aria-controls="panel12d-content" id="panel12d-header">
           <Typography style={{ fontWeight: 500 }}>
-            What should I expect from the Idea Analysis phase?
+            Can I upgrade or extend my service later on?
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Here&apos;s a refined version of how we will provide a detailed and
-            comprehensive analysis of your chosen business idea:
-            <br />• Addressing Concerns: We will thoroughly explore each of your
-            concerns by providing background information on various aspects
-            related to the business idea. This will clarify any uncertainties
-            and pave the way for practical solutions.
-            <br /> • Aligning Skills with the Business: We will match your
-            specific skills and expertise with the requirements and demands of
-            the business idea. This will outline your role within the venture,
-            ensuring clarity and alignment.
-            <br /> • Assessing Team Needs: We&apos;ll evaluate the necessity of
-            assembling a team and outline the functions of each entity. This
-            includes exploring options like outsourcing tasks to external
-            partners or contractors rather than hiring full-time employees.
-            <br /> • Funding Options: Based on the nature of the business idea
-            and your budget, we will present various funding options. These
-            could include self-funding, seeking investors, crowd funding, or
-            obtaining loans/grants.
-            <br /> • Future Growth Projections: We will project potential
-            directions your company can take to foster growth and expansion in
-            the future. This involves analyzing market trends, identifying
-            opportunities for scaling, and outlining strategic pathways for
-            development.
-            <br /> • Initiating the Business: To provide further clarity on your
-            journey, we&apos;ll outline essential steps for starting your
-            business. These task-based instructions, including prerequisites,
-            will significantly reduce uncertainty. We aim to provide a
-            comprehensive and actionable analysis of your business idea,
-            enabling you to make informed decisions and chart a successful
-            course forward.
+            Yes. If you have completed Idea Generation, Idea & Finance, or
+            Market Strategy, you can upgrade to a full Business Plan at a
+            discounted rate based on your initial package.
           </Typography>
         </AccordionDetails>
       </Accordion>
+
       <Accordion
         expanded={expanded === "panel13"}
         onChange={handleChange("panel13")}
       >
         <AccordionSummary aria-controls="panel13d-content" id="panel13d-header">
           <Typography style={{ fontWeight: 500 }}>
-            How do we ensure adherence to the process?
+            Who are your consultants, and how are they selected?
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            By monitoring chat rooms and recording all calls we ensure strict
-            adherence to the process and protect all parties involved. This
-            comprehensive data enables us to promptly address any issues and
-            maintain transparency.
+            Our consultants are carefully chosen through multiple interviews and
+            a review of their experience and past projects to ensure they meet
+            Horizon Consultancy&apos;s quality standards.
           </Typography>
         </AccordionDetails>
       </Accordion>
+
       <Accordion
         expanded={expanded === "panel14"}
         onChange={handleChange("panel14")}
       >
         <AccordionSummary aria-controls="panel14d-content" id="panel14d-header">
           <Typography style={{ fontWeight: 500 }}>
-            Is there a money-back guarantee clause?
+            Can you share examples of case studies or past projects?
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            To understand our clauses, we recommend reviewing the project
-            cancellation terms outlined in the Terms and Agreements section to
-            prevent any misunderstandings or issues down the line. This will
-            help ensure clarity and avoid any unexpected problems.
+            Visit our Case Studies section to explore detailed examples of our
+            work. For a more in-depth review, we offer free consultations to
+            discuss what to expect from each package.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion
+        expanded={expanded === "panel15"}
+        onChange={handleChange("panel15")}
+      >
+        <AccordionSummary aria-controls="panel15d-content" id="panel15d-header">
+          <Typography style={{ fontWeight: 500 }}>
+            What is your cancellation or refund policy?
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Please refer to our{" "}
+            <a href="/terms" target="_blank" rel="noopener noreferrer">
+              Terms &amp; Conditions.
+            </a>{" "}
+            for details on our cancellation and refund policy, including our
+            money-back guarantee provisions.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion
+        expanded={expanded === "panel16"}
+        onChange={handleChange("panel16")}
+      >
+        <AccordionSummary aria-controls="panel16d-content" id="panel16d-header">
+          <Typography style={{ fontWeight: 500 }}>
+            How do you protect my confidential information and ideas?
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            All project work is covered by a strict confidentiality agreement
+            and NDA. We limit access to only the consultants and team members
+            directly involved, and use encrypted communication channels
+            (SSL/TLS) and secure project portals to exchange files.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion
+        expanded={expanded === "panel17"}
+        onChange={handleChange("panel17")}
+      >
+        <AccordionSummary aria-controls="panel17d-content" id="panel17d-header">
+          <Typography style={{ fontWeight: 500 }}>
+            Where is my data stored, and who has access to it?
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Your data resides on encrypted, Canadian-region cloud servers that
+            comply with PIPEDA. Only authorised Horizon Consultancy staff and
+            your assigned consultant can access your account files and project
+            documents.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion
+        expanded={expanded === "panel18"}
+        onChange={handleChange("panel18")}
+      >
+        <AccordionSummary aria-controls="panel18d-content" id="panel18d-header">
+          <Typography style={{ fontWeight: 500 }}>
+            Will I own all rights to the final deliverables?
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Yes. Once the project is complete and payment is settled, you
+            receive full intellectual-property rights to every document and
+            deliverable we produce. You&apos;re free to use, modify, and share
+            them as you wish.
           </Typography>
         </AccordionDetails>
       </Accordion>

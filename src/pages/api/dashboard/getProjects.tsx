@@ -33,8 +33,8 @@ export default getHandler({}).get(async (req, res) => {
     ( SELECT serviceName FROM services st where  st.serviceStatus = p.status and st.serviceStatus <> 7  and  st.projectId = p.project_id limit 1 ) as currentServiceName,
     case 
     when p.project_service = 'i' then 'Ideas generation'
-    when p.project_service = 'f' then 'Financial plan'
-    when p.project_service = 'm' then 'Marketing plan'
+    when p.project_service = 'f' then 'Idea & Finance'
+    when p.project_service = 'm' then 'Market strategy'
     when p.project_service = 'bc' then 'Complex business plan'    
     else 'Business plan' end as projectTypeName
     from projects p 

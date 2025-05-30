@@ -95,7 +95,7 @@ export default function PricingPage(props: PricingPageProps) {
     <>
       <SEO
         title="Pricing - Horizon Consultancy"
-        description="Horizon Consultancy provides Pricing."
+        description="Explore pricing plans for expert business consulting tailored to startups and businesses—turn ideas into reality, refine strategy, and secure funding."
         url={`${configs.PUBLIC_URL}/pricing`}
       />
       <section>
@@ -184,10 +184,10 @@ export default function PricingPage(props: PricingPageProps) {
           <div className={styles.bannerWrapper}>
             <div className={styles.bannerContainer}>
               <div className={styles.bannerContent}>
-                <h2 className={styles.bannerTitle}>Complex business plan</h2>
+                <h2 className={styles.bannerTitle}>Complex Business Plan</h2>
                 <div className={styles.bannerDesc}>
                   You might need a different quotation if your business meets
-                  some of these criteria
+                  any of the following criteria
                 </div>
                 <div className={styles.bannerPoints}>
                   <div className={styles.bannerPnt}>
@@ -308,7 +308,7 @@ const cardsData = [
     title: "Market Strategy",
     pricing: "$4,000",
     currency: "CAD",
-    serviceUrl: "/services/marketing-strategy",
+    serviceUrl: "/services/market-strategy",
     questionnaireUrl: "marketing-plan",
     backgroundClass: styles.cardGreen,
     points: [

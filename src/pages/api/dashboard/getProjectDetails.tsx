@@ -82,8 +82,8 @@ export default getHandler({}).get(async (req, res) => {
     (select serviceName from services se where se.serviceStatus = p.status and se.serviceStatus <> 7 and se.projectId= ${projectId} limit 1 ) as currentServiceName , 
     case 
     when p.project_service = 'i' then 'Ideas generation'
-    when p.project_service = 'f' then 'Financial plan'
-    when p.project_service = 'm' then 'Marketing plan'
+    when p.project_service = 'f' then 'Idea & Finance'
+    when p.project_service = 'm' then 'Market strategy'
     when p.project_service = 'bc' then 'Complex business plan'    
     else 'Business plan' end as projectTypeName,
     (SELECT COUNT(*) FROM projects WHERE upgradeFromProjectId = p.upgradeFromProjectId and s.userId = ${req.userId} ) as projectUpgradeCount , 

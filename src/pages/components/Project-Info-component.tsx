@@ -67,11 +67,11 @@ const ProjectInfoComponent: React.FC<ProjectInfoProps> = ({
       case "b":
         return "business-plan";
 
-      case "Financial plan":
+      case "Idea & Finance":
       case "f":
         return "financial-plan";
 
-      case "Marketing plan":
+      case "Market strategy":
       case "m":
         return "marketing-plan";
 

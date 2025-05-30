@@ -68,10 +68,17 @@ export default function Home() {
   const testimonials: any = [
     {
       photo: "profile1",
-      name: "Rania Bouery",
-      job: "CEO Aucanada",
+      name: "Rania B.",
+      job: "AuCanada",
       url: "https://auCanada.co",
-      desc: "I hesitated to start a business despite having the skills, due to the complexity of the process. Horizon Consultancy's clear, step-by-step approach gave me full understanding and control, and now I feel confident and autonomous.",
+      desc: "Based on my skills, the consultant molded the business plan in a smart, strategic way. The process was simple yet fully valuable. I definitely recommend Horizon Consultancy for tailored and effective business planning support.",
+    },
+    {
+      photo: "profile2",
+      name: "Elie K.",
+      job: "Spaces",
+      url: "https://spaces.com",
+      desc: "Horizon Consultancy helped us prepare a solid business plan that impressed investors and secured the funding we needed to launch in the Gulf region. Their practical advice and clear financial projections made all the difference.",
     },
   ];
 
@@ -138,11 +145,11 @@ export default function Home() {
               </div>
               <div className={styles.aboutText}>
                 <div>
-                  Our seasoned experts will help you smoothly overcome the
-                  challenges to launching your new company. We ensure you fully
-                  understand each phase of the process, equipping you with the
-                  knowledge needed to successfully launch and sustain your
-                  business with confidence.
+                  Our seasoned experts will help you smoothly navigate the
+                  complex challenges of launching your new company. We ensure
+                  you fully understand each critical phase of the process,
+                  equipping you with the knowledge needed to confidently launch
+                  and sustain your business.
                 </div>
 
                 <div className={styles.helpSection}>
@@ -158,7 +165,7 @@ export default function Home() {
                       </div>
                       <div>
                         <Image alt="tick" width={22} height={16} src={tick} />
-                        <span>Focus on your skills</span>
+                        <span>Focus on your strengths</span>
                       </div>
                       <div>
                         <Image alt="tick" width={22} height={16} src={tick} />
@@ -173,7 +180,7 @@ export default function Home() {
                       </div>
                       <div>
                         <Image alt="tick" width={22} height={16} src={tick} />
-                        <span>Autonomously run your firm</span>
+                        <span>Run your business independently</span>
                       </div>
                       <div>
                         <Image alt="tick" width={22} height={16} src={tick} />
@@ -202,8 +209,8 @@ export default function Home() {
             <h2 className="subTitle">Ensure your highest chance of success</h2>
             <div className="description">
               Creativity and innovation are at the heart of our company. When we
-              craft plans and proposals for you we make sure you stand out in
-              the market. We keep you at the center at all times.
+              craft plans and proposals for you, we make sure you stand out in
+              the market. You remain at the centre of everything we do.
             </div>
 
             <div className={styles.services}>
@@ -211,10 +218,10 @@ export default function Home() {
                 <div className={`${styles.rectangular} ${styles.lightBlue} `}>
                   <div className={styles.link}>Business Planning</div>
                   <div>
-                    Our business planning approach provides a detailed roadmap
-                    to guide your startup in any industry, from conception to
-                    launch and beyond. It covers all essential aspects,
-                    delivering a comprehensive and easy-to-follow strategy.
+                    Our business planning approach offers a detailed roadmap to
+                    guide your startup in any industry—from conception to launch
+                    and beyond. It covers all essential aspects, providing a
+                    comprehensive and easy-to-follow strategy.
                   </div>
                 </div>
                 <div>
@@ -240,11 +247,11 @@ export default function Home() {
                 <div className={`${styles.rectangular} ${styles.blue} `}>
                   <div className={styles.link}>Idea Generation</div>
                   <div>
-                    We can propose innovative ideas that align perfectly with
-                    your capabilities and aspirations. Our approach involves
-                    conducting a thorough analysis of your background, skills,
-                    and preferences so we can analyse and propose ideas that
-                    suit you.
+                    We propose innovative ideas that align with your
+                    capabilities and aspirations. Our approach includes a
+                    thorough analysis of your background, skills, and
+                    preferences, allowing us to suggest ideas that are the right
+                    fit for you.
                   </div>
                 </div>
               </div>
@@ -263,9 +270,9 @@ export default function Home() {
             <h6 className="title">Why us</h6>
             <h2 className="subTitle">Turning visions into reality</h2>
             <div className="description">
-              Simply put, we are a result driven company, we want you to succeed
-              even after your project is finalized. We also use a top-notch
-              process that makes the entire experience clear, easy and
+              Simply put, we&apos;re a results-driven company—we want you to
+              succeed long after your project is finalized. Our top-notch
+              process makes the entire experience clear, straightforward, and
               trackable.
             </div>
 
@@ -281,9 +288,9 @@ export default function Home() {
                 </div>
                 <div className={styles.title}>Idea validation</div>
                 <div className={styles.desc}>
-                  To validate your idea we make sure we fully understand it in
-                  context. The collected data enables us to either move forward
-                  or propose amendments.
+                  To validate your idea, we ensure full understanding within its
+                  context. The data we collect allows us to proceed confidently
+                  or suggest thoughtful amendments.
                 </div>
               </div>
               <div className={styles.whyUsSection}>
@@ -297,9 +304,9 @@ export default function Home() {
                 </div>
                 <div className={styles.title}>Tailored business model</div>
                 <div className={styles.desc}>
-                  To validate your idea we make sure we fully understand it in
-                  context. The collected data enables us to either move forward
-                  or propose amendments.
+                  We develop a business model tailored to your specific context
+                  and objectives. The insights we gather guide us in refining or
+                  moving forward with your idea effectively.
                 </div>
               </div>
               <div className={`${styles.whyUsSection} ${styles.noBorder} `}>
@@ -313,9 +320,9 @@ export default function Home() {
                 </div>
                 <div className={styles.title}>Practical plan</div>
                 <div className={styles.desc}>
-                  When creating the Business Plan structure our aim is to
-                  develop a plan that is actionable and grounded in real-world
-                  implementation rather than being purely theoretical.
+                  When structuring your business plan, our goal is to create a
+                  practical, actionable, real-world strategy—not just a
+                  theoretical document.
                 </div>
               </div>
             </div>
@@ -326,9 +333,9 @@ export default function Home() {
                 </div>
                 <div className={styles.title}>Responsive foundation</div>
                 <div className={styles.desc}>
-                  In an ever-changing market our approach involves crafting
-                  versatile and adjustable strategies to predict and navigate
-                  ongoing changes effectively.
+                  In an ever-changing market, our approach focuses on building
+                  flexible, adaptable strategies to help you anticipate and
+                  navigate evolving conditions.
                 </div>
               </div>
 
@@ -343,9 +350,9 @@ export default function Home() {
                 </div>
                 <div className={styles.title}>Customer support</div>
                 <div className={styles.desc}>
-                  You can count on our comprehensive project processes and
-                  dedicated follow-up to ensure your satisfaction and provide
-                  the highest level of service and support.
+                  You can count on our thorough project process and committed
+                  follow-up to ensure your satisfaction and deliver the highest
+                  level of service and support.
                 </div>
               </div>
               <div className={`${styles.whyUsSection} ${styles.noBorder} `}>
@@ -359,9 +366,9 @@ export default function Home() {
                 </div>
                 <div className={styles.title}>Relevant business know-how</div>
                 <div className={styles.desc}>
-                  We aim to assist you in launching and sustaining your business
-                  by providing practical insights. We can help you avoid
-                  unnecessary courses and workshops.
+                  We provide practical insights to help you launch and sustain
+                  your business—saving you time by helping you avoid unnecessary
+                  courses and workshops.
                 </div>
               </div>
             </div>
@@ -370,7 +377,7 @@ export default function Home() {
           <div className={styles.howItWorksContainer}>
             <h2 className={styles.title}>How It Works</h2>
             <div className={styles.desc}>
-              We have thoroughly analysed all processes on our website to ensure
+              We have thoroughly analyzed all processes on our website to ensure
               they are user-friendly and easy for you to navigate.
             </div>
 
@@ -417,8 +424,8 @@ export default function Home() {
             <div className={styles.videoWrapper}>
               <div className={styles.videoContainer}>
                 <iframe
-                  src="https://www.youtube.com/embed/cfZLumL_JI4?list=PLQlnTldJs0ZR-L-KtbBtm1WgPjmxiDuWi"
-                  title="how it works"
+                  src="https://www.youtube.com/embed/FxhWuP9tizA?rel=0&modestbranding=1"
+                  title="How It Works"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -448,7 +455,8 @@ export default function Home() {
                       <div className={styles.name}>{v.name}</div>
                       <div className={styles.job}>
                         <div>{v.job}</div>
-                        <div>
+                      {/* to remove the comment when we have websites for them */}
+                        {/* <div>
                           <a
                             href={v.url}
                             target="_blank"
@@ -461,7 +469,7 @@ export default function Home() {
                               alt="redirect"
                             />
                           </a>
-                        </div>
+                        </div> */}
                       </div>
 
                       <div className={styles.text}>&quot;{v.desc}&quot;</div>

@@ -47,7 +47,7 @@ const CookieConsent: React.FC = () => {
         We use cookies to improve your experience and for session management
         purposes only. By continuing to use this site, you consent to our use of
         cookies. For more information, please read our{" "}
-        <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">
+        <a href="/privacy" target="_blank" rel="noopener noreferrer">
           Privacy Policy.
         </a>{" "}
       </p>

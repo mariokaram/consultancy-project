@@ -169,7 +169,8 @@ export default function Header(props: any) {
                     href={item.link}
                     className={`${
                       pathname === item.link ||
-                      pathname === `${item.link}/[[...service]]`
+                      pathname === `${item.link}/[[...service]]` ||
+                      pathname === `${item.link}/[slug]` 
                         ? styles.navLinkActive
                         : ""
                     } transitionLink`}

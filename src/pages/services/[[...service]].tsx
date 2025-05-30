@@ -45,10 +45,10 @@ const servicesDataSeo = {
     description: "Craft a comprehensive business plan for your success.",
     url: "business-plan",
   },
-  "marketing-strategy": {
-    title: "Marketing Strategy - Horizon Consultancy",
-    description: "Develop effective marketing strategies to grow your brand.",
-    url: "marketing-strategy",
+  "market-strategy": {
+    title: "Market Strategy - Horizon Consultancy",
+    description: "Develop effective market strategies to grow your brand.",
+    url: "market-strategy",
   },
   "idea-finance": {
     title: "Idea and Finance - Horizon Consultancy",
@@ -65,7 +65,7 @@ export default function ServicesPage({ seoData }: { seoData: SEOType }) {
   const scrollToAllias: any = {
     "proposing-business-ideas": ideagenRef,
     "business-plan": businessplanRef,
-    "marketing-strategy": marketingstrategyRef,
+    "market-strategy": marketingstrategyRef,
     "idea-finance": ideafinanceRef,
   };
 
@@ -73,123 +73,103 @@ export default function ServicesPage({ seoData }: { seoData: SEOType }) {
     {
       title: "Idea Validation",
       icon: solutions,
-      desc: `We analyze the market demand, 
-      customer pain points, and existing competitors to ensure 
-      your idea solves a real problem. We adapt the concept to fit
-       market needs, thus ensuring the highest chance of success.`,
+      desc: `We assess market demand, customer pain points, and existing competitors to ensure your concept addresses a real need. We then refine the idea for market fit.`,
     },
     {
       title: "Business Model Development",
       icon: model,
-      desc: `We craft a tailored business model
-      by identifying key resources, revenue streams, and customer
-      segments. We also outline critical activities, partnerships, and
-      a clear cost structure to support your business.`,
+      desc: `We tailor a complete business model by mapping out key resources, revenue streams, customer segments, core activities, and partnerships—all while outlining cost structures.`,
     },
     {
       title: "Financial Analysis",
-      icon: competitorAnalysis,
-      desc: `Get a detailed financial plan that includes
-      investment breakdowns, profit and loss forecasts, cash flow
-      management, and a break-even analysis, helping you understand
-      what to expect and ensuring your business is financially sound
-      from the start.`,
+      icon: growth,
+      desc: `Receive a detailed financial forecast including investment needs, profit/loss projections, break-even analysis, and cash flow management to help you understand what to expect and prepare.`,
     },
   ];
   const BusinessPlanArray = [
     {
       title: "Executive summary",
       icon: summary,
-      desc: `We prioritize executive summaries as investors often lack time for reading full Business Plans. Our compelling summaries aim to pique investor interest and encourage further exploration of your offerings.`,
+      desc: `We prioritize compelling executive summaries, knowing that investors often lack the time to read full business plans. Our summaries are designed to spark interest and prompt further engagement with your company.`,
     },
     {
       title: "Business model",
       icon: model,
-      desc: `As a service, the business model is indispensable, delineating the company's purpose and resource requirements, serving as the foundation from which all subsequent detailed sections are derived for comprehensive planning.`,
+      desc: `Your business model is the backbone of the plan. It defines your purpose, identifies necessary resources, and sets the foundation for all detailed sections, creating a clear roadmap for implementation.`,
     },
     {
       title: "Market landscape",
       icon: competitorAnalysis,
-      desc: `Our market data analysis service will gather, interpret, and leverage market insights to enhance customer service, differentiate your offerings, stay competitive, and capitalize on growth opportunities effectively.`,
+      desc: `We collect and analyze relevant market data to position your business effectively. Our insights help you deliver value, differentiate from competitors, stay competitive, and capitalize on new opportunities.`,
     },
     {
-      title: "Marketing strategy ",
+      title: "Marketing strategy",
       icon: analysis,
-      desc: `An effective targeted marketing strategy for maximum impact is vital. It ensures we connect your company with its target audience, paving the way for sustained growth and success in today's competitive business environment.`,
+      desc: `A targeted marketing strategy ensures your business connects with the right audience. We focus on measurable impact and sustainable growth in today's dynamic marketplace.`,
     },
     {
       title: "Business infrastructure",
       icon: infrastructure,
-      desc: `The most significant expenditures typically revolve around personnel. To mitigate losses, our company will implement clear role definitions, and establish accountability frameworks. This will ensure that every employee understands their responsibilities, leading to efficient operations and processes.`,
+      desc: `Personnel is often your largest cost. We help define roles and responsibilities clearly, establish accountability systems, and ensure operations run efficiently.`,
     },
     {
       title: "Financial study",
       icon: budget,
-      desc: `In our financial studies service, we meticulously analyse every numerical detail of a company, providing a unique perspective and uncovering hidden data that could potentially pose challenges to the business.`,
+      desc: `We analyze every financial detail to uncover hidden risks and opportunities. Our data-driven approach provides the clarity needed for confident financial planning and investment decisions.`,
     },
     {
       title: "Growth strategy",
       icon: goal,
-      desc: `We study future prospects in an ever-changing market to assist you in avoiding the risk of becoming obsolete or surpassed by more flexible competitors. We aim to ensure sustained relevance and competitiveness.`,
+      desc: `Staying ahead requires agility. We help you identify long-term opportunities and design flexible growth strategies that keep your business relevant in a changing market.`,
     },
     {
       title: "Risk assessment",
       icon: expert,
-      desc: `Unforeseen changes can jeopardize a business's success. Many planners overlook this vital aspect, but we provide proactive risk projection and prepare the company to navigate potential challenges with flexibility.`,
+      desc: `Unexpected challenges can derail progress. Unlike many, we don't overlook this. We forecast potential risks and create proactive strategies to ensure you're well-prepared.`,
     },
   ];
   const MarketStrategyArray = [
     {
       title: "Business Model",
       icon: model,
-      desc: `We help you shape your value proposition,
-      revenue strategy, and customer targeting. Our approach ensures
-      you have a strong operational structure and key partnerships in
-      place.`,
+      desc: `We help you strengthen your value proposition, define revenue strategies, and target the right customers—laying the foundation for sustainable growth.`,
     },
     {
       title: "Lead Generation",
       icon: strategyPlanning,
-      desc: `We identify your target audience, implement
-      effective prospecting techniques, and nurture leads with the
-      right tools and strategies to maximize conversions.`,
+      desc: `We pinpoint your ideal audience, apply proven prospecting methods, and use strategic tools to convert leads into long-term clients.`,
     },
     {
       title: "Competitor Assessment",
       icon: competitorAnalysisChart,
-      desc: `Gain insights into the strengths and weaknesses of your competitors. We'll help you position your
-      business effectively and identify areas where you can outperform
-      the competition.`,
+      desc: `Gain a competitive edge through deep analysis of your industry landscape. We help you identify gaps, highlight your strengths, and refine your positioning.`,
     },
     {
       title: "Marketing Strategy",
       icon: analysis,
-      desc: `Our team creates a comprehensive marketing
-      plan, including digital marketing tactics like SEO, social
-      media, and email outreach. We'll track performance through
-      measurable KPIs to ensure your campaigns are on the right track.`,
+      desc: `We craft KPI-driven marketing plans using SEO, social media, email campaigns, and more—ensuring consistent performance tracking and optimization.`,
     },
   ];
   const IdeaGenerationArray = [
     {
       title: "Overcoming concerns",
       icon: solutions,
-      desc: `We address concerns head-on, providing clear solutions and actionable strategies to alleviate any perceived shortcomings, ensuring a smooth and confident path forward.`,
+      desc: `We tackle uncertainties head-on, providing actionable strategies to address perceived limitations—building your confidence in your entrepreneurial journey.`,
     },
     {
       title: "Business foundations",
       icon: enterprise,
-      desc: `We ensure comprehensive coverage of future growth, organisational structure, and skill utilization components, laying a solid blueprint for progress and development.`,
+      desc: `We lay the groundwork for success by outlining clear growth strategies, organizational structure, and how to best use your unique skills.`,
     },
     {
       title: "Initiating the business",
       icon: book,
-      desc: `The uncertainty of launching a business can be daunting, especially for those lacking experience. Our goal is to clear the path by outlining the essential steps needed to launch your startup.`,
+      desc: `Starting a business can be overwhelming. We break down the process, offering a clear roadmap to guide your launch step-by-step.`,
     },
     {
       title: "Funding options",
-      icon: growth,
-      desc: `We assess and propose the various funding opportunities available to you to help you navigate the financial challenges of a new business startup.`,
+      icon: budget,
+      desc: `We help you understand the funding landscape by identifying suitable financial options and guiding you through application and preparation processes.`,
     },
   ];
   const router = useRouter();
@@ -329,9 +309,9 @@ export default function ServicesPage({ seoData }: { seoData: SEOType }) {
 
               <h2 className="subTitle">Market Strategy</h2>
               <div className="description">
-                Our Market Strategy package refines your business model, helping
-                identify leads and effective ways to reach them by analyzing the
-                market and competitors.
+                Our Market Strategy package helps refine your business model by
+                identifying leads and the best ways to reach them through
+                detailed market and competitor analysis.
               </div>
             </div>
 
@@ -377,11 +357,11 @@ export default function ServicesPage({ seoData }: { seoData: SEOType }) {
                 />
               </div>
 
-              <h1 className="subTitle">Idea & Finance</h1>
+              <h1 className="subTitle">Idea and Finance</h1>
               <div className="description">
-                Our Idea & Finance Package shapes your business model, outlining
-                costs, necessary resources, and how operations will need to run
-                for success.
+                Our Idea and Finance package combines strategic concept
+                development with detailed financial planning to ensure
+                feasibility and long-term viability.
               </div>
             </div>
 
@@ -427,9 +407,9 @@ export default function ServicesPage({ seoData }: { seoData: SEOType }) {
 
               <h2 className="subTitle">Idea Generation</h2>
               <div className="description">
-                This innovative service is the first step towards becoming an
-                entrepreneur for individuals that have the will to start but are
-                not sure what idea suits them and how to go about it.
+                This service is ideal for aspiring entrepreneurs who have the
+                drive to start but need guidance in choosing the right idea and
+                understanding how to bring it to life.
               </div>
             </div>
             <div className={styles.planContent}>
@@ -439,24 +419,20 @@ export default function ServicesPage({ seoData }: { seoData: SEOType }) {
               <div className={styles.desc}>
                 <div className={styles.summary}>Key Details</div>
                 <div className={styles.text}>
-                  We offer personalized business ideas based on questionnaire
-                  responses, presenting two to three proposals, and providing a
-                  comparative analysis to aid informed decision-making. This
-                  comparison outlines each idea&apos;s core values, resource
-                  requirements, and future prospects.
+                  Based on your responses to our questionnaire, we provide 2 to
+                  3 personalized business ideas and a comparative analysis to
+                  help you make an informed decision. Each idea includes core
+                  values, resource requirements, and growth potential.
                   <br />
                   <br />
-                  Upon selecting an idea, we conduct a comprehensive analysis
-                  tailored to your expertise and available assets, demonstrating
-                  why the business aligns with your preferences and desired
-                  outcomes. This approach ensures that your concerns are
-                  addressed and solutions are provided, paving a clear and
-                  professional path forward.
+                  Once you choose your preferred idea, we conduct a deep
+                  analysis aligned with your background and available resources.
+                  This ensures the business is a fit for your goals and helps
+                  address your concerns with tailored solutions.
                   <br />
                   <br />
-                  Additionally, we develop a basic business model for your
-                  chosen idea, allowing for seamless transition into an
-                  executable business plan.
+                  We also build a basic business model to help you seamlessly
+                  transition into a full-fledged business plan.
                 </div>
               </div>
             </div>

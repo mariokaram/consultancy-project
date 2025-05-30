@@ -9,7 +9,7 @@ export default function AboutPage() {
     <>
       <SEO
         title="About us - Horizon Consultancy"
-        description="Horizon Consultancy provides about us."
+        description="Horizon Consultancy offers expert business planning and strategic consulting, helping startups and businesses navigate compliance across industries."
         url={`${configs.PUBLIC_URL}/about-us`}
       />
       <section className={styles.sectionMain}>
@@ -56,7 +56,8 @@ export default function AboutPage() {
               local experts in different regions. This approach guarantees that
               all aspects of your business are covered professionally, while
               keeping our solutions aligned with Canadian regulations and market
-              expectations, or other regions&apos; local regulations when applicable.
+              expectations, or other regions&apos; local regulations when
+              applicable.
             </div>
           </div>
           <div className={styles.aboutSection}>

@@ -16,11 +16,11 @@ export default function ContactBanner() {
             Got more questions? Let&apos;s talk
           </h2>
           <div className={`description ${styles.desc}`}>
-            Whether you have more questions or need to schedule a meeting, don&apos;t
-            hesitate to reach out. We&apos;re always ready to help and clarify any
-            concerns you may have. Additionally, we can discuss and provide a
-            mock-up plan during the meeting to give you a better understanding
-            of our approach.
+            Whether you have more questions or would like to schedule a meeting,
+            don&apos;t hesitate to reach out. We&apos;re always ready to help and address
+            any concerns you may have. During the meeting, we can also discuss
+            and provide a mock-up plan to give you a better understanding of our
+            approach.
           </div>
           <div className={styles.btn}>
             <Link href="/contact">

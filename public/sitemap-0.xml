@@ -6,10 +6,13 @@
 <url><loc>https://www.horizon-consultancy.com/consultants</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
 <url><loc>https://www.horizon-consultancy.com/contact</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
 <url><loc>https://www.horizon-consultancy.com/pricing</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
-<url><loc>https://www.horizon-consultancy.com/case-studies/case1</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
-<url><loc>https://www.horizon-consultancy.com/case-studies/case2</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
+<url><loc>https://www.horizon-consultancy.com/privacy</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
+<url><loc>https://www.horizon-consultancy.com/terms</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
+<url><loc>https://www.horizon-consultancy.com/case-studies/visa-consulting-business</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
+<url><loc>https://www.horizon-consultancy.com/case-studies/furniture-brand-gulf-expansion</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
+<url><loc>https://www.horizon-consultancy.com/case-studies/turning-skills-into-a-scalable-venture</loc><changefreq>daily</changefreq><priority>0.7</priority><robots>index, follow</robots></url>
 <url><loc>https://www.horizon-consultancy.com/services/proposing-business-ideas</loc><changefreq>daily</changefreq><priority>0.8</priority><robots>index, follow</robots></url>
 <url><loc>https://www.horizon-consultancy.com/services/business-plan</loc><changefreq>daily</changefreq><priority>0.8</priority><robots>index, follow</robots></url>
-<url><loc>https://www.horizon-consultancy.com/services/marketing-strategy</loc><changefreq>daily</changefreq><priority>0.8</priority><robots>index, follow</robots></url>
+<url><loc>https://www.horizon-consultancy.com/services/market-strategy</loc><changefreq>daily</changefreq><priority>0.8</priority><robots>index, follow</robots></url>
 <url><loc>https://www.horizon-consultancy.com/services/idea-finance</loc><changefreq>daily</changefreq><priority>0.8</priority><robots>index, follow</robots></url>
 </urlset>

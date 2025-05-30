@@ -99,8 +99,8 @@ export default getHandler({}).get(async (req, res) => {
         (select serviceName from services se where se.serviceStatus = p.status and se.serviceStatus <> 7 and se.projectId = ${projectId} limit 1 ) as currentServiceName ,   
         case 
         when p.project_service = 'i' then 'Ideas generation'
-        when p.project_service = 'f' then 'Financial plan'
-        when p.project_service = 'm' then 'Marketing plan'
+        when p.project_service = 'f' then 'Idea & Finance'
+        when p.project_service = 'm' then 'Market strategy'
         when p.project_service = 'bc' then 'Complex business plan'    
         else 'Business plan' end as projectTypeName,
         s.serviceDuration , s.serviceName , st.status_color , st.status_label  , st.status_value , s.serviceValue , p.info,  p.project_id, u.id as consultantId, p.customer_id as userId , u.name as consultantName , p.date_creation ,
@@ -129,8 +129,8 @@ export default getHandler({}).get(async (req, res) => {
         (select serviceName from services se where se.serviceStatus = p.status and se.serviceStatus <> 7 and se.projectId = ${projectId} limit 1 ) as currentServiceName ,         
         case 
         when p.project_service = 'i' then 'Ideas generation'
-        when p.project_service = 'f' then 'Financial plan'
-        when p.project_service = 'm' then 'Marketing plan'
+        when p.project_service = 'f' then 'Idea & Finance'
+        when p.project_service = 'm' then 'Market strategy'
         when p.project_service = 'bc' then 'Complex business plan'    
         else 'Business plan' end as projectTypeName,
         ( select sta.status_label from statuses sta where sta.id = p.status ) as projectLabelStatus ,

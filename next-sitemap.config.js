@@ -46,8 +46,17 @@ module.exports = {
       return {
         loc: path,
         changefreq: "daily",
-        priority: 0.8, // Slightly higher priority for nested service pages
-        robots: "index, follow", // Ensure these are indexed
+        priority: 0.8,
+        robots: "index, follow",
+      };
+    }
+
+    if (path.startsWith("/case-studies")) {
+      return {
+        loc: path,
+        changefreq: "daily",
+        priority: 0.7,
+        robots: "index, follow",
       };
     }
 

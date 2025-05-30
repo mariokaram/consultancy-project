@@ -329,12 +329,10 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
                             : "Upgrade your Project!"}
                         </h2>
                         <div className={`description ${styles.desc}`}>
-                          {finalData.projectType == "i"
-                            ? `We believe the workspaces of tomorrow begin with
-                                people, a collaboration between your team and
-                                ours. Horizontal is a global network of expertise.
-                                Bridging geographical and cultural differences`
-                            : `Take full advantage of our bundles by upgrading to one once this project is complete. We will send you a quotation with a discounted price as part of the upgrade.`}
+                          Take full advantage of our bundles by upgrading to one
+                          once this project is complete. We will send you a
+                          quotation with a discounted price as part of the
+                          upgrade.
                         </div>
                         <div className={styles.btn}>
                           <Button

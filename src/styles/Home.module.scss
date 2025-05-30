@@ -451,6 +451,7 @@
             padding-top: 1.5rem;
           }
           .name {
+            font-size: 1.02rem;
             font-weight: bold;
             color: var(--blueColor);
             margin-top: 1.5rem;
@@ -471,12 +472,12 @@
       }
       .profile1 {
         &::after {
-          background-image: url("~/public/imgs/consultantImg.png");
+          background-image: url("~/public/imgs/aucanada.jpg");
         }
       }
       .profile2 {
         &::after {
-          background-image: url("~/public/imgs/consultantImg.png");
+          background-image: url("~/public/imgs/spaces.jpg");
         }
       }
       .profile3 {

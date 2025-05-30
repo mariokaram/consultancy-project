@@ -90,9 +90,9 @@ export default function ContactUsPage() {
 
   return (
     <>
-    <SEO
+      <SEO
         title="Contact - Horizon Consultancy"
-        description="Horizon Consultancy provides Contact."
+        description="Have questions or want to review a mock-up plan? Contact Horizon Consultancy for inquiries, collaborations, or partnership opportunities."
         url={`${configs.PUBLIC_URL}/contact`}
       />
       <section>
@@ -109,11 +109,10 @@ export default function ContactUsPage() {
             <div className={styles.contactInfoSection}>
               <div className={`subTitle ${styles.infoTitle}`}>Get in touch</div>
               <div className={styles.infoDesc}>
-                Feel free to reach out to us at any time if you have any
-                inquiries or would like to review a mock-up plan for better
-                understanding. If you&apos;re interested in proposing a
-                potential partnership, we welcome collaboration and look forward
-                to hearing from you.
+                Feel free to reach out to us anytime if you have any questions
+                or would like to review a mock-up plan for better understanding.
+                If you&apos;re interested in proposing a partnership, we welcome the
+                opportunity to collaborate and look forward to hearing from you.
               </div>
               <div className={styles.infoContact}>
                 <div>
@@ -122,7 +121,7 @@ export default function ContactUsPage() {
                   </div>
                   <div className={styles.infoName}>
                     <div>email us</div>
-                    <div>horizon@hotmail.cop</div>
+                    <div>horizon@horizon-consultancy.com</div>
                   </div>
                 </div>
                 <div>
@@ -131,7 +130,7 @@ export default function ContactUsPage() {
                   </div>
                   <div className={styles.infoName}>
                     <div>Location</div>
-                    <div>234 Boulevard Maine , ON Canada</div>
+                    <div>116 Albert Street, Suite 300, K1P 5G3, ON Canada</div>
                   </div>
                 </div>
                 <div>
@@ -140,7 +139,7 @@ export default function ContactUsPage() {
                   </div>
                   <div className={styles.infoName}>
                     <div>Call us</div>
-                    <div>1 (438) 343-4545</div>
+                    <div>+1 (438) 526-2627</div>
                   </div>
                 </div>
               </div>
@@ -189,7 +188,7 @@ export default function ContactUsPage() {
                   <div className={styles.charCount}>
                     {charCount > maxLength
                       ? ""
-                      : `${charCount}/${maxLength} characters`}
+                      : `${charCount}/${maxLength} minimum characters`}
                   </div>
                 </div>
               </div>

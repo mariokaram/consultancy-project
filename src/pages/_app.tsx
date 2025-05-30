@@ -71,7 +71,7 @@ export default function App(props: MyAppProps) {
   const hideFooterRoutes = ["/chatroom", "/signin"]; // Add more routes if needed
   return (
     <>
-      <SessionProvider session={session} refetchInterval={60}>
+      <SessionProvider session={session} refetchInterval={300}>
         <SpinnerContextProvider>
           <ThemeProvider theme={theme}>
             <CacheProvider value={emotionCache}>
@@ -87,7 +87,7 @@ export default function App(props: MyAppProps) {
                 <main className={`${Aeonik.className} main`}>
                   <NextNProgress color="var(--blueColor)" />
                   <Component {...pageProps} />
-                  {/* <Analytics /> */}
+                  <Analytics />
                 </main>
               </SWRConfig>
               {!hideFooterRoutes.includes(router.pathname) && (
