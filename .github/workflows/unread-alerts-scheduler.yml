@@ -11,6 +11,6 @@ jobs:
     steps:
       - name: Send API Request for Unread Alerts
         run: |
-          curl -X GET "https://horizon-consultancy.com/api/unreadAlerts" \
+          curl -X GET "https://horizon-consultancy.com/api/unreadAlert" \
           -H "x-api-key: ${{ secrets.UNREAD_ALERTS_KEY }}" \
           --fail -v
