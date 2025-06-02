@@ -20,4 +20,5 @@ export const configs = {
   STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
   PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
   NEXT_PUBLIC_BOOKING: process.env.NEXT_PUBLIC_BOOKING,
+  UNREAD_ALERTS_KEY: process.env.UNREAD_ALERTS_KEY
 };

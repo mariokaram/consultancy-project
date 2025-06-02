@@ -332,9 +332,10 @@ export type ConsultantProfile = {
 };
 
 export const consultants: ConsultantProfile[] = [
+  // prod
   {
-    id: "f84fc3ac-0742-4017-8b69-98f3be23c7ab",
-    name: "Rachel D.",
+    id: "11e64aaa-43dd-4305-ac92-23dc1c8e9600",
+    name: "Nour D.",
     field: "Entrepreneurship, Warwick University",
     focus: "Business Consulting",
     bio: "Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...",
@@ -343,9 +344,11 @@ export const consultants: ConsultantProfile[] = [
     imageSrc: consultantProf2,
     color: "lightBlue",
   },
+
+  //test
   {
-    id: "9f6cdb33-6186-42c2-b961-68d6fd6d422d",
-    name: "Tony. D",
+    id: "7e3b94ca-4341-498b-bf10-45193f0969c1",
+    name: "Nour D.",
     field: "Entrepreneurship, Warwick University",
     focus: "Business Consulting",
     bio: "John has extensive experience in financial planning and investment strategies...",
@@ -354,6 +357,7 @@ export const consultants: ConsultantProfile[] = [
     imageSrc: consultantProf2,
     color: "rose",
   },
+
   {
     id: "sdsd",
     name: "John",

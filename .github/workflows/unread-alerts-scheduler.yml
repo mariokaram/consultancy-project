@@ -1,0 +1,16 @@
+name: Unread Alerts Scheduler
+
+on:
+  schedule:
+    - cron: "0 13-21/2 * * 1-5" # Every 2 hours from 1 PM–9 PM UTC (9 AM–5 PM EST)
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  send-unread-alerts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send API Request for Unread Alerts
+        run: |
+          curl -X GET "https://horizon-consultancy.com/api/unreadAlerts" \
+          -H "x-api-key: ${{ secrets.UNREAD_ALERTS_KEY }}" \
+          --fail -v

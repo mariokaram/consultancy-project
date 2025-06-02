@@ -8,6 +8,11 @@ const sql = require("sql-template-strings");
 export default getHandler({ auth: false, urlRateLimit: "unreadApi" }).get(
   async (req, res) => {
     try {
+      const apiKey = req.headers["x-api-key"];
+      if (apiKey !== configs.UNREAD_ALERTS_KEY) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+
       const UnreadMsgsConsultants = await executeQuery(sql`
       SELECT DISTINCT u.email
       FROM consultency.chatroom c

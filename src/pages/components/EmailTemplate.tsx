@@ -34,7 +34,7 @@ export const TemplateEmail = (template: EmailProps) => {
       <Tailwind>
         <Preview>
           {template.type === "login"
-            ? "Sign in to your Horizon account to begin your business journey."
+            ? "Sign in to your account to begin your business journey."
             : template.heading ||
               "You've got an update from Horizon Consultancy"}
         </Preview>
