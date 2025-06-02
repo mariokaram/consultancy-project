@@ -12,7 +12,7 @@ type SEOProps = {
 export default function SEO({
   title = "Horizon Consultancy",
   description = "Online Business Consultancy",
-  image = `${configs.PUBLIC_URL}/imgs/landing-background.webp`,
+  image = `${configs.PUBLIC_URL}/imgs/main.jpg`,
   url = configs.PUBLIC_URL,
   noIndex = false, // Default: Allow indexing
 }: SEOProps) {
