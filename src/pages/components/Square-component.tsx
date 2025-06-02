@@ -7,7 +7,7 @@ import chat from "~/public/imgs/chat.png";
 import meeting from "~/public/imgs/meeting.png";
 import Link from "next/link";
 import { configs } from "@/utils/config";
-
+import Tooltip from "@mui/material/Tooltip";
 interface SquareComponentProps {
   chatroom?: number;
   customer: number;
@@ -111,9 +111,20 @@ export default function SquareComponent({
                   </Button>
                 </Link>
               ) : (
-                <Button size="large" className="btn btn-white" disabled>
-                  Chat with consultant
-                </Button>
+                <Tooltip
+                  disableTouchListener={false}
+                  arrow={true}
+                  enterTouchDelay={0}
+                  leaveTouchDelay={3000}
+                  placement="left"
+                  title="Consultant chatroom unlocks after payment."
+                >
+                  <span>
+                    <Button size="large" className="btn btn-white" disabled>
+                      Chat with consultant
+                    </Button>
+                  </span>
+                </Tooltip>
               )}
             </div>
           </div>

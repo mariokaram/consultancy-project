@@ -348,7 +348,7 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
                   )}
                 {openDialogType === "ideagen" && (
                   <OpenDialog
-                    title="Chosen idea"
+                    title="Select your Preferred Idea"
                     btnName="Choose"
                     id="ideagen"
                     type="ideagen"
@@ -375,7 +375,7 @@ export default function ProjectDetails(props: ProjectDetailsProps) {
                     btnName="Confirm"
                     title="Confirmation"
                     id="confirm"
-                    text="Are you sure you want to confirm? Once confirmed, changes cannot be made. Please ensure that everything meets your expectations before proceeding."
+                    text="Are you sure you want to confirm? Once confirmed, changes cannot be made. If you have any concerns, feel free to discuss them with your consultant in the chatroom before proceeding."
                     openDialog={isDialogOpen}
                     onCloseDialog={(v) => dialogResultFn(v as string)}
                   />

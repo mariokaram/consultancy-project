@@ -892,6 +892,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = (props) => {
                 alreadySubmitted={alreadySubmitted}
                 tableRows={tableRows}
                 userRole={props.userRole}
+                projectType={props.serviceTypeQueryParam}
               >
                 {map(
                   stepperDataType,
@@ -993,6 +994,7 @@ export function FormikStepper({
   alreadySubmitted: boolean;
   tableRows?: TableType;
   userRole: string;
+  projectType: string;
   onSubmit: (
     step: number,
     isFinalStep: boolean,
@@ -1165,9 +1167,9 @@ export function FormikStepper({
           <Form autoComplete="off">
             <OpenDialog
               text="Please note that submitted answers cannot be modified afterwards. Are you sure you want to proceed with the submission?"
-              title="Get Your Quote"
+              title={props.projectType === "i" ? "Get Your Review" : "Get Your Quote"}
               id="questionnaire"
-              btnName="get quote"
+              btnName={props.projectType === "i" ? "get review" : "get quote"}
               openDialog={isDialogOpen}
               onCloseDialog={(v) => dialogResultFn(v as string)}
             />

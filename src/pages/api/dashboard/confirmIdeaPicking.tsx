@@ -26,11 +26,15 @@ export default getHandler({}).put(async (req, res) => {
           [data.projectId, req.userId],
         ];
       })
-      .query(() => {
-        return [
-          ` update services set serviceStatus = 2  where projectId = ? and userId = ? and statusOrder = 3 `,
-          [data.projectId, req.userId],
-        ];
+      .query((affected: { affectedRows: number }) => {
+        if (affected.affectedRows > 0) {
+          return [
+            ` update services set serviceStatus = 2  where projectId = ? and userId = ? and statusOrder = 3 `,
+            [data.projectId, req.userId],
+          ];
+        } else {
+          return null;
+        }
       })
       .commit();
     await db.end();

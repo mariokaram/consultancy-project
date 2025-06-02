@@ -17,7 +17,7 @@ export default getHandler({}).post(async (req, res) => {
 
     if (data.serviceType === "i") {
       info = `Complete and submit your questionnaire, then move on to finalize and receive two customized business ideas.`;
-      infoFinal = `The checkout button will appear on your dashboard within 1 business day. You will receive an email or can check your dashboard for updates to proceed.`;
+      infoFinal = `Your submission is under review. We will notify you via email once the next steps are ready, and you can also check your dashboard for updates.`;
     } else {
       info = `Complete and submit your questionnaire to receive a quotation and move on to the next planning phase.`;
       infoFinal = `Your quotation will be available on your dashboard within two business days. You will be notified by email or can check your dashboard for updates.`;
@@ -144,12 +144,6 @@ export default getHandler({}).post(async (req, res) => {
     }
 
     if (data.isFinalStep) {
-      // send to the user reviewing your questionnaire
-      await sendEmail({
-        to: data.emailValue,
-        type: "reviewUserQuestionnaire",
-      });
-
       // send to the admin reviewing your questionnaire
       await sendEmail({
         type: "reviewAdminQuestionnaire",

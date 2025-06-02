@@ -132,12 +132,13 @@ export default function PricingPage(props: PricingPageProps) {
                   <div className={styles.cardPricing}>
                     <div className={styles.startText}>
                       {" "}
-                      {card.id === "i" || props.filteredCardsData.length === 1
+                      {card.id === "i" ||
+                      (props.upgradeProjectType && props.projectId)
                         ? ""
                         : "Starting from"}
                     </div>
-                    {props.filteredCardsData.length === 1 ? (
-                      "Discounted Quote"
+                    {props.upgradeProjectType && props.projectId ? (
+                      <div className={styles.discount}>Discounted Quote</div>
                     ) : (
                       <>
                         {card.pricing} <small>{card.currency}</small>
@@ -172,7 +173,7 @@ export default function PricingPage(props: PricingPageProps) {
                     size="large"
                     className="btn btn-secondary"
                   >
-                    {props.filteredCardsData.length === 1
+                    {props.upgradeProjectType && props.projectId
                       ? "Upgrade Plan"
                       : "Choose Plan"}
                   </Button>
@@ -181,73 +182,75 @@ export default function PricingPage(props: PricingPageProps) {
             ))}
           </div>
           {/* Banner Section */}
-          <div className={styles.bannerWrapper}>
-            <div className={styles.bannerContainer}>
-              <div className={styles.bannerContent}>
-                <h2 className={styles.bannerTitle}>Complex Business Plan</h2>
-                <div className={styles.bannerDesc}>
-                  You might need a different quotation if your business meets
-                  any of the following criteria
-                </div>
-                <div className={styles.bannerPoints}>
-                  <div className={styles.bannerPnt}>
-                    <div>
-                      <div className={styles.bannerTick}>
-                        <Image alt="tick" width={22} height={16} src={tick} />
+          {!props.upgradeProjectType && !props.projectId && (
+            <div className={styles.bannerWrapper}>
+              <div className={styles.bannerContainer}>
+                <div className={styles.bannerContent}>
+                  <h2 className={styles.bannerTitle}>Complex Business Plan</h2>
+                  <div className={styles.bannerDesc}>
+                    You might need a different quotation if your business meets
+                    any of the following criteria
+                  </div>
+                  <div className={styles.bannerPoints}>
+                    <div className={styles.bannerPnt}>
+                      <div>
+                        <div className={styles.bannerTick}>
+                          <Image alt="tick" width={22} height={16} src={tick} />
+                        </div>
+                        <div className={styles.bannerInfo}>
+                          More than 1 business model
+                        </div>
                       </div>
-                      <div className={styles.bannerInfo}>
-                        More than 1 business model
+                      <div>
+                        <div className={styles.bannerTick}>
+                          <Image alt="tick" width={22} height={16} src={tick} />
+                        </div>
+                        <div className={styles.bannerInfo}>
+                          Budget higher than $400,000
+                        </div>
                       </div>
                     </div>
-                    <div>
-                      <div className={styles.bannerTick}>
-                        <Image alt="tick" width={22} height={16} src={tick} />
+                    <div className={styles.bannerPnt}>
+                      <div>
+                        <div className={styles.bannerTick}>
+                          <Image alt="tick" width={22} height={16} src={tick} />
+                        </div>
+                        <div className={styles.bannerInfo}>
+                          Intricate operations/processes
+                        </div>
                       </div>
-                      <div className={styles.bannerInfo}>
-                        Budget higher than $400,000
+                      <div>
+                        <div className={styles.bannerTick}>
+                          <Image alt="tick" width={22} height={16} src={tick} />
+                        </div>
+                        <div className={styles.bannerInfo}>
+                          Medium to large sized entreprise
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div className={styles.bannerPnt}>
-                    <div>
-                      <div className={styles.bannerTick}>
-                        <Image alt="tick" width={22} height={16} src={tick} />
-                      </div>
-                      <div className={styles.bannerInfo}>
-                        Intricate operations/processes
-                      </div>
-                    </div>
-                    <div>
-                      <div className={styles.bannerTick}>
-                        <Image alt="tick" width={22} height={16} src={tick} />
-                      </div>
-                      <div className={styles.bannerInfo}>
-                        Medium to large sized entreprise
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
-                <div className={styles.bannerBtn}>
-                  <Button
-                    onClick={() =>
-                      handleChoosePlan("complex-business-plan", "bc")
-                    }
-                    size="large"
-                    className="btn btn-secondary"
-                  >
-                    Get quotation
-                  </Button>
+                  <div className={styles.bannerBtn}>
+                    <Button
+                      onClick={() =>
+                        handleChoosePlan("complex-business-plan", "bc")
+                      }
+                      size="large"
+                      className="btn btn-secondary"
+                    >
+                      Get quotation
+                    </Button>
+                  </div>
                 </div>
+                <Image
+                  className={styles.bannerImg}
+                  alt="Banner Image"
+                  src={complexPplan}
+                  quality={100}
+                />
               </div>
-              <Image
-                className={styles.bannerImg}
-                alt="Banner Image"
-                src={complexPplan}
-                quality={100}
-              />
             </div>
-          </div>
+          )}
           {/* faq Section */}
           <div className={styles.faqSection}>
             <h6 className="title">faq</h6>

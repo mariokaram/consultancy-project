@@ -14,7 +14,7 @@ export async function CustomsendVerificationRequest(params: {
   await resend.sendEmail({
     from: provider.from || "",
     to: identifier,
-    subject: "Welcome to Horizon-Consultancy",
+    subject: "Welcome to Horizon Consultancy",
     react: <EmailTemplate type="login" link={url} />,
   });
 }

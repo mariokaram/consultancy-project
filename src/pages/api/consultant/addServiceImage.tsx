@@ -44,9 +44,10 @@ export default getHandler({}).put(async (req, res) => {
         await sendEmail({
           to: data.userEmail,
           type: "updatedDashboard",
-          subject: "you have an update",
-          heading: "check your dashboard",
-          text: "you have an update go to dashboard",
+          subject: "An Update is available on your Dashboard",
+          heading: "New Update on your Project",
+          text: `Your project dashboard has been updated. Log in to review the latest developments and keep your progress on track.`,
+          name: data.userName,
         });
       }
 

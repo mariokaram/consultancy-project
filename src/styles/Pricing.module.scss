@@ -87,6 +87,7 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      margin-bottom: 3rem;
     }
 
     .cardBackg {
@@ -108,6 +109,9 @@
       }
 
       .cardPricing {
+        .discount {
+          font-size: 0.85rem;
+        }
         .startText {
           text-align: center;
           font-size: 0.8rem;
@@ -167,7 +171,7 @@
 
   //banner
   .bannerWrapper {
-    margin: 2rem 0 4rem;
+    margin: 0rem 0 4rem;
     width: 100%;
     display: flex;
     justify-content: center;

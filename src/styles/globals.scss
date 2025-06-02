@@ -177,11 +177,12 @@ a {
 
 //buttons
 .links {
+  font-size: 0.867rem;
   white-space: nowrap;
   color: var(--primaryColor) !important;
   font-weight: 600;
   text-transform: capitalize;
-  &:hover{
+  &:hover {
     background-color: rgba(0, 0, 0, 0.04);
   }
 }
@@ -227,8 +228,8 @@ a {
 .lightBlue {
   border-radius: 1000px;
   padding: 0.4rem 0.8rem;
-  background-color: #E0F2FE;
-  color: #0369A1;
+  background-color: #e0f2fe;
+  color: #0369a1;
   display: flex;
   justify-content: center;
   white-space: nowrap;
@@ -236,8 +237,8 @@ a {
 .grey {
   border-radius: 1000px;
   padding: 0.4rem 0.8rem;
-  background-color: #F5F7FB;
-  color: #6C7C8C;
+  background-color: #f5f7fb;
+  color: #6c7c8c;
   display: flex;
   justify-content: center;
   white-space: nowrap;
@@ -254,7 +255,7 @@ a {
 .yellow {
   border-radius: 1000px;
   padding: 0.4rem 0.8rem;
-  background-color: #FFF3CD;
+  background-color: #fff3cd;
   color: #856404;
   display: flex;
   justify-content: center;
@@ -281,8 +282,8 @@ a {
 .green {
   border-radius: 1000px;
   padding: 0.4rem 0.8rem;
-  background-color: #D1FAE5;
-  color: #10B981;
+  background-color: #d1fae5;
+  color: #10b981;
   display: flex;
   justify-content: center;
   white-space: nowrap;

@@ -84,7 +84,7 @@ export default function OpenDialog(props: DialogType) {
   const [open, setOpen] = React.useState(false);
 
   const defaultValueForEmail =
-    "default msg Email here about review is complete and you go and pay";
+    "Your review is complete! Please proceed with payment at your earliest convenience.";
   const defaultValueForAlert =
     "Your review is complete! Please proceed with payment at your earliest convenience.";
 

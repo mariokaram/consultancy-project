@@ -78,7 +78,7 @@ export default async function checkout(
 
         .query(([{ consultant_id }]: [{ consultant_id: string }]) => {
           const msgFrom = `c`;
-          const autoMsg = `here you can give an auto message from consultant`;
+          const autoMsg = `Hi and welcome! I am your consultant and I am here to support you throughout your project. Feel free to leave your questions or thoughts anytime — I usually respond within 2 business hours.`;
           if (consultant_id) {
             return [
               sql`INSERT INTO chatroom ( userId, consultantId , message , date , msgFrom , projectId ) VALUES ( ${userId} , ${consultant_id} , ${autoMsg} ,  CONVERT_TZ(NOW(), @@session.time_zone, '+00:00')  , ${msgFrom} , ${projectId} )`,

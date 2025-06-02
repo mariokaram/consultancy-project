@@ -251,7 +251,7 @@
             font-weight: bold;
             color: #8c66d8;
             margin-bottom: 1.2rem;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
           }
 
           .horizontal {
@@ -276,10 +276,7 @@
               color: var(--primaryColor);
               text-decoration: none;
               max-width: max-content;
-
-              &:hover {
-                text-decoration: underline;
-              }
+              text-decoration: underline;
             }
           }
         }
@@ -288,19 +285,21 @@
   }
 }
 @media (max-width: 1000px) {
-
-  .msgContent{
+  .msgContent {
     text-align: left !important;
   }
 }
 
 @media (max-width: 600px) {
-.convSection{
-  padding: 1rem !important;
-}
+  .convSection {
+    padding: 1rem !important;
+  }
+  .convSection {
+    order: 2;
+  }
 }
 @media (max-width: 350px) {
-.convSection{
-  padding: 1rem 0rem !important;
-}
+  .convSection {
+    padding: 1rem 0rem !important;
+  }
 }

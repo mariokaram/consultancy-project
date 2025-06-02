@@ -22,10 +22,10 @@ export default getHandler({}).put(async (req, res) => {
         type: "inputEmailAlert",
         name: data.name,
         subject: goToPayment
-          ? "Go to payment to be changed later"
+          ? "Your Quotation is Ready - Please Proceed with Payment"
           : "Plan modification to be change later",
         heading: goToPayment
-          ? "Go to payment to be changed later"
+          ? "Your Quotation is Ready"
           : "Plan modification to be change later",
         text: data.content,
       });

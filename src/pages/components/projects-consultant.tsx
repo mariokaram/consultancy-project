@@ -348,6 +348,7 @@ export default function ProjectConsultantDetails(props: ProjectDetailsProps) {
           },
           serviceId: id,
           userEmail: finalData.userEmail,
+          userName: finalData.userName,
           projectId: props.projectId,
           // check on second upload to alert the user only when second upload on idea gen
           ideaPickingFirstUpload:

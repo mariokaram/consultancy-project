@@ -88,7 +88,7 @@ const ProjectInfoComponent: React.FC<ProjectInfoProps> = ({
       <div className={styles.cardInfo}>
         <div className={styles.cardTitle}>
           <div className={styles.companyName}>{companyName}</div>
-          <div>
+          <div className={styles.consul}>
             Consultant:{" "}
             {consultantName ? (
               <strong>{consultantName} </strong>
@@ -108,15 +108,15 @@ const ProjectInfoComponent: React.FC<ProjectInfoProps> = ({
           )}
           {(userRole === "a" || userRole === "c") && (
             <>
-              <div>
+              <div className={styles.bio}>
                 User name: <strong>{userName}</strong>{" "}
               </div>
-              <div>
+              <div className={styles.bio}>
                 User email: <strong>{userEmail}</strong>{" "}
               </div>
             </>
           )}
-          <div>
+          <div className={styles.consul}>
             Service plan:{" "}
             <strong style={{ textTransform: "capitalize" }}>
               {projectTypeName}
@@ -127,12 +127,17 @@ const ProjectInfoComponent: React.FC<ProjectInfoProps> = ({
             <strong>{moment.utc(date_creation).format("DD-MM-YYYY")}</strong>
           </div>
           {invoice && currentServiceName && (
-            <div>
+            <div className={styles.serviceName}>
               Current stage: <strong>{currentServiceName}</strong>
             </div>
           )}
           <div className={styles.status}>
-            <div className={status_color}>{status_label}</div>
+            <div className={status_color}>
+              {status_value === "underReview" &&
+              projectTypeName === "Ideas generation"
+                ? "Reviewing answers"
+                : status_label}
+            </div>
           </div>
 
           {status_value !== "complete" && (
@@ -142,8 +147,10 @@ const ProjectInfoComponent: React.FC<ProjectInfoProps> = ({
                 <div>{info}</div>
               ) : (
                 <div>
-                  The process is expected to be completed within {info} working
-                  days.
+                  {projectTypeName === "Ideas generation" &&
+                  currentServiceName !== "Idea analysis"
+                    ? `We are currently developing two business ideas based on your answers. This process may take up to ${info} business days.`
+                    : `The process is expected to be completed within ${info} business days.`}
                 </div>
               )}
             </div>
@@ -241,7 +248,7 @@ const ProjectInfoComponent: React.FC<ProjectInfoProps> = ({
                 </a>
               </div>
             )}
-            
+
             {/* {(userRole === "u" || userRole === "a") &&
               paymentLoader &&
               status_value === "awaitingPayment" &&

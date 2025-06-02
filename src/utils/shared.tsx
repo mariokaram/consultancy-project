@@ -162,14 +162,6 @@ export async function sendEmail(paramsEmail: EmailParams) {
 
     const getEmailText = (): EmailParams => {
       switch (paramsEmail.type) {
-        case "reviewUserQuestionnaire":
-          return {
-            to: paramsEmail.to,
-            subject: "Questionnaire under review",
-            heading: "We are reviewing your questionnaire",
-            text: "We are reviewing your questionnaire it will take around 2 business days",
-            btnLink: "dashboard",
-          };
         case "reviewAdminQuestionnaire":
           return {
             to: configs.EMAIL_FROM,
@@ -194,6 +186,7 @@ export async function sendEmail(paramsEmail: EmailParams) {
             heading: paramsEmail.heading,
             text: paramsEmail.text,
             btnLink: "dashboard",
+            name: paramsEmail.name,
           };
         case "contactUs":
           return {
@@ -342,8 +335,8 @@ export const consultants: ConsultantProfile[] = [
   {
     id: "f84fc3ac-0742-4017-8b69-98f3be23c7ab",
     name: "Rachel D.",
-    field: "PhD, Entrepreneurship, Stanford University",
-    focus: "Financial Services",
+    field: "Entrepreneurship, Warwick University",
+    focus: "Business Consulting",
     bio: "Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...",
     quote:
       "I thrive on transforming complex ideas into compelling strategies that drive growth...",
@@ -351,10 +344,10 @@ export const consultants: ConsultantProfile[] = [
     color: "lightBlue",
   },
   {
-    id: "efade3aa-57ec-42f1-9364-6fba8df2316c",
+    id: "9f6cdb33-6186-42c2-b961-68d6fd6d422d",
     name: "Tony. D",
-    field: "MBA, Finance, Harvard Business School",
-    focus: "Financial Services",
+    field: "Entrepreneurship, Warwick University",
+    focus: "Business Consulting",
     bio: "John has extensive experience in financial planning and investment strategies...",
     quote:
       "My goal is to leverage financial acumen to maximize returns and ensure long-term stability...",
