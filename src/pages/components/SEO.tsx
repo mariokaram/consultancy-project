@@ -12,7 +12,7 @@ type SEOProps = {
 export default function SEO({
   title = "Horizon Consultancy",
   description = "Online Business Consultancy",
-  image = `${configs.PUBLIC_URL}/imgs/main.jpg`,
+  image = `https://res.cloudinary.com/dfbxrjdfd/image/upload/v1748852373/main_g0nq3k.jpg`,
   url = configs.PUBLIC_URL,
   noIndex = false, // Default: Allow indexing
 }: SEOProps) {
