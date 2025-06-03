@@ -20,14 +20,14 @@ export default getHandler({ auth: false, urlRateLimit: "unreadApi" }).get(
 
       const UnreadMsgsConsultants = await executeQuery(sql`
       SELECT DISTINCT u.email
-      FROM consultency.chatroom c
+      FROM chatroom c
       INNER JOIN users u ON u.id = c.consultantId
       inner join projects p on p.project_id = c.projectId 
       where p.status <> 7 and p.invoice IS NOT NULL and c.unread = 0 and c.msgFrom = 'u' 
       `);
       const UnreadMsgsUsers = await executeQuery(sql`
       SELECT DISTINCT u.email
-      FROM consultency.chatroom c
+      FROM chatroom c
       INNER JOIN users u ON u.id = c.userId
       inner join projects p on p.project_id = c.projectId 
       where p.status <> 7 and p.invoice IS NOT NULL and c.unread = 0 and c.msgFrom in ('c' , 'a') 
