@@ -4,7 +4,7 @@ const cspHeader =
   process.env.NODE_ENV === "production"
     ? `
     default-src 'self';
-    script-src 'self' https://www.youtube.com https://www.youtube-nocookie.com;
+    script-src 'self' https://www.youtube.com https://www.youtube-nocookie.com 'unsafe-inline';
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data: https://res.cloudinary.com https://i.ytimg.com;
     font-src 'self';

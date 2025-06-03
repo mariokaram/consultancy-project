@@ -10,7 +10,9 @@ module.exports = {
     "/components/*", // Exclude all component pages
   ],
   robotsTxtOptions: {
-    additionalSitemaps: ["https://www.horizon-consultancy.com/sitemap.xml"],
+    // Remove your sitemap.xml from additionalSitemaps completely!
+    // additionalSitemaps: [],
+
     policies: [
       {
         userAgent: "*",
