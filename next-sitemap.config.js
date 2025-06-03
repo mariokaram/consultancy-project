@@ -10,9 +10,6 @@ module.exports = {
     "/components/*", // Exclude all component pages
   ],
   robotsTxtOptions: {
-    // Remove your sitemap.xml from additionalSitemaps completely!
-    // additionalSitemaps: [],
-
     policies: [
       {
         userAgent: "*",
@@ -49,7 +46,6 @@ module.exports = {
         loc: path,
         changefreq: "daily",
         priority: 0.8,
-        robots: "index, follow",
       };
     }
 
@@ -58,7 +54,6 @@ module.exports = {
         loc: path,
         changefreq: "daily",
         priority: 0.7,
-        robots: "index, follow",
       };
     }
 
@@ -66,9 +61,6 @@ module.exports = {
       loc: path,
       changefreq: "daily",
       priority: ["/"].includes(path) ? 1.0 : 0.7,
-      robots: noIndexPaths.some((p) => path.includes(p))
-        ? "noindex, nofollow"
-        : "index, follow",
     };
   },
 };
