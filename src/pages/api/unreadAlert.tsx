@@ -8,10 +8,15 @@ const sql = require("sql-template-strings");
 export default getHandler({ auth: false, urlRateLimit: "unreadApi" }).get(
   async (req, res) => {
     try {
+      console.log("hey i am here");
       const apiKey = req.headers["x-api-key"];
       if (apiKey !== configs.UNREAD_ALERTS_KEY) {
+        console.log("hey i am out");
+
         return res.status(401).json({ error: "Unauthorized" });
       }
+
+      console.log("hey i am in");
 
       const UnreadMsgsConsultants = await executeQuery(sql`
       SELECT DISTINCT u.email
