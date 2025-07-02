@@ -20,10 +20,27 @@ export default function Footer() {
                 </Link>
               </div>
               <div className={styles.social}>
-                <XIcon />
-                <FacebookIcon />
-                <LinkedInIcon />
-                <YouTubeIcon />
+                <a
+                  href="https://www.facebook.com/HorizonBusinessConsultancy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FacebookIcon style={{ color: "var(--blueColor)" }} />
+                </a>
+                <a
+                  href="https://www.linkedin.com/company/horizon-business-planning-consultancy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <LinkedInIcon style={{ color: "var(--blueColor)" }} />
+                </a>
+                <a
+                  href="https://www.youtube.com/@HorizonBusinessPlanning"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <YouTubeIcon style={{ color: "var(--blueColor)" }} />
+                </a>
               </div>
             </div>
             <div>

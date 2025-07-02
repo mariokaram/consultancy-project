@@ -85,11 +85,38 @@ export default function Home() {
   const mediaQuery1400 = useMediaQuery("(max-width:1400px)");
   const mediaQuery1600 = useMediaQuery("(max-width:1535px)");
 
+  const orgSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Horizon Consultancy",
+    url: "https://www.horizon-consultancy.com",
+    logo: "https://res.cloudinary.com/dfbxrjdfd/image/upload/v1740534946/logo-primary_jeideq.png",
+    sameAs: [
+      "https://www.facebook.com/HorizonBusinessConsultancy",
+      "https://www.linkedin.com/company/horizon-business-planning-consultancy",
+      "https://www.youtube.com/@HorizonBusinessPlanning",
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: "+1-438-526-2627",
+      contactType: "Customer Service",
+      areaServed: "CA",
+      availableLanguage: ["English", "French"],
+    },
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    url: "https://www.horizon-consultancy.com/",
+  };
+
   return (
     <>
       <SEO
         title="Home - Horizon Consultancy"
         description="Horizon Consultancy provides tailored business strategies to help you grow and succeed."
+        structuredData={[orgSchema, websiteSchema]}
       />
       <section>
         <div className={styles.backgroundImg}>
@@ -455,7 +482,7 @@ export default function Home() {
                       <div className={styles.name}>{v.name}</div>
                       <div className={styles.job}>
                         <div>{v.job}</div>
-                      {/* to remove the comment when we have websites for them */}
+                        {/* to remove the comment when we have websites for them */}
                         {/* <div>
                           <a
                             href={v.url}

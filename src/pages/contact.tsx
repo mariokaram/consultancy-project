@@ -87,6 +87,26 @@ export default function ContactUsPage() {
       showSpinner(false);
     }
   }
+  const contactSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact - Horizon Consultancy",
+    "description": "Contact Horizon Consultancy for business inquiries, strategic advice, and partnership opportunities.",
+    "url": "https://www.horizon-consultancy.com/contact",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "Horizon Consultancy",
+      "url": "https://www.horizon-consultancy.com",
+      "logo": "https://res.cloudinary.com/dfbxrjdfd/image/upload/v1740534946/logo-primary_jeideq.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-438-526-2627",
+        "contactType": "Customer Service",
+        "areaServed": "CA",
+        "availableLanguage": ["English", "French"]
+      }
+    }
+  };
 
   return (
     <>
@@ -94,6 +114,7 @@ export default function ContactUsPage() {
         title="Contact - Horizon Consultancy"
         description="Have questions or want to review a mock-up plan? Contact Horizon Consultancy for inquiries, collaborations, or partnership opportunities."
         url={`${configs.PUBLIC_URL}/contact`}
+        structuredData={contactSchema}
       />
       <section>
         <div className={styles.contactContainer}>

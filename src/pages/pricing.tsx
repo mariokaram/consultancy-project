@@ -91,12 +91,61 @@ export default function PricingPage(props: PricingPageProps) {
     }
   }
 
+  const pricingSchema = {
+    "@context": "https://schema.org",
+    "@type": "OfferCatalog",
+    "name": "Horizon Consultancy Pricing Plans",
+    "description": "Explore flexible pricing plans for expert business consulting tailored to startups and growing businesses.",
+    "url": "https://www.horizon-consultancy.com/pricing",
+    "provider": {
+      "@type": "Organization",
+      "name": "Horizon Consultancy",
+      "url": "https://www.horizon-consultancy.com"
+    },
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "name": "Idea Generation Plan",
+        "description": "Best for entrepreneurs exploring innovative, profitable business ideas and opportunities.",
+        "price": "1500",
+        "priceCurrency": "CAD",
+        "url": "https://www.horizon-consultancy.com/pricing"
+      },
+      {
+        "@type": "Offer",
+        "name": "Business Plan",
+        "description": "Best for entrepreneurs seeking a strategic, execution-focused plan that drives growth and attracts investors.",
+        "price": "6000",
+        "priceCurrency": "CAD",
+        "url": "https://www.horizon-consultancy.com/pricing"
+      },
+      {
+        "@type": "Offer",
+        "name": "Idea and Finance Plan",
+        "description": "Best for entrepreneurs and startups validating business feasibility and determining funding needs.",
+        "price": "4500",
+        "priceCurrency": "CAD",
+        "url": "https://www.horizon-consultancy.com/pricing"
+      },
+      {
+        "@type": "Offer",
+        "name": "Market Strategy Plan",
+        "description": "Best for business owners seeking to attract customers, increase sales, and scale effectively.",
+        "price": "4000",
+        "priceCurrency": "CAD",
+        "url": "https://www.horizon-consultancy.com/pricing"
+      }
+    ]
+  };
+  
+
   return (
     <>
       <SEO
         title="Pricing - Horizon Consultancy"
         description="Explore pricing plans for expert business consulting tailored to startups and businesses—turn ideas into reality, refine strategy, and secure funding."
         url={`${configs.PUBLIC_URL}/pricing`}
+        structuredData={pricingSchema}
       />
       <section>
         {/* backGroundImage Section */}

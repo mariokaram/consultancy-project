@@ -6,7 +6,8 @@ type SEOProps = {
   description?: string;
   image?: string;
   url?: string;
-  noIndex?: boolean; // Control indexing dynamically
+  noIndex?: boolean;
+  structuredData?: object;
 };
 
 export default function SEO({
@@ -14,16 +15,15 @@ export default function SEO({
   description = "Online Business Consultancy",
   image = `https://res.cloudinary.com/dfbxrjdfd/image/upload/v1748880656/logo-seo_zcppup.png`,
   url = configs.PUBLIC_URL,
-  noIndex = false, // Default: Allow indexing
+  noIndex = false,
+  structuredData,
 }: SEOProps) {
   return (
     <Head>
-      {/* ✅ Essential Meta Tags */}
       <title>{title}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={url} />
 
-      {/* ✅ Open Graph for Facebook, WhatsApp, LinkedIn */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
@@ -32,18 +32,25 @@ export default function SEO({
       <meta property="og:url" content={url} />
       <meta property="og:type" content="website" />
 
-      {/* ✅ Twitter Card for Twitter Previews */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
       <meta name="twitter:image:alt" content={title} />
 
-      {/* ✅ Robots Meta Tag for Search Engines */}
       <meta
         name="robots"
         content={noIndex ? "noindex, nofollow" : "index, follow"}
       />
+
+      {structuredData && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
+      )}
     </Head>
   );
 }

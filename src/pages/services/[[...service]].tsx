@@ -189,6 +189,24 @@ export default function ServicesPage({ seoData }: { seoData: SEOType }) {
     }
   }, [router]);
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Business Plan Writing",
+    "description": "Expert business plan services to help startups and entrepreneurs secure funding and define strategy.",
+    "provider": {
+      "@type": "Organization",
+      "name": "Horizon Consultancy",
+      "url": "https://www.horizon-consultancy.com"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Canada"
+    },
+    "serviceType": "Business Consulting",
+    "url": "https://www.horizon-consultancy.com/services/business-plan"
+  };
+
   return (
     <>
       <SEO
@@ -199,6 +217,7 @@ export default function ServicesPage({ seoData }: { seoData: SEOType }) {
             ? `${configs.PUBLIC_URL}/services/${seoData.url}`
             : `${configs.PUBLIC_URL}/services`
         }
+        structuredData={serviceSchema}
       />
       <section>
         {/* backGroundImage Section */}

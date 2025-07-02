@@ -1,5 +1,7 @@
+const siteUrl = "https://www.horizon-consultancy.com";
+
 module.exports = {
-  siteUrl: "https://www.horizon-consultancy.com",
+  siteUrl,
   generateRobotsTxt: true,
   exclude: [
     "/dashboard",
@@ -7,7 +9,8 @@ module.exports = {
     "/questionnaire",
     "/consultant/dashboard-consultant",
     "/chatroom",
-    "/components/*", // Exclude all component pages
+    "/consultants",
+    "/components/*",
   ],
   robotsTxtOptions: {
     policies: [
@@ -16,6 +19,7 @@ module.exports = {
         disallow: [
           "/dashboard",
           "/signin",
+          "/consultants",
           "/questionnaire",
           "/consultant/dashboard-consultant",
           "/chatroom",
@@ -26,21 +30,8 @@ module.exports = {
     ],
   },
   transform: async (config, path) => {
-    const noIndexPaths = [
-      "/dashboard",
-      "/signin",
-      "/questionnaire",
-      "/consultant/dashboard-consultant",
-      "/chatroom",
-      "/components/",
-    ];
+    if (path.includes("/components/")) return null;
 
-    // Exclude component pages
-    if (path.includes("/components/")) {
-      return null;
-    }
-
-    // Dynamic Services Paths
     if (path.startsWith("/services")) {
       return {
         loc: path,
@@ -62,5 +53,15 @@ module.exports = {
       changefreq: "daily",
       priority: ["/"].includes(path) ? 1.0 : 0.7,
     };
+  },
+
+  additionalPaths: async (config) => {
+    return [
+      {
+        loc: `${siteUrl}/services`,
+        changefreq: "daily",
+        priority: 0.8,
+      },
+    ];
   },
 };
