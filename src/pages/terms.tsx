@@ -1,7 +1,9 @@
 // pages/terms-and-conditions.tsx
 import React from "react";
 import styles from "@/styles/Terms.module.scss";
-import { Container, Typography, Box } from "@mui/material";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 const TermsAndConditions = () => (
   <Container className={styles.termsPage} maxWidth="md">

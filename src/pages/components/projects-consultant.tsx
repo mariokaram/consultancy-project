@@ -4,15 +4,13 @@ import DownloadIcon from "@mui/icons-material/Download";
 import useSWR, { mutate } from "swr";
 import OpenDialog, { AdminDialogType } from "@/pages/components/Modal";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-import {
-  Alert,
-  AlertTitle,
-  CircularProgress,
-  Input,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from "@mui/material";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import CircularProgress from "@mui/material/CircularProgress";
+import Input from "@mui/material/Input";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import type { SelectChangeEvent } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { isEmpty, map } from "lodash";
 import SquareComponent from "@/pages/components/Square-component";

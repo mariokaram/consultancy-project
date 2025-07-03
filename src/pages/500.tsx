@@ -1,4 +1,6 @@
-import { Container, Typography, Button } from "@mui/material";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import Link from "next/link";
 import styles from "@/styles/404.module.scss";
 import SEO from "@/pages/components/SEO";

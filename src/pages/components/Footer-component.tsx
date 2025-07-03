@@ -3,7 +3,6 @@ import styles from "@/styles/Footer.module.scss";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "~/public/icons/logo-primary.svg";
-import XIcon from "@mui/icons-material/X";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import YouTubeIcon from "@mui/icons-material/YouTube";

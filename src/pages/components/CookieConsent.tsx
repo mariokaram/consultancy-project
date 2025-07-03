@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import styles from "@/styles/CookieConsent.module.scss";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import localFont from "next/font/local";
 
 const Aeonik = localFont({

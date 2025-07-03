@@ -1,14 +1,10 @@
 import * as React from "react";
 import moment from "moment";
-import Image from "next/image";
 import Button from "@mui/material/Button";
 import InfoIcon from "@mui/icons-material/Info";
 import { useRouter } from "next/router";
-import Info from "~/public/imgs/info.png";
 import styles from "@/styles/ProjectInfo.module.scss";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DownloadIcon from "@mui/icons-material/Download";
-import CircularProgress from "@mui/material/CircularProgress";
 
 interface ProjectInfoProps {
   project_id: number;

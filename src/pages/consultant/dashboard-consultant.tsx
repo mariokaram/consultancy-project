@@ -1,10 +1,11 @@
 import styles from "@/styles/Dashboard-consultant.module.scss";
 import Image from "next/image";
 import { ProjectConsultantListType } from "../api/consultant/getProjects-consultant";
-import Button from "@mui/material/Button";
 import { useRouter } from "next/router";
 import useSWR, { mutate } from "swr";
-import { Alert, AlertTitle, CircularProgress } from "@mui/material";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import CircularProgress from "@mui/material/CircularProgress";
 import React, { useEffect, useState } from "react";
 import { isEmpty, map } from "lodash";
 import { getServerSession } from "next-auth";

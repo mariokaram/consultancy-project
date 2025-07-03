@@ -8,7 +8,8 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-import { Checkbox, Input } from "@mui/material";
+import Checkbox from "@mui/material/Checkbox";
+import Input from "@mui/material/Input";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -290,7 +291,10 @@ export default function OpenDialog(props: DialogType) {
 
         <DialogActions>
           {props.type !== "alert" && (
-            <Button className="btn btn-whitish" onClick={() => handleClose("no")}>
+            <Button
+              className="btn btn-whitish"
+              onClick={() => handleClose("no")}
+            >
               Cancel
             </Button>
           )}

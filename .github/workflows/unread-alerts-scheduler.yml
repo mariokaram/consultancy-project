@@ -2,7 +2,7 @@ name: Unread Alerts Scheduler
 
 on:
   schedule:
-    - cron: "0 13-21/2 * * 1-5" # Every 2 hours from 1 PM–9 PM UTC (9 AM–5 PM EST)
+    - cron: "*/5 * * * 1-5" # Every 5 minutes, Monday–Friday (UTC time)
   workflow_dispatch: # Manual trigger
 
 jobs:
@@ -14,3 +14,7 @@ jobs:
           curl "https://www.horizon-consultancy.com/api/unreadAlert" \
           -H "x-api-key: ${{ secrets.UNREAD_ALERTS_KEY }}" \
           --fail -v
+
+      - name: Keep /pricing page warm
+        run: |
+          curl -s "https://www.horizon-consultancy.com/pricing" >/dev/null
