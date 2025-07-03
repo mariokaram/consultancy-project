@@ -2,7 +2,7 @@ name: Unread Alerts Scheduler
 
 on:
   schedule:
-    - cron: "*/5 * * * 1-5" # Every 5 minutes, Monday–Friday (UTC time)
+    - cron: "*/5 * * * *" # Every 5 minutes, 7 days a week (UTC)
   workflow_dispatch: # Manual trigger
 
 jobs:

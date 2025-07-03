@@ -3,6 +3,7 @@ User-agent: *
 Allow: /
 Disallow: /dashboard
 Disallow: /signin
+Disallow: /consultants
 Disallow: /questionnaire
 Disallow: /consultant/dashboard-consultant
 Disallow: /chatroom
