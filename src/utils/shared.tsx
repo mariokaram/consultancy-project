@@ -5,7 +5,7 @@ import { configs } from "@/utils/config";
 import { CreateEmailResponse } from "resend/build/src/emails/interfaces";
 import { StaticImageData } from "next/image";
 import successWork from "~/public/imgs/immigration.jpg";
-import consultantProf2 from "~/public/imgs/consultant1.png";
+import consultantNour from "~/public/imgs/nour.jpg";
 import houseFurn from "~/public/imgs/furniture.jpg";
 import fabricated from "~/public/imgs/fabricated.png";
 
@@ -40,7 +40,7 @@ export const allCaseStudyDetails: CaseStudyDetailType[] = [
     date: "October 21, 2024",
     image: successWork,
     author: "Nour D.",
-    authorImage: consultantProf2,
+    authorImage: consultantNour,
     sections: [
       {
         heading: "Client Challenge",
@@ -69,7 +69,7 @@ export const allCaseStudyDetails: CaseStudyDetailType[] = [
     date: "January 7, 2025",
     image: houseFurn,
     author: "Nour D.",
-    authorImage: consultantProf2,
+    authorImage: consultantNour,
     sections: [
       {
         heading: "Client Challenge",
@@ -98,7 +98,7 @@ export const allCaseStudyDetails: CaseStudyDetailType[] = [
     date: "May 22, 2025",
     image: fabricated,
     author: "Nour D.",
-    authorImage: consultantProf2,
+    authorImage: consultantNour,
     sections: [
       {
         heading: "Client Challenge",
@@ -341,7 +341,7 @@ export const consultants: ConsultantProfile[] = [
     bio: "Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...Jane played a pivotal role in crafting a strategic business plan for a biotech startup...",
     quote:
       "I thrive on transforming complex ideas into compelling strategies that drive growth...",
-    imageSrc: consultantProf2,
+    imageSrc: consultantNour,
     color: "lightBlue",
   },
 
@@ -354,7 +354,7 @@ export const consultants: ConsultantProfile[] = [
     bio: "John has extensive experience in financial planning and investment strategies...",
     quote:
       "My goal is to leverage financial acumen to maximize returns and ensure long-term stability...",
-    imageSrc: consultantProf2,
+    imageSrc: consultantNour,
     color: "rose",
   },
 
@@ -366,7 +366,7 @@ export const consultants: ConsultantProfile[] = [
     bio: "John has extensive experience in financial planning and investment strategies...",
     quote:
       "My goal is to leverage financial acumen to maximize returns and ensure long-term stability...",
-    imageSrc: consultantProf2,
+    imageSrc: consultantNour,
     color: "salmon",
   },
   {
@@ -377,7 +377,7 @@ export const consultants: ConsultantProfile[] = [
     bio: "John has extensive experience in financial planning and investment strategies...",
     quote:
       "My goal is to leverage financial acumen to maximize returns and ensure long-term stability...",
-    imageSrc: consultantProf2,
+    imageSrc: consultantNour,
     color: "blue",
   },
 ];
