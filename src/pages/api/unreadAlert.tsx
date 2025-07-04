@@ -8,7 +8,9 @@ const sql = require("sql-template-strings");
 export default getHandler({ auth: false, urlRateLimit: "unreadApi" }).get(
   async (req, res) => {
     try {
-      const apiKey = req.headers["x-api-key"];
+      // Get secret key from query string instead of headers
+      const apiKey = req.query.key;
+
       if (apiKey !== configs.UNREAD_ALERTS_KEY) {
         return res.status(401).json({ error: "Unauthorized" });
       }
@@ -17,15 +19,16 @@ export default getHandler({ auth: false, urlRateLimit: "unreadApi" }).get(
       SELECT DISTINCT u.email
       FROM chatroom c
       INNER JOIN users u ON u.id = c.consultantId
-      inner join projects p on p.project_id = c.projectId 
-      where p.status <> 7 and p.invoice IS NOT NULL and c.unread = 0 and c.msgFrom = 'u' 
+      INNER JOIN projects p ON p.project_id = c.projectId 
+      WHERE p.status <> 7 AND p.invoice IS NOT NULL AND c.unread = 0 AND c.msgFrom = 'u' 
       `);
+
       const UnreadMsgsUsers = await executeQuery(sql`
       SELECT DISTINCT u.email
       FROM chatroom c
       INNER JOIN users u ON u.id = c.userId
-      inner join projects p on p.project_id = c.projectId 
-      where p.status <> 7 and p.invoice IS NOT NULL and c.unread = 0 and c.msgFrom in ('c' , 'a') 
+      INNER JOIN projects p ON p.project_id = c.projectId 
+      WHERE p.status <> 7 AND p.invoice IS NOT NULL AND c.unread = 0 AND c.msgFrom IN ('c' , 'a') 
       `);
 
       if (
