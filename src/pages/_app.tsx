@@ -68,7 +68,7 @@ export default function App(props: MyAppProps) {
   }: any = props;
 
   const router = useRouter();
-  const hideFooterRoutes = ["/chatroom", "/signin"]; // Add more routes if needed
+  const hideFooterRoutes = ["/chatroom", "/signin", "/questionnaire"]; // Add more routes if needed
   return (
     <>
       <SessionProvider session={session} refetchInterval={300}>
