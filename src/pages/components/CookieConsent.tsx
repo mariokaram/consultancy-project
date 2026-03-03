@@ -3,19 +3,6 @@
 import { useState, useEffect } from "react";
 import styles from "@/styles/CookieConsent.module.scss";
 import Button from "@mui/material/Button";
-import localFont from "next/font/local";
-
-const Aeonik = localFont({
-  src: [
-    {
-      path: "../../../public/fonts/Aeonik-Regular.otf",
-      weight: "400",
-    },
-    { path: "../../../public/fonts/Aeonik-Light.otf", weight: "300" },
-    { path: "../../../public/fonts/Aeonik-Bold.otf", weight: "600" },
-  ],
-  display: "swap",
-});
 
 const CookieConsent: React.FC = () => {
   const [showBanner, setShowBanner] = useState<boolean | null>(null);
@@ -40,9 +27,7 @@ const CookieConsent: React.FC = () => {
   if (showBanner === null) return null;
 
   return showBanner && !accepted ? (
-    <div
-      className={`${styles.cookieBanner} ${styles.visible} ${Aeonik.className}`}
-    >
+    <div className={`${styles.cookieBanner} ${styles.visible}`}>
       <p>
         We use cookies to improve your experience and for session management
         purposes only. By continuing to use this site, you consent to our use of

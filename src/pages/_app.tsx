@@ -36,25 +36,30 @@ interface MyAppProps extends AppProps {
   session: Session;
 }
 
-// ----- FONT_FAMILY FOR ALL WEB FROM GOOGLE FONT START
-const Aeonik = localFont({
+// ----- FONT_FAMILY FOR ALL WEB FROM LOCAL FONT START
+const DMSans = localFont({
   src: [
     {
-      path: "../../public/fonts/Aeonik-Regular.otf",
-      weight: "400",
+      path: "../../public/fonts/DM_Sans/DMSans-VariableFont_opsz,wght.ttf",
+      weight: "100 900",
+      style: "normal",
     },
-    { path: "../../public/fonts/Aeonik-Light.otf", weight: "300" },
-    { path: "../../public/fonts/Aeonik-Bold.otf", weight: "600" },
+    {
+      path: "../../public/fonts/DM_Sans/DMSans-Italic-VariableFont_opsz,wght.ttf",
+      weight: "100 900",
+      style: "italic",
+    },
   ],
   display: "swap",
+  fallback: ["sans-serif"],
 });
 
-// Create a custom theme with the Aeonik font for the button component
+// Create a custom theme with the DM Sans font for the button component
 const theme = createTheme({
   typography: {
-    fontFamily: Aeonik.style.fontFamily,
+    fontFamily: DMSans.style.fontFamily,
     button: {
-      fontFamily: Aeonik.style.fontFamily,
+      fontFamily: DMSans.style.fontFamily,
     },
   },
 });
@@ -75,26 +80,28 @@ export default function App(props: MyAppProps) {
         <SpinnerContextProvider>
           <ThemeProvider theme={theme}>
             <CacheProvider value={emotionCache}>
-              <Header />
-              <CookieConsent />
-              <SWRConfig
-                value={{
-                  fetcher: (url) => axios(url).then((r) => r.data),
-                  errorRetryCount: 3,
-                  errorRetryInterval: 5000,
-                }}
-              >
-                <main className={`${Aeonik.className} main`}>
-                  <NextNProgress color="var(--blueColor)" />
-                  <Component {...pageProps} />
-                  <Analytics />
-                </main>
-              </SWRConfig>
-              {!hideFooterRoutes.includes(router.pathname) && (
-                <footer className={`${Aeonik.className}`}>
-                  <Footer />
-                </footer>
-              )}
+              <div className={DMSans.className}>
+                <Header />
+                <CookieConsent />
+                <SWRConfig
+                  value={{
+                    fetcher: (url) => axios(url).then((r) => r.data),
+                    errorRetryCount: 3,
+                    errorRetryInterval: 5000,
+                  }}
+                >
+                  <main className="main">
+                    <NextNProgress color="var(--blueColor)" />
+                    <Component {...pageProps} />
+                    <Analytics />
+                  </main>
+                </SWRConfig>
+                {!hideFooterRoutes.includes(router.pathname) && (
+                  <footer>
+                    <Footer />
+                  </footer>
+                )}
+              </div>
             </CacheProvider>
           </ThemeProvider>
         </SpinnerContextProvider>
