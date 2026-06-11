@@ -136,7 +136,7 @@ export const TemplateEmail = (template: EmailProps) => {
             <Text className="text-xs text-gray-500 text-center leading-relaxed">
               &copy; {currentYear} Horizon Business Planning Consultancy Inc.
               <br />
-              116 Albert Street, Suite 300, K1P 5G3, ON Canada
+              275 Slater Street, 9th Floor, K1P 6A6, ON, Canada
               <br />
               <Link
                 href="https://horizon-consultancy.com/privacy"

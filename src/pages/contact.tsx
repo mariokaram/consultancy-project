@@ -151,7 +151,7 @@ export default function ContactUsPage() {
                   </div>
                   <div className={styles.infoName}>
                     <div>Location</div>
-                    <div>116 Albert Street, Suite 300, K1P 5G3, ON Canada</div>
+                    <div>275 Slater Street, 9th Floor, K1P 6A6, ON, Canada</div>
                   </div>
                 </div>
                 <div>

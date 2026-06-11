@@ -288,8 +288,7 @@ export default function PrivacyPolicyPage() {
             Inc.
           </li>
           <li>
-            <strong>Address:</strong> 116 Albert Street, Suite 300, K1P 5G3, ON
-            Canada
+            <strong>Address:</strong> 275 Slater Street, 9th Floor, K1P 6A6, ON, Canada
           </li>
         </ul>
       </Box>
